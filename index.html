@@ -1,4 +1,4 @@
-<!-- PÁGINA COMPLETA BENTOV · BANNER + REPRODUCTOR CON VISUALIZADOR DE AUDIO -->
+<!-- PÁGINA COMPLETA BENTOV · DISEÑO PREMIUM CON VISUALIZADOR INMERSIVO -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -7,92 +7,327 @@
   <title>BENTOV · Sinfonía Neuronal</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    body { margin: 0; background: #1c1c1e; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; overflow-x: hidden; }
-    .banner { position: relative; width: 100%; height: 50vh; min-height: 400px; display: flex; align-items: center; justify-content: center; }
-    canvas#waveCanvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
-    .glass-card { position: relative; z-index: 2; max-width: 40rem; width: 90%; padding: 2rem; border-radius: 2rem; background: rgba(44,44,46,0.7); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 30px 60px rgba(0,0,0,0.6), inset 0 0 0 0.5px rgba(255,255,255,0.06); text-align: center; color: white; }
-    .badge { display: inline-block; padding: 0.3rem 0.8rem; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); border-radius: 9999px; color: #a1a1a6; }
-    .animated-title { background: linear-gradient(135deg, #ffffff, #c7c7cc, #e5e5ea, #ffffff); background-size: 300% 300%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: titleShift 6s ease-in-out infinite alternate; }
-    @keyframes titleShift { 0% { background-position: 0% 50%; } 100% { background-position: 100% 50%; } }
-    .player-section { display: flex; justify-content: center; padding: 2rem 1rem 3rem; }
-    .reproductor { max-width: 28rem; width: 100%; background: #2c2c2e; border-radius: 2.5rem; padding: 2rem; box-shadow: 0 30px 60px rgba(0,0,0,0.7), inset 0 0 0 0.5px rgba(255,255,255,0.1); color: white; }
-    input[type="range"] { -webkit-appearance: none; width: 100%; height: 4px; background: #48484a; border-radius: 2px; outline: none; }
-    input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; background: #fff; border-radius: 50%; box-shadow: 0 0 12px rgba(168,85,247,0.8); cursor: pointer; margin-top: -7px; }
-    .boton-play { width: 64px; height: 64px; background: #f2f2f7; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 24px rgba(0,0,0,0.4); transition: all 0.3s ease; position: relative; z-index: 2; }
-    .boton-play:hover { transform: scale(1.06); box-shadow: 0 12px 28px rgba(168,85,247,0.5); }
-    .boton-play svg { width: 32px; height: 32px; color: #1c1c1e; }
+    /* ─── Estilos base ─── */
+    body {
+      margin: 0;
+      background: #1c1c1e;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      overflow-x: hidden;
+    }
 
-    /* Visualizador circular */
-    .viz-container { position: relative; display: flex; justify-content: center; align-items: center; margin-bottom: 1.5rem; }
-    canvas#visualizer { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1; border-radius: 50%; }
+    /* ─── Banner con ondas cerebrales ─── */
+    .banner {
+      position: relative;
+      width: 100%;
+      height: 50vh;
+      min-height: 420px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    canvas#waveCanvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+    .glass-card {
+      position: relative;
+      z-index: 2;
+      max-width: 42rem;
+      width: 90%;
+      padding: 2.5rem 2rem;
+      border-radius: 2rem;
+      background: rgba(44, 44, 46, 0.65);
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), inset 0 0 0 0.5px rgba(255,255,255,0.08);
+      text-align: center;
+      color: white;
+    }
+    .badge {
+      display: inline-block;
+      padding: 0.25rem 0.9rem;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 9999px;
+      color: #b0b0b5;
+      backdrop-filter: blur(10px);
+    }
+    .animated-title {
+      background: linear-gradient(135deg, #ffffff 0%, #d1d1d6 40%, #f0f0f5 80%, #ffffff 100%);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: titleShift 8s ease-in-out infinite alternate;
+    }
+    @keyframes titleShift {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
+
+    /* ─── Reproductor ─── */
+    .player-section {
+      display: flex;
+      justify-content: center;
+      padding: 2rem 1rem 4rem;
+    }
+    .reproductor {
+      max-width: 30rem;
+      width: 100%;
+      background: #2c2c2e;
+      border-radius: 2.5rem;
+      padding: 2.5rem 2rem 2rem;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7), inset 0 0 0 0.5px rgba(255,255,255,0.12);
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Partículas decorativas de fondo (solo estéticas) */
+    .particle-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.15;
+    }
+    .particle {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.4);
+      border-radius: 50%;
+      animation: floatParticle 12s linear infinite;
+    }
+    @keyframes floatParticle {
+      0% { transform: translateY(100%) scale(0); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(-100%) scale(1); opacity: 0; }
+    }
+
+    /* Controles */
+    input[type="range"] {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 4px;
+      background: #48484a;
+      border-radius: 2px;
+      outline: none;
+      z-index: 1;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      background: #ffffff;
+      border-radius: 50%;
+      box-shadow: 0 0 15px rgba(168, 85, 247, 0.9);
+      cursor: pointer;
+      margin-top: -7px;
+    }
+
+    .boton-play {
+      width: 70px;
+      height: 70px;
+      background: #f2f2f7;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      transition: all 0.3s ease;
+      position: relative;
+      z-index: 5;
+    }
+    .boton-play:hover {
+      transform: scale(1.06);
+      box-shadow: 0 15px 35px rgba(168, 85, 247, 0.6);
+    }
+    .boton-play svg {
+      width: 34px;
+      height: 34px;
+      color: #1c1c1e;
+    }
+
+    /* Contenedor del visualizador */
+    .viz-wrapper {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      height: 220px;
+    }
+    canvas#visualizer {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+      border-radius: 50%;
+    }
+
+    /* Efecto de aura alrededor del botón */
+    .aura {
+      position: absolute;
+      width: 170px;
+      height: 170px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(168,85,247,0.1) 0%, transparent 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 0;
+      animation: pulseAura 2s ease-in-out infinite;
+    }
+    @keyframes pulseAura {
+      0%, 100% { opacity: 0.4; transform: translate(-50%, -50%) scale(1); }
+      50% { opacity: 0.8; transform: translate(-50%, -50%) scale(1.15); }
+    }
+
+    /* Enlace LinkedIn */
+    .linkedin-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.06);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.15);
+      transition: all 0.3s;
+      animation: gentlePulse 2.8s ease-in-out infinite;
+    }
+    .linkedin-icon:hover {
+      animation: none;
+      transform: scale(1.15);
+      background: rgba(168,85,247,0.25);
+      box-shadow: 0 0 18px rgba(168,85,247,0.6);
+    }
+    @keyframes gentlePulse {
+      0%, 100% { box-shadow: 0 0 8px rgba(168,85,247,0.4); }
+      50% { box-shadow: 0 0 18px rgba(168,85,247,0.8); }
+    }
   </style>
 </head>
 <body>
-  <!-- BANNER -->
+  <!-- ═══════════ BANNER ═══════════ -->
   <div class="banner">
     <canvas id="waveCanvas"></canvas>
     <div class="glass-card">
       <div class="badge mb-4">BENTOV · Neurotech</div>
-      <h1 class="animated-title text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-4">
+      <h1 class="animated-title text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-5">
         Frecuencias<br />Binaurales<br />Certificadas
       </h1>
-      <p class="text-gray-300 text-base md:text-lg lg:text-xl font-light tracking-wide">
+      <p class="text-gray-300/90 text-base md:text-lg lg:text-xl font-light tracking-wide">
         Impulsadas por inteligencia artificial avanzada
       </p>
-      <div class="mt-6 flex justify-center">
-        <div class="w-16 h-px bg-gradient-to-r from-transparent via-gray-400 to-transparent"></div>
+      <div class="mt-7 flex justify-center">
+        <div class="w-20 h-0.5 bg-gradient-to-r from-transparent via-purple-400/60 to-transparent"></div>
       </div>
     </div>
   </div>
 
-  <!-- REPRODUCTOR MEJORADO CON VISUALIZADOR -->
+  <!-- ═══════════ REPRODUCTOR ═══════════ -->
   <div class="player-section">
     <div class="reproductor">
-      <div class="text-center mb-6">
-        <span class="text-xs font-semibold tracking-widest uppercase text-gray-400 bg-gray-700/50 px-3 py-1 rounded-full">BENTOV · Neurotech</span>
+      <!-- Partículas flotantes decorativas -->
+      <div class="particle-bg" id="particleContainer"></div>
+
+      <!-- Cabecera del reproductor con creador y LinkedIn -->
+      <div class="flex items-center justify-center gap-3 mb-7 relative z-10">
+        <div class="text-left">
+          <p class="text-[0.65rem] text-purple-300/80 uppercase tracking-widest">Creado por</p>
+          <h2 class="text-sm font-medium tracking-tight text-white/80">Juan C. Artunduaga J.</h2>
+        </div>
+        <a href="https://www.linkedin.com/in/jcaj" target="_blank" rel="noopener" class="linkedin-icon" aria-label="LinkedIn">
+          <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M4.98 3.5C4.98 4.88 3.88 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM.19 8h4.62v16H.19V8zm7.95 0h4.45v2.16h.06c.62-1.17 2.13-2.4 4.38-2.4 4.68 0 5.54 3.08 5.54 7.09V24h-4.83v-8.17c0-1.95-.04-4.46-2.72-4.46-2.72 0-3.14 2.12-3.14 4.32V24H7.14V8z"/>
+          </svg>
+        </a>
       </div>
 
-      <!-- CONTENEDOR VISUALIZADOR + BOTÓN -->
-      <div class="viz-container">
-        <canvas id="visualizer" width="180" height="180"></canvas>
+      <!-- Visualizador + botón play -->
+      <div class="viz-wrapper">
+        <div class="aura"></div>
+        <canvas id="visualizer" width="220" height="220"></canvas>
         <button id="playPauseBtn" class="boton-play">
           <svg id="playIcon" fill="currentColor" viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg>
           <svg id="pauseIcon" class="hidden" fill="currentColor" viewBox="0 0 24 24"><path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/></svg>
         </button>
       </div>
 
-      <div class="space-y-5">
+      <!-- Controles -->
+      <div class="space-y-5 relative z-10">
         <div>
-          <div class="flex justify-between text-xs text-gray-400 mb-1">
-            <span id="currentTime">0:00</span><span id="remainingTime">-7:00</span>
+          <div class="flex justify-between text-xs text-gray-400 mb-1 tracking-wider">
+            <span id="currentTime">0:00</span>
+            <span id="remainingTime">-7:00</span>
           </div>
           <input type="range" id="progressBar" value="0" min="0" step="0.1" max="420" class="w-full">
         </div>
+
         <div class="flex items-center gap-3">
-          <svg class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0014 8.5v7a4.47 4.47 0 001.5-3.5z"/></svg>
+          <svg class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0014 8.5v7a4.47 4.47 0 001.5-3.5z"/>
+          </svg>
           <input type="range" id="volumeBar" min="0" max="1" step="0.01" value="0.8" class="flex-1">
         </div>
-        <p class="text-center text-xs text-gray-500 mt-1">Experiencia de 7 minutos · Se pausará automáticamente</p>
+
+        <p class="text-center text-[0.7rem] text-gray-500 mt-1">Experiencia de 7 minutos · Pausa automática</p>
       </div>
 
-      <div class="mt-8 bg-black/25 rounded-xl p-4 text-xs text-gray-400 space-y-1.5">
-        <p class="text-gray-300 font-semibold uppercase tracking-wide mb-2">⚠️ Advertencias de seguridad</p>
-        <p>• No escuchar mientras se conduce o maneja maquinaria.</p>
-        <p>• No usar si tiene epilepsia o antecedentes convulsivos.</p>
-        <p>• Consultar al médico si tiene marcapasos o implantes electrónicos.</p>
-        <p>• Mantener un volumen moderado y detenerse ante molestias.</p>
+      <!-- Advertencias mejoradas -->
+      <div class="mt-8 bg-black/30 backdrop-blur-md rounded-2xl p-4 text-[0.7rem] text-gray-400 space-y-1.5 border border-white/5 relative z-10">
+        <p class="text-gray-300 font-semibold uppercase tracking-widest mb-2 flex items-center gap-1">
+          <span>⚠️</span> Advertencias de seguridad
+        </p>
+        <p>• No usar al conducir o manejar maquinaria.</p>
+        <p>• No apto para personas con epilepsia o convulsiones.</p>
+        <p>• Consulte a su médico si usa marcapasos o implantes.</p>
+        <p>• Volumen moderado; interrumpa ante cualquier malestar.</p>
       </div>
-      <p class="text-center text-gray-600 text-xs mt-6">Diseñado por Juan C. Artunduaga Jaramillo</p>
+
+      <p class="text-center text-gray-600 text-[0.65rem] mt-6 relative z-10">BENTOV · Neurotech · Beta</p>
     </div>
   </div>
 
+  <!-- Audio oculto -->
   <audio id="audioPlayer" preload="auto"
     src="https://raw.githubusercontent.com/jartunduaga1986-byte/bentov-audio/99b73821584358a093869c9e8dafff2ba93ce1fa/bentov_certified_7.05Hz.mp3"
     controlsList="nodownload" oncontextmenu="return false;">
   </audio>
 
   <script>
-    // ─── Ondas cerebrales estáticas (fondo del banner) ───
+    // ─── Partículas decorativas ───
+    (() => {
+      const container = document.getElementById('particleContainer');
+      for (let i = 0; i < 18; i++) {
+        const p = document.createElement('div');
+        p.classList.add('particle');
+        const size = Math.random() * 4 + 2;
+        p.style.width = size + 'px';
+        p.style.height = size + 'px';
+        p.style.left = Math.random() * 100 + '%';
+        p.style.animationDelay = Math.random() * 10 + 's';
+        p.style.animationDuration = (Math.random() * 10 + 8) + 's';
+        container.appendChild(p);
+      }
+    })();
+
+    // ─── Ondas cerebrales del banner ───
     (() => {
       const canvas = document.getElementById('waveCanvas');
       const ctx = canvas.getContext('2d');
@@ -108,8 +343,8 @@
       function draw() {
         ctx.clearRect(0,0,w,h);
         waves.forEach(wv => {
-          ctx.beginPath(); ctx.lineWidth=1.8; ctx.strokeStyle=wv.col;
-          for (let x=0; x<=w; x+=2) {
+          ctx.beginPath(); ctx.lineWidth = 1.8; ctx.strokeStyle = wv.col;
+          for (let x = 0; x <= w; x += 2) {
             let y = h*0.5 + Math.sin(x*wv.freq + time*wv.speed + wv.off)*wv.amp + Math.cos(x*0.008 + time*0.01)*4;
             x===0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
           }
@@ -123,7 +358,7 @@
       window.addEventListener('resize', resize); resize(); draw();
     })();
 
-    // ─── Reproductor y Visualizador de Frecuencias ───
+    // ─── Reproductor + Visualizador mejorado ───
     (() => {
       const audio = document.getElementById('audioPlayer');
       const playBtn = document.getElementById('playPauseBtn');
@@ -135,89 +370,96 @@
       const rem = document.getElementById('remainingTime');
       const vizCanvas = document.getElementById('visualizer');
       const vizCtx = vizCanvas.getContext('2d');
-      const MAX = 420; // 7 minutos
+      const MAX = 420; // 7 min
 
       let audioCtx, analyser, source, freqData;
-      let animationId;
+      let animationId = null;
+      let sourceConnected = false;
 
-      function fmt(t) { const m = Math.floor(t/60); const s = Math.floor(t%60); return `${m}:${s.toString().padStart(2,'0')}`; }
+      const fmt = t => { const m=Math.floor(t/60); const s=Math.floor(t%60); return `${m}:${s.toString().padStart(2,'0')}`; };
 
-      // Inicializar Web Audio
-      function initAudioContext() {
-        if (audioCtx) return;
-        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        analyser = audioCtx.createAnalyser();
-        analyser.fftSize = 256;
-        const bufferLength = analyser.frequencyBinCount;
-        freqData = new Uint8Array(bufferLength);
-        source = audioCtx.createMediaElementSource(audio);
-        source.connect(analyser);
-        analyser.connect(audioCtx.destination);
+      // Inicializar audio
+      async function initAudio() {
+        if (!audioCtx) {
+          audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+          analyser = audioCtx.createAnalyser();
+          analyser.fftSize = 512;
+          freqData = new Uint8Array(analyser.frequencyBinCount);
+          source = audioCtx.createMediaElementSource(audio);
+          source.connect(analyser);
+          analyser.connect(audioCtx.destination);
+          sourceConnected = true;
+        }
+        if (audioCtx.state === 'suspended') await audioCtx.resume();
       }
 
-      // Dibujar visualizador circular
+      // Dibujar visualizador inmersivo (anillo de ondas)
       function drawVisualizer() {
         animationId = requestAnimationFrame(drawVisualizer);
         analyser.getByteFrequencyData(freqData);
 
-        const width = vizCanvas.width;
-        const height = vizCanvas.height;
-        vizCtx.clearRect(0, 0, width, height);
+        const w = vizCanvas.width, h = vizCanvas.height;
+        vizCtx.clearRect(0, 0, w, h);
+        const cx = w/2, cy = h/2;
+        const radiusBase = 75;
+        const angles = freqData.length; // 256
 
-        const centerX = width / 2;
-        const centerY = height / 2;
-        const radius = 70; // radio base de las barras
-        const bars = freqData.length; // 128
-        const angleStep = (2 * Math.PI) / bars;
-
-        // Dibujar barras radiales
-        vizCtx.lineWidth = 2;
-        vizCtx.strokeStyle = 'rgba(255, 255, 255, 0.7)';
-        vizCtx.shadowColor = 'rgba(168, 85, 247, 0.5)';
-        vizCtx.shadowBlur = 4;
-
-        for (let i = 0; i < bars; i++) {
-          const value = freqData[i] / 255; // 0-1
-          const barHeight = value * 30; // altura máxima 30px
-          const angle = i * angleStep;
-          const innerX = centerX + Math.cos(angle) * radius;
-          const innerY = centerY + Math.sin(angle) * radius;
-          const outerX = centerX + Math.cos(angle) * (radius + barHeight);
-          const outerY = centerY + Math.sin(angle) * (radius + barHeight);
+        // Dibujar barras radiales con gradiente
+        for (let i = 0; i < angles; i++) {
+          const value = freqData[i] / 255;
+          const barH = value * 45;
+          const angle = (i / angles) * Math.PI * 2;
+          const x1 = cx + Math.cos(angle) * radiusBase;
+          const y1 = cy + Math.sin(angle) * radiusBase;
+          const x2 = cx + Math.cos(angle) * (radiusBase + barH);
+          const y2 = cy + Math.sin(angle) * (radiusBase + barH);
 
           vizCtx.beginPath();
-          vizCtx.moveTo(innerX, innerY);
-          vizCtx.lineTo(outerX, outerY);
-          vizCtx.strokeStyle = `rgba(255, 255, 255, ${0.4 + value * 0.6})`;
+          vizCtx.moveTo(x1, y1);
+          vizCtx.lineTo(x2, y2);
+          const alpha = 0.2 + value * 0.7;
+          vizCtx.strokeStyle = `rgba(255, 255, 255, ${alpha})`;
+          vizCtx.lineWidth = 2.2;
+          vizCtx.shadowColor = 'rgba(168, 85, 247, 0.7)';
+          vizCtx.shadowBlur = value * 12;
+          vizCtx.stroke();
+        }
+        vizCtx.shadowBlur = 0; // reset
+
+        // Ondas concéntricas que expanden según el volumen promedio
+        const avg = freqData.reduce((a,b) => a+b, 0) / freqData.length / 255;
+        for (let ring = 1; ring <= 3; ring++) {
+          const radius = radiusBase + 12 * ring + avg * 20;
+          vizCtx.beginPath();
+          vizCtx.arc(cx, cy, radius, 0, Math.PI*2);
+          vizCtx.strokeStyle = `rgba(255, 255, 255, ${0.05 + avg*0.2})`;
+          vizCtx.lineWidth = 1.5;
           vizCtx.stroke();
         }
 
-        // Círculo central semitransparente (para darle profundidad)
+        // Núcleo central pulsante
         vizCtx.beginPath();
-        vizCtx.arc(centerX, centerY, radius - 2, 0, 2 * Math.PI);
-        vizCtx.fillStyle = 'rgba(28, 28, 30, 0.3)';
+        vizCtx.arc(cx, cy, 18 + avg*10, 0, Math.PI*2);
+        vizCtx.fillStyle = `rgba(255, 255, 255, ${0.1 + avg*0.15})`;
         vizCtx.fill();
-        vizCtx.shadowBlur = 0; // reset
+        vizCtx.strokeStyle = 'rgba(255,255,255,0.3)';
+        vizCtx.lineWidth = 1;
+        vizCtx.stroke();
       }
 
       function startVisualizer() {
-        if (!audioCtx) initAudioContext();
-        if (audioCtx.state === 'suspended') audioCtx.resume();
         if (!animationId) drawVisualizer();
       }
-
       function stopVisualizer() {
-        if (animationId) {
-          cancelAnimationFrame(animationId);
-          animationId = null;
-        }
-        vizCtx.clearRect(0, 0, vizCanvas.width, vizCanvas.height);
+        if (animationId) { cancelAnimationFrame(animationId); animationId = null; }
+        vizCtx.clearRect(0,0,vizCanvas.width, vizCanvas.height);
       }
 
-      // Eventos del botón Play/Pause
-      playBtn.addEventListener('click', () => {
+      // Evento play/pause
+      playBtn.addEventListener('click', async () => {
         if (audio.paused) {
-          audio.play().catch(e => alert("Error al reproducir. Verifica tu conexión."));
+          await initAudio();
+          audio.play().catch(() => alert('Error al reproducir.'));
           playIcon.classList.add('hidden');
           pauseIcon.classList.remove('hidden');
           startVisualizer();
@@ -229,10 +471,8 @@
         }
       });
 
-      // Al cargar metadatos
       audio.addEventListener('loadedmetadata', () => {
-        audio.volume = 0.8;
-        volumeBar.value = 0.8;
+        audio.volume = 0.8; volumeBar.value = 0.8;
         progressBar.max = (audio.duration > MAX) ? MAX : audio.duration;
         updateProgress();
       });
@@ -240,44 +480,23 @@
       function updateProgress() {
         let cur = audio.currentTime;
         if (cur > MAX) {
-          audio.pause();
-          audio.currentTime = MAX;
-          playIcon.classList.remove('hidden');
-          pauseIcon.classList.add('hidden');
-          progressBar.value = MAX;
-          curr.textContent = fmt(MAX);
-          rem.textContent = '-0:00';
-          stopVisualizer();
-          return;
+          audio.pause(); audio.currentTime = MAX;
+          playIcon.classList.remove('hidden'); pauseIcon.classList.add('hidden');
+          progressBar.value = MAX; curr.textContent = fmt(MAX); rem.textContent = '-0:00';
+          stopVisualizer(); return;
         }
-        progressBar.value = cur;
-        curr.textContent = fmt(cur);
+        progressBar.value = cur; curr.textContent = fmt(cur);
         rem.textContent = '-' + fmt(parseFloat(progressBar.max) - cur);
       }
 
       audio.addEventListener('timeupdate', updateProgress);
-
-      progressBar.addEventListener('input', () => {
-        audio.currentTime = Math.min(progressBar.value, MAX);
-      });
-
-      volumeBar.addEventListener('input', () => {
-        audio.volume = volumeBar.value;
-      });
-
+      progressBar.addEventListener('input', () => { audio.currentTime = Math.min(progressBar.value, MAX); });
+      volumeBar.addEventListener('input', () => { audio.volume = volumeBar.value; });
       audio.addEventListener('ended', () => {
-        playIcon.classList.remove('hidden');
-        pauseIcon.classList.add('hidden');
-        audio.currentTime = 0;
-        updateProgress();
-        stopVisualizer();
+        playIcon.classList.remove('hidden'); pauseIcon.classList.add('hidden');
+        audio.currentTime = 0; updateProgress(); stopVisualizer();
       });
-
-      // Limpiar al salir
-      window.addEventListener('beforeunload', () => {
-        if (audioCtx) audioCtx.close();
-      });
-
+      window.addEventListener('beforeunload', () => { if (audioCtx) audioCtx.close(); });
       audio.addEventListener('contextmenu', e => e.preventDefault());
     })();
   </script>
