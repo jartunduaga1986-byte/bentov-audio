@@ -6,223 +6,155 @@
   <title>BENTOV · Sinfonía Neuronal</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    /* ─── Estilos base ─── */
+    :root {
+      --neon-purple: #bc13fe;
+      --neon-blue: #1390fe;
+    }
     body {
       margin: 0;
-      background: #1c1c1e;
+      background: transparent;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       overflow-x: hidden;
     }
 
-    /* ─── Banner con ondas cerebrales ─── */
-    .banner {
-      position: relative;
-      width: 100%;
-      height: 50vh;
-      min-height: 420px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    /* Fondo hexagonal (se mantiene igual) */
+    .container-hex {
+      position: fixed;
+      top: -50px;
+      left: -50px;
+      width: calc(100vw + 100px);
+      height: calc(100vh + 100px);
+      z-index: -10;
+      overflow: hidden;
+      background-color: #020202;
     }
-    canvas#waveCanvas {
+    .hex-wrapper {
       position: absolute;
-      top: 0;
-      left: 0;
+      width: 104px;
+      height: 120px;
+      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), filter 0.5s ease;
+      will-change: transform, filter;
+    }
+    .hex-inner {
       width: 100%;
       height: 100%;
-      z-index: 1;
-    }
-    .glass-card {
+      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+      background: linear-gradient(150deg, #2c2d30 0%, #111112 40%, #050505 100%);
+      transition: background 0.5s ease;
       position: relative;
-      z-index: 2;
-      max-width: 42rem;
-      width: 90%;
-      padding: 2.5rem 2rem;
-      border-radius: 2rem;
-      background: rgba(44, 44, 46, 0.65);
-      backdrop-filter: blur(30px);
-      -webkit-backdrop-filter: blur(30px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), inset 0 0 0 0.5px rgba(255,255,255,0.08);
-      text-align: center;
-      color: white;
+    }
+    .hex-inner::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0) 20%);
+      pointer-events: none;
+    }
+    .glow-purple .hex-inner { background: linear-gradient(150deg, #3a1c4a 0%, #150820 50%, #050505 100%); }
+    .glow-blue .hex-inner { background: linear-gradient(150deg, #1c2a4a 0%, #081220 50%, #050505 100%); }
+    @keyframes pulse-purple {
+      0% { filter: drop-shadow(0 0 8px rgba(188, 19, 254, 0.3)) drop-shadow(4px 6px 8px rgba(0,0,0,1)); }
+      100% { filter: drop-shadow(0 0 25px rgba(188, 19, 254, 0.8)) drop-shadow(4px 6px 8px rgba(0,0,0,1)); }
+    }
+    @keyframes pulse-blue {
+      0% { filter: drop-shadow(0 0 8px rgba(19, 144, 254, 0.3)) drop-shadow(4px 6px 8px rgba(0,0,0,1)); }
+      100% { filter: drop-shadow(0 0 25px rgba(19, 144, 254, 0.8)) drop-shadow(4px 6px 8px rgba(0,0,0,1)); }
+    }
+
+    /* Banner */
+    .banner { position: relative; width: 100%; height: 50vh; min-height: 420px; display: flex; align-items: center; justify-content: center; }
+    canvas#waveCanvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
+    .glass-card {
+      position: relative; z-index: 2; max-width: 42rem; width: 90%; padding: 2.5rem 2rem; border-radius: 2rem;
+      background: rgba(44,44,46,0.65); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
+      border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 30px 60px rgba(0,0,0,0.5), inset 0 0 0 0.5px rgba(255,255,255,0.08);
+      text-align: center; color: white;
     }
     .badge {
-      display: inline-block;
-      padding: 0.25rem 0.9rem;
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 9999px;
-      color: #b0b0b5;
-      backdrop-filter: blur(10px);
+      display: inline-block; padding: 0.25rem 0.9rem; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.15em;
+      text-transform: uppercase; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 9999px; color: #b0b0b5; backdrop-filter: blur(10px);
     }
     .animated-title {
-      background: linear-gradient(135deg, #ffffff 0%, #d1d1d6 40%, #f0f0f5 80%, #ffffff 100%);
-      background-size: 200% 200%;
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      animation: titleShift 8s ease-in-out infinite alternate;
+      background: linear-gradient(135deg, #ffffff 0%, #d1d1d6 40%, #f0f0f5 80%, #ffffff 100%); background-size: 200% 200%;
+      -webkit-background-clip: text; background-clip: text; color: transparent; animation: titleShift 8s ease-in-out infinite alternate;
     }
-    @keyframes titleShift {
-      0% { background-position: 0% 50%; }
-      100% { background-position: 100% 50%; }
-    }
+    @keyframes titleShift { 0% { background-position: 0% 50%; } 100% { background-position: 100% 50%; } }
 
-    /* ─── Reproductor ─── */
-    .player-section {
-      display: flex;
-      justify-content: center;
-      padding: 2rem 1rem 4rem;
-    }
+    /* Reproductor */
+    .player-section { display: flex; justify-content: center; padding: 2rem 1rem 4rem; }
     .reproductor {
-      max-width: 30rem;
-      width: 100%;
-      background: #2c2c2e;
-      border-radius: 2.5rem;
-      padding: 2.5rem 2rem 2rem;
-      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7), inset 0 0 0 0.5px rgba(255,255,255,0.12);
-      color: white;
-      position: relative;
-      overflow: hidden;
+      max-width: 30rem; width: 100%; background: rgba(44,44,46,0.85); backdrop-filter: blur(20px);
+      border-radius: 2.5rem; padding: 2.5rem 2rem 2rem;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.7), inset 0 0 0 0.5px rgba(255,255,255,0.12), 0 0 40px rgba(188,19,254,0.15);
+      color: white; position: relative; overflow: hidden;
     }
-
-    /* Partículas decorativas de fondo (solo estéticas) */
-    .particle-bg {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 0;
-      opacity: 0.15;
-    }
-    .particle {
-      position: absolute;
-      background: rgba(255, 255, 255, 0.4);
-      border-radius: 50%;
-      animation: floatParticle 12s linear infinite;
-    }
+    .particle-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; opacity: 0.15; }
+    .particle { position: absolute; background: rgba(255,255,255,0.4); border-radius: 50%; animation: floatParticle 12s linear infinite; }
     @keyframes floatParticle {
-      0% { transform: translateY(100%) scale(0); opacity: 0; }
-      10% { opacity: 1; }
-      90% { opacity: 1; }
+      0% { transform: translateY(100%) scale(0); opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 
       100% { transform: translateY(-100%) scale(1); opacity: 0; }
     }
 
-    /* Controles */
-    input[type="range"] {
-      -webkit-appearance: none;
-      width: 100%;
-      height: 4px;
-      background: #48484a;
-      border-radius: 2px;
-      outline: none;
-      z-index: 1;
-    }
-    input[type="range"]::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      width: 18px;
-      height: 18px;
-      background: #ffffff;
-      border-radius: 50%;
-      box-shadow: 0 0 15px rgba(168, 85, 247, 0.9);
-      cursor: pointer;
-      margin-top: -7px;
-    }
+    input[type="range"] { -webkit-appearance: none; width: 100%; height: 4px; background: #48484a; border-radius: 2px; outline: none; z-index: 1; }
+    input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; background: #fff; border-radius: 50%; box-shadow: 0 0 15px rgba(168,85,247,0.9); cursor: pointer; margin-top: -7px; }
 
     .boton-play {
-      width: 70px;
-      height: 70px;
-      background: #f2f2f7;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-      transition: all 0.3s ease;
-      position: relative;
-      z-index: 5;
+      width: 70px; height: 70px; background: #f2f2f7; border-radius: 50%; display: flex; align-items: center;
+      justify-content: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5); transition: all 0.3s ease; position: relative; z-index: 5;
     }
-    .boton-play:hover {
-      transform: scale(1.06);
-      box-shadow: 0 15px 35px rgba(168, 85, 247, 0.6);
-    }
-    .boton-play svg {
-      width: 34px;
-      height: 34px;
-      color: #1c1c1e;
-    }
+    .boton-play:hover { transform: scale(1.06); box-shadow: 0 15px 35px rgba(168,85,247,0.6); }
+    .boton-play svg { width: 34px; height: 34px; color: #1c1c1e; }
 
-    /* Contenedor del visualizador */
-    .viz-wrapper {
-      position: relative;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-bottom: 1.5rem;
-      height: 220px;
-    }
-    canvas#visualizer {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 1;
-      border-radius: 50%;
-    }
+    .viz-wrapper { position: relative; display: flex; justify-content: center; align-items: center; margin-bottom: 1.5rem; height: 260px; }
+    canvas#visualizer { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1; border-radius: 50%; }
 
-    /* Efecto de aura alrededor del botón */
+    /* Aura neón (mejorada) */
     .aura {
-      position: absolute;
-      width: 170px;
-      height: 170px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(168,85,247,0.1) 0%, transparent 70%);
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 0;
-      animation: pulseAura 2s ease-in-out infinite;
+      position: absolute; width: 180px; height: 180px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(188,19,254,0.2) 0%, rgba(19,144,254,0.05) 60%, transparent 80%);
+      top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 0;
+      animation: auraPulse 2.5s ease-in-out infinite alternate;
     }
-    @keyframes pulseAura {
-      0%, 100% { opacity: 0.4; transform: translate(-50%, -50%) scale(1); }
-      50% { opacity: 0.8; transform: translate(-50%, -50%) scale(1.15); }
+    @keyframes auraPulse {
+      0% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
+      100% { opacity: 1; transform: translate(-50%, -50%) scale(1.2); }
     }
 
-    /* Enlace LinkedIn */
+    .onda-expansiva {
+      position: absolute; width: 70px; height: 70px; border-radius: 50%;
+      border: 2px solid rgba(188,19,254,0.8); top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0);
+      pointer-events: none; z-index: 4; animation: onda 0.6s ease-out forwards;
+    }
+    @keyframes onda {
+      0% { transform: translate(-50%, -50%) scale(0); opacity: 1; border-width: 3px; }
+      100% { transform: translate(-50%, -50%) scale(4); opacity: 0; border-width: 1px; }
+    }
+
+    /* LinkedIn */
     .linkedin-icon {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.06);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255,255,255,0.15);
-      transition: all 0.3s;
-      animation: gentlePulse 2.8s ease-in-out infinite;
+      display: inline-flex; align-items: center; justify-content: center; width: 38px; height: 38px;
+      border-radius: 50%; background: rgba(255,255,255,0.06); backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.15); transition: all 0.3s; animation: gentlePulse 2.8s ease-in-out infinite;
     }
-    .linkedin-icon:hover {
-      animation: none;
-      transform: scale(1.15);
-      background: rgba(168,85,247,0.25);
-      box-shadow: 0 0 18px rgba(168,85,247,0.6);
-    }
+    .linkedin-icon:hover { animation: none; transform: scale(1.15); background: rgba(168,85,247,0.25); box-shadow: 0 0 18px rgba(168,85,247,0.6); }
     @keyframes gentlePulse {
       0%, 100% { box-shadow: 0 0 8px rgba(168,85,247,0.4); }
       50% { box-shadow: 0 0 18px rgba(168,85,247,0.8); }
     }
+
+    /* Texto de frecuencia dominante */
+    .freq-display {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 6;
+      font-size: 0.8rem; font-weight: 500; color: rgba(255,255,255,0.9); pointer-events: none;
+      text-shadow: 0 0 8px rgba(188,19,254,0.5); opacity: 0; transition: opacity 0.3s;
+    }
+    .freq-display.visible { opacity: 1; }
   </style>
 </head>
 <body>
-  <!-- ═══════════ BANNER ═══════════ -->
+  <div id="hex-grid" class="container-hex"></div>
+
   <div class="banner">
     <canvas id="waveCanvas"></canvas>
     <div class="glass-card">
@@ -239,13 +171,10 @@
     </div>
   </div>
 
-  <!-- ═══════════ REPRODUCTOR ═══════════ -->
   <div class="player-section">
     <div class="reproductor">
-      <!-- Partículas flotantes decorativas -->
       <div class="particle-bg" id="particleContainer"></div>
 
-      <!-- Cabecera del reproductor con creador y LinkedIn -->
       <div class="flex items-center justify-center gap-3 mb-7 relative z-10">
         <div class="text-left">
           <p class="text-[0.65rem] text-purple-300/80 uppercase tracking-widest">Creado por</p>
@@ -258,37 +187,30 @@
         </a>
       </div>
 
-      <!-- Visualizador + botón play -->
       <div class="viz-wrapper">
         <div class="aura"></div>
-        <canvas id="visualizer" width="220" height="220"></canvas>
+        <canvas id="visualizer" width="260" height="260"></canvas>
+        <div id="freqDisplay" class="freq-display">-- Hz</div>
         <button id="playPauseBtn" class="boton-play">
           <svg id="playIcon" fill="currentColor" viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg>
           <svg id="pauseIcon" class="hidden" fill="currentColor" viewBox="0 0 24 24"><path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/></svg>
         </button>
       </div>
 
-      <!-- Controles -->
       <div class="space-y-5 relative z-10">
         <div>
           <div class="flex justify-between text-xs text-gray-400 mb-1 tracking-wider">
-            <span id="currentTime">0:00</span>
-            <span id="remainingTime">-7:00</span>
+            <span id="currentTime">0:00</span><span id="remainingTime">-7:00</span>
           </div>
           <input type="range" id="progressBar" value="0" min="0" step="0.1" max="420" class="w-full">
         </div>
-
         <div class="flex items-center gap-3">
-          <svg class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0014 8.5v7a4.47 4.47 0 001.5-3.5z"/>
-          </svg>
+          <svg class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0014 8.5v7a4.47 4.47 0 001.5-3.5z"/></svg>
           <input type="range" id="volumeBar" min="0" max="1" step="0.01" value="0.8" class="flex-1">
         </div>
-
         <p class="text-center text-[0.7rem] text-gray-500 mt-1">Experiencia de 7 minutos · Pausa automática</p>
       </div>
 
-      <!-- Advertencias mejoradas -->
       <div class="mt-8 bg-black/30 backdrop-blur-md rounded-2xl p-4 text-[0.7rem] text-gray-400 space-y-1.5 border border-white/5 relative z-10">
         <p class="text-gray-300 font-semibold uppercase tracking-widest mb-2 flex items-center gap-1">
           <span>⚠️</span> Advertencias de seguridad
@@ -298,38 +220,68 @@
         <p>• Consulte a su médico si usa marcapasos o implantes.</p>
         <p>• Volumen moderado; interrumpa ante cualquier malestar.</p>
       </div>
-
       <p class="text-center text-gray-600 text-[0.65rem] mt-6 relative z-10">BENTOV · Neurotech · Beta</p>
     </div>
   </div>
 
-  <!-- Audio oculto -->
   <audio id="audioPlayer" preload="auto"
     src="https://raw.githubusercontent.com/jartunduaga1986-byte/bentov-audio/99b73821584358a093869c9e8dafff2ba93ce1fa/bentov_certified_7.05Hz.mp3"
     controlsList="nodownload" oncontextmenu="return false;">
   </audio>
 
   <script>
-    // ─── Partículas decorativas ───
+    // Fondo hexagonal (sin cambios)
+    (() => {
+      const grid = document.getElementById('hex-grid');
+      const hexWidth = 104, hexHeight = 120, gap = 3;
+      const horizontalDist = hexWidth + gap, verticalDist = (hexHeight * 0.75) + gap;
+      function createGrid() {
+        grid.innerHTML = '';
+        const cols = Math.ceil(window.innerWidth / horizontalDist) + 2;
+        const rows = Math.ceil(window.innerHeight / verticalDist) + 2;
+        for (let row = -1; row < rows; row++) {
+          for (let col = -1; col < cols; col++) {
+            const hexWrapper = document.createElement('div'); hexWrapper.className = 'hex-wrapper';
+            const innerHex = document.createElement('div'); innerHex.className = 'hex-inner';
+            hexWrapper.appendChild(innerHex);
+            const isEvenRow = row % 2 === 0;
+            const x = col * horizontalDist + (isEvenRow ? horizontalDist / 2 : 0);
+            const y = row * verticalDist;
+            hexWrapper.style.left = `${x}px`; hexWrapper.style.top = `${y}px`;
+            const depthRand = Math.random();
+            let baseScale = 1, baseShadow = '';
+            if (depthRand > 0.80) { baseScale = 1.05; baseShadow = 'drop-shadow(8px 12px 15px rgba(0,0,0,1))'; hexWrapper.style.zIndex = '3'; innerHex.style.background = 'linear-gradient(150deg, #383a3f 0%, #1a1b1d 50%, #050505 100%)'; }
+            else if (depthRand < 0.25) { baseScale = 0.93; baseShadow = 'drop-shadow(1px 2px 3px rgba(0,0,0,0.8))'; hexWrapper.style.zIndex = '1'; innerHex.style.background = 'linear-gradient(150deg, #18191a 0%, #0a0a0b 50%, #000000 100%)'; }
+            else { baseScale = 1; baseShadow = 'drop-shadow(4px 6px 8px rgba(0,0,0,1))'; hexWrapper.style.zIndex = '2'; }
+            hexWrapper.style.transform = `scale(${baseScale})`; hexWrapper.style.filter = baseShadow;
+            const neonRand = Math.random();
+            if (neonRand > 0.94) hexWrapper.classList.add('glow-purple');
+            else if (neonRand > 0.88) hexWrapper.classList.add('glow-blue');
+            hexWrapper.addEventListener('mouseover', () => { hexWrapper.style.transform = `scale(${baseScale * 0.92})`; hexWrapper.style.filter = 'drop-shadow(0px 0px 0px rgba(0,0,0,1))'; innerHex.style.background = '#000'; hexWrapper.style.zIndex = '0'; });
+            hexWrapper.addEventListener('mouseout', () => { hexWrapper.style.transform = `scale(${baseScale})`; hexWrapper.style.filter = baseShadow; innerHex.style.background = ''; setTimeout(() => { hexWrapper.style.zIndex = ''; }, 300); });
+            grid.appendChild(hexWrapper);
+          }
+        }
+      }
+      createGrid();
+      let resizeTimer;
+      window.addEventListener('resize', () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(createGrid, 200); });
+    })();
+
+    // Partículas decorativas (sin cambios)
     (() => {
       const container = document.getElementById('particleContainer');
       for (let i = 0; i < 18; i++) {
-        const p = document.createElement('div');
-        p.classList.add('particle');
-        const size = Math.random() * 4 + 2;
-        p.style.width = size + 'px';
-        p.style.height = size + 'px';
-        p.style.left = Math.random() * 100 + '%';
-        p.style.animationDelay = Math.random() * 10 + 's';
-        p.style.animationDuration = (Math.random() * 10 + 8) + 's';
-        container.appendChild(p);
+        const p = document.createElement('div'); p.classList.add('particle');
+        const size = Math.random() * 4 + 2; p.style.width = size + 'px'; p.style.height = size + 'px';
+        p.style.left = Math.random() * 100 + '%'; p.style.animationDelay = Math.random() * 10 + 's';
+        p.style.animationDuration = (Math.random() * 10 + 8) + 's'; container.appendChild(p);
       }
     })();
 
-    // ─── Ondas cerebrales del banner ───
+    // Ondas cerebrales del banner (sin cambios)
     (() => {
-      const canvas = document.getElementById('waveCanvas');
-      const ctx = canvas.getContext('2d');
+      const canvas = document.getElementById('waveCanvas'), ctx = canvas.getContext('2d');
       let w, h, time = 0;
       const waves = [
         { amp: 25, freq: 0.02, speed: 0.03, col: 'rgba(255,255,255,0.12)', off: 0 },
@@ -357,7 +309,7 @@
       window.addEventListener('resize', resize); resize(); draw();
     })();
 
-    // ─── Reproductor + Visualizador mejorado ───
+    // Reproductor + Visualizador POTENCIADO
     (() => {
       const audio = document.getElementById('audioPlayer');
       const playBtn = document.getElementById('playPauseBtn');
@@ -369,15 +321,28 @@
       const rem = document.getElementById('remainingTime');
       const vizCanvas = document.getElementById('visualizer');
       const vizCtx = vizCanvas.getContext('2d');
-      const MAX = 420; // 7 min
+      const freqDisplay = document.getElementById('freqDisplay');
+      const MAX = 420;
 
       let audioCtx, analyser, source, freqData;
       let animationId = null;
       let sourceConnected = false;
+      const particlesOrb = [];
 
       const fmt = t => { const m=Math.floor(t/60); const s=Math.floor(t%60); return `${m}:${s.toString().padStart(2,'0')}`; };
 
-      // Inicializar audio
+      // Partículas orbitantes (inicializar)
+      for (let i = 0; i < 30; i++) {
+        particlesOrb.push({
+          angle: Math.random() * Math.PI * 2,
+          radius: 85 + Math.random() * 40,
+          size: Math.random() * 3 + 1.5,
+          speed: (Math.random() * 0.02 + 0.005),
+          offset: Math.random() * Math.PI * 2,
+          brightness: 0.5
+        });
+      }
+
       async function initAudio() {
         if (!audioCtx) {
           audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -392,7 +357,6 @@
         if (audioCtx.state === 'suspended') await audioCtx.resume();
       }
 
-      // Dibujar visualizador inmersivo (anillo de ondas)
       function drawVisualizer() {
         animationId = requestAnimationFrame(drawVisualizer);
         analyser.getByteFrequencyData(freqData);
@@ -400,13 +364,13 @@
         const w = vizCanvas.width, h = vizCanvas.height;
         vizCtx.clearRect(0, 0, w, h);
         const cx = w/2, cy = h/2;
-        const radiusBase = 75;
-        const angles = freqData.length; // 256
+        const radiusBase = 70;
+        const angles = freqData.length;
 
-        // Dibujar barras radiales con gradiente
+        // Barras radiales con gradiente neón
         for (let i = 0; i < angles; i++) {
           const value = freqData[i] / 255;
-          const barH = value * 45;
+          const barH = value * 50;
           const angle = (i / angles) * Math.PI * 2;
           const x1 = cx + Math.cos(angle) * radiusBase;
           const y1 = cy + Math.sin(angle) * radiusBase;
@@ -416,51 +380,85 @@
           vizCtx.beginPath();
           vizCtx.moveTo(x1, y1);
           vizCtx.lineTo(x2, y2);
-          const alpha = 0.2 + value * 0.7;
-          vizCtx.strokeStyle = `rgba(255, 255, 255, ${alpha})`;
-          vizCtx.lineWidth = 2.2;
-          vizCtx.shadowColor = 'rgba(168, 85, 247, 0.7)';
-          vizCtx.shadowBlur = value * 12;
+          // Color dinámico: mezcla púrpura y azul según la posición
+          const mix = (Math.sin(angle) + 1) / 2;
+          const r = Math.floor(188 * mix + 19 * (1 - mix));
+          const g = Math.floor(19 * mix + 144 * (1 - mix));
+          const b = Math.floor(254 * mix + 254 * (1 - mix));
+          vizCtx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${0.3 + value * 0.7})`;
+          vizCtx.lineWidth = 2.5;
+          vizCtx.shadowColor = `rgba(${r}, ${g}, ${b}, 0.8)`;
+          vizCtx.shadowBlur = value * 15;
           vizCtx.stroke();
         }
-        vizCtx.shadowBlur = 0; // reset
+        vizCtx.shadowBlur = 0;
 
-        // Ondas concéntricas que expanden según el volumen promedio
-        const avg = freqData.reduce((a,b) => a+b, 0) / freqData.length / 255;
+        // Partículas orbitantes reactivas
+        const avgVolume = freqData.reduce((a,b) => a+b, 0) / freqData.length / 255;
+        particlesOrb.forEach(p => {
+          p.angle += p.speed * (1 + avgVolume);
+          p.brightness = 0.3 + avgVolume * 0.7;
+          const x = cx + Math.cos(p.angle + p.offset) * p.radius;
+          const y = cy + Math.sin(p.angle + p.offset) * p.radius;
+          vizCtx.beginPath();
+          vizCtx.arc(x, y, p.size, 0, Math.PI*2);
+          vizCtx.fillStyle = `rgba(188, 19, 254, ${p.brightness})`;
+          vizCtx.shadowColor = 'rgba(188, 19, 254, 0.8)';
+          vizCtx.shadowBlur = 6;
+          vizCtx.fill();
+        });
+        vizCtx.shadowBlur = 0;
+
+        // Ondas concéntricas
         for (let ring = 1; ring <= 3; ring++) {
-          const radius = radiusBase + 12 * ring + avg * 20;
+          const radius = radiusBase + 12 * ring + avgVolume * 25;
           vizCtx.beginPath();
           vizCtx.arc(cx, cy, radius, 0, Math.PI*2);
-          vizCtx.strokeStyle = `rgba(255, 255, 255, ${0.05 + avg*0.2})`;
+          vizCtx.strokeStyle = `rgba(255, 255, 255, ${0.05 + avgVolume*0.25})`;
           vizCtx.lineWidth = 1.5;
           vizCtx.stroke();
         }
 
-        // Núcleo central pulsante
+        // Núcleo pulsante y frecuencia dominante
+        const dominantIndex = freqData.indexOf(Math.max(...freqData));
+        const dominantFreq = Math.round(dominantIndex * audioCtx.sampleRate / analyser.fftSize);
         vizCtx.beginPath();
-        vizCtx.arc(cx, cy, 18 + avg*10, 0, Math.PI*2);
-        vizCtx.fillStyle = `rgba(255, 255, 255, ${0.1 + avg*0.15})`;
+        vizCtx.arc(cx, cy, 15 + avgVolume*12, 0, Math.PI*2);
+        vizCtx.fillStyle = `rgba(19, 144, 254, ${0.2 + avgVolume*0.3})`;
         vizCtx.fill();
-        vizCtx.strokeStyle = 'rgba(255,255,255,0.3)';
-        vizCtx.lineWidth = 1;
+        vizCtx.strokeStyle = 'rgba(255,255,255,0.4)';
+        vizCtx.lineWidth = 1.5;
         vizCtx.stroke();
+
+        // Mostrar frecuencia dominante
+        freqDisplay.textContent = `${dominantFreq} Hz`;
+        freqDisplay.style.opacity = 0.7 + avgVolume * 0.3;
+        if (!audio.paused) freqDisplay.classList.add('visible');
+        else freqDisplay.classList.remove('visible');
       }
 
-      function startVisualizer() {
-        if (!animationId) drawVisualizer();
-      }
+      function startVisualizer() { if (!animationId) drawVisualizer(); }
       function stopVisualizer() {
         if (animationId) { cancelAnimationFrame(animationId); animationId = null; }
         vizCtx.clearRect(0,0,vizCanvas.width, vizCanvas.height);
+        freqDisplay.classList.remove('visible');
       }
 
-      // Evento play/pause
+      // Onda expansiva al hacer clic
+      function triggerWave() {
+        const wave = document.createElement('div');
+        wave.className = 'onda-expansiva';
+        document.querySelector('.viz-wrapper').appendChild(wave);
+        wave.addEventListener('animationend', () => wave.remove());
+      }
+
       playBtn.addEventListener('click', async () => {
         if (audio.paused) {
           await initAudio();
           audio.play().catch(() => alert('Error al reproducir.'));
           playIcon.classList.add('hidden');
           pauseIcon.classList.remove('hidden');
+          triggerWave();
           startVisualizer();
         } else {
           audio.pause();
