@@ -1,0 +1,285 @@
+<!-- PÁGINA COMPLETA BENTOV · BANNER + REPRODUCTOR CON VISUALIZADOR DE AUDIO -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BENTOV · Sinfonía Neuronal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { margin: 0; background: #1c1c1e; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; overflow-x: hidden; }
+    .banner { position: relative; width: 100%; height: 50vh; min-height: 400px; display: flex; align-items: center; justify-content: center; }
+    canvas#waveCanvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
+    .glass-card { position: relative; z-index: 2; max-width: 40rem; width: 90%; padding: 2rem; border-radius: 2rem; background: rgba(44,44,46,0.7); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 30px 60px rgba(0,0,0,0.6), inset 0 0 0 0.5px rgba(255,255,255,0.06); text-align: center; color: white; }
+    .badge { display: inline-block; padding: 0.3rem 0.8rem; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); border-radius: 9999px; color: #a1a1a6; }
+    .animated-title { background: linear-gradient(135deg, #ffffff, #c7c7cc, #e5e5ea, #ffffff); background-size: 300% 300%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: titleShift 6s ease-in-out infinite alternate; }
+    @keyframes titleShift { 0% { background-position: 0% 50%; } 100% { background-position: 100% 50%; } }
+    .player-section { display: flex; justify-content: center; padding: 2rem 1rem 3rem; }
+    .reproductor { max-width: 28rem; width: 100%; background: #2c2c2e; border-radius: 2.5rem; padding: 2rem; box-shadow: 0 30px 60px rgba(0,0,0,0.7), inset 0 0 0 0.5px rgba(255,255,255,0.1); color: white; }
+    input[type="range"] { -webkit-appearance: none; width: 100%; height: 4px; background: #48484a; border-radius: 2px; outline: none; }
+    input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; background: #fff; border-radius: 50%; box-shadow: 0 0 12px rgba(168,85,247,0.8); cursor: pointer; margin-top: -7px; }
+    .boton-play { width: 64px; height: 64px; background: #f2f2f7; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 24px rgba(0,0,0,0.4); transition: all 0.3s ease; position: relative; z-index: 2; }
+    .boton-play:hover { transform: scale(1.06); box-shadow: 0 12px 28px rgba(168,85,247,0.5); }
+    .boton-play svg { width: 32px; height: 32px; color: #1c1c1e; }
+
+    /* Visualizador circular */
+    .viz-container { position: relative; display: flex; justify-content: center; align-items: center; margin-bottom: 1.5rem; }
+    canvas#visualizer { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1; border-radius: 50%; }
+  </style>
+</head>
+<body>
+  <!-- BANNER -->
+  <div class="banner">
+    <canvas id="waveCanvas"></canvas>
+    <div class="glass-card">
+      <div class="badge mb-4">BENTOV · Neurotech</div>
+      <h1 class="animated-title text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-4">
+        Frecuencias<br />Binaurales<br />Certificadas
+      </h1>
+      <p class="text-gray-300 text-base md:text-lg lg:text-xl font-light tracking-wide">
+        Impulsadas por inteligencia artificial avanzada
+      </p>
+      <div class="mt-6 flex justify-center">
+        <div class="w-16 h-px bg-gradient-to-r from-transparent via-gray-400 to-transparent"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- REPRODUCTOR MEJORADO CON VISUALIZADOR -->
+  <div class="player-section">
+    <div class="reproductor">
+      <div class="text-center mb-6">
+        <span class="text-xs font-semibold tracking-widest uppercase text-gray-400 bg-gray-700/50 px-3 py-1 rounded-full">BENTOV · Neurotech</span>
+      </div>
+
+      <!-- CONTENEDOR VISUALIZADOR + BOTÓN -->
+      <div class="viz-container">
+        <canvas id="visualizer" width="180" height="180"></canvas>
+        <button id="playPauseBtn" class="boton-play">
+          <svg id="playIcon" fill="currentColor" viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg>
+          <svg id="pauseIcon" class="hidden" fill="currentColor" viewBox="0 0 24 24"><path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/></svg>
+        </button>
+      </div>
+
+      <div class="space-y-5">
+        <div>
+          <div class="flex justify-between text-xs text-gray-400 mb-1">
+            <span id="currentTime">0:00</span><span id="remainingTime">-7:00</span>
+          </div>
+          <input type="range" id="progressBar" value="0" min="0" step="0.1" max="420" class="w-full">
+        </div>
+        <div class="flex items-center gap-3">
+          <svg class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0014 8.5v7a4.47 4.47 0 001.5-3.5z"/></svg>
+          <input type="range" id="volumeBar" min="0" max="1" step="0.01" value="0.8" class="flex-1">
+        </div>
+        <p class="text-center text-xs text-gray-500 mt-1">Experiencia de 7 minutos · Se pausará automáticamente</p>
+      </div>
+
+      <div class="mt-8 bg-black/25 rounded-xl p-4 text-xs text-gray-400 space-y-1.5">
+        <p class="text-gray-300 font-semibold uppercase tracking-wide mb-2">⚠️ Advertencias de seguridad</p>
+        <p>• No escuchar mientras se conduce o maneja maquinaria.</p>
+        <p>• No usar si tiene epilepsia o antecedentes convulsivos.</p>
+        <p>• Consultar al médico si tiene marcapasos o implantes electrónicos.</p>
+        <p>• Mantener un volumen moderado y detenerse ante molestias.</p>
+      </div>
+      <p class="text-center text-gray-600 text-xs mt-6">Diseñado por Juan C. Artunduaga Jaramillo</p>
+    </div>
+  </div>
+
+  <audio id="audioPlayer" preload="auto"
+    src="https://raw.githubusercontent.com/jartunduaga1986-byte/bentov-audio/99b73821584358a093869c9e8dafff2ba93ce1fa/bentov_certified_7.05Hz.mp3"
+    controlsList="nodownload" oncontextmenu="return false;">
+  </audio>
+
+  <script>
+    // ─── Ondas cerebrales estáticas (fondo del banner) ───
+    (() => {
+      const canvas = document.getElementById('waveCanvas');
+      const ctx = canvas.getContext('2d');
+      let w, h, time = 0;
+      const waves = [
+        { amp: 25, freq: 0.02, speed: 0.03, col: 'rgba(255,255,255,0.12)', off: 0 },
+        { amp: 20, freq: 0.015, speed: 0.02, col: 'rgba(255,255,255,0.10)', off: 2 },
+        { amp: 18, freq: 0.025, speed: 0.04, col: 'rgba(255,255,255,0.08)', off: 4 },
+        { amp: 12, freq: 0.01, speed: 0.015, col: 'rgba(255,255,255,0.06)', off: 1 },
+        { amp: 22, freq: 0.018, speed: 0.025, col: 'rgba(255,255,255,0.14)', off: 3 }
+      ];
+      function resize() { w = canvas.parentElement.clientWidth; h = canvas.parentElement.clientHeight; canvas.width = w; canvas.height = h; }
+      function draw() {
+        ctx.clearRect(0,0,w,h);
+        waves.forEach(wv => {
+          ctx.beginPath(); ctx.lineWidth=1.8; ctx.strokeStyle=wv.col;
+          for (let x=0; x<=w; x+=2) {
+            let y = h*0.5 + Math.sin(x*wv.freq + time*wv.speed + wv.off)*wv.amp + Math.cos(x*0.008 + time*0.01)*4;
+            x===0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+          }
+          ctx.stroke();
+        });
+        const grad = ctx.createLinearGradient(0,0,0,h);
+        grad.addColorStop(0, 'rgba(28,28,30,0)'); grad.addColorStop(0.5, 'rgba(28,28,30,0.15)'); grad.addColorStop(1, 'rgba(28,28,30,0.55)');
+        ctx.fillStyle = grad; ctx.fillRect(0,0,w,h);
+        time++; requestAnimationFrame(draw);
+      }
+      window.addEventListener('resize', resize); resize(); draw();
+    })();
+
+    // ─── Reproductor y Visualizador de Frecuencias ───
+    (() => {
+      const audio = document.getElementById('audioPlayer');
+      const playBtn = document.getElementById('playPauseBtn');
+      const playIcon = document.getElementById('playIcon');
+      const pauseIcon = document.getElementById('pauseIcon');
+      const progressBar = document.getElementById('progressBar');
+      const volumeBar = document.getElementById('volumeBar');
+      const curr = document.getElementById('currentTime');
+      const rem = document.getElementById('remainingTime');
+      const vizCanvas = document.getElementById('visualizer');
+      const vizCtx = vizCanvas.getContext('2d');
+      const MAX = 420; // 7 minutos
+
+      let audioCtx, analyser, source, freqData;
+      let animationId;
+
+      function fmt(t) { const m = Math.floor(t/60); const s = Math.floor(t%60); return `${m}:${s.toString().padStart(2,'0')}`; }
+
+      // Inicializar Web Audio
+      function initAudioContext() {
+        if (audioCtx) return;
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        analyser = audioCtx.createAnalyser();
+        analyser.fftSize = 256;
+        const bufferLength = analyser.frequencyBinCount;
+        freqData = new Uint8Array(bufferLength);
+        source = audioCtx.createMediaElementSource(audio);
+        source.connect(analyser);
+        analyser.connect(audioCtx.destination);
+      }
+
+      // Dibujar visualizador circular
+      function drawVisualizer() {
+        animationId = requestAnimationFrame(drawVisualizer);
+        analyser.getByteFrequencyData(freqData);
+
+        const width = vizCanvas.width;
+        const height = vizCanvas.height;
+        vizCtx.clearRect(0, 0, width, height);
+
+        const centerX = width / 2;
+        const centerY = height / 2;
+        const radius = 70; // radio base de las barras
+        const bars = freqData.length; // 128
+        const angleStep = (2 * Math.PI) / bars;
+
+        // Dibujar barras radiales
+        vizCtx.lineWidth = 2;
+        vizCtx.strokeStyle = 'rgba(255, 255, 255, 0.7)';
+        vizCtx.shadowColor = 'rgba(168, 85, 247, 0.5)';
+        vizCtx.shadowBlur = 4;
+
+        for (let i = 0; i < bars; i++) {
+          const value = freqData[i] / 255; // 0-1
+          const barHeight = value * 30; // altura máxima 30px
+          const angle = i * angleStep;
+          const innerX = centerX + Math.cos(angle) * radius;
+          const innerY = centerY + Math.sin(angle) * radius;
+          const outerX = centerX + Math.cos(angle) * (radius + barHeight);
+          const outerY = centerY + Math.sin(angle) * (radius + barHeight);
+
+          vizCtx.beginPath();
+          vizCtx.moveTo(innerX, innerY);
+          vizCtx.lineTo(outerX, outerY);
+          vizCtx.strokeStyle = `rgba(255, 255, 255, ${0.4 + value * 0.6})`;
+          vizCtx.stroke();
+        }
+
+        // Círculo central semitransparente (para darle profundidad)
+        vizCtx.beginPath();
+        vizCtx.arc(centerX, centerY, radius - 2, 0, 2 * Math.PI);
+        vizCtx.fillStyle = 'rgba(28, 28, 30, 0.3)';
+        vizCtx.fill();
+        vizCtx.shadowBlur = 0; // reset
+      }
+
+      function startVisualizer() {
+        if (!audioCtx) initAudioContext();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        if (!animationId) drawVisualizer();
+      }
+
+      function stopVisualizer() {
+        if (animationId) {
+          cancelAnimationFrame(animationId);
+          animationId = null;
+        }
+        vizCtx.clearRect(0, 0, vizCanvas.width, vizCanvas.height);
+      }
+
+      // Eventos del botón Play/Pause
+      playBtn.addEventListener('click', () => {
+        if (audio.paused) {
+          audio.play().catch(e => alert("Error al reproducir. Verifica tu conexión."));
+          playIcon.classList.add('hidden');
+          pauseIcon.classList.remove('hidden');
+          startVisualizer();
+        } else {
+          audio.pause();
+          playIcon.classList.remove('hidden');
+          pauseIcon.classList.add('hidden');
+          stopVisualizer();
+        }
+      });
+
+      // Al cargar metadatos
+      audio.addEventListener('loadedmetadata', () => {
+        audio.volume = 0.8;
+        volumeBar.value = 0.8;
+        progressBar.max = (audio.duration > MAX) ? MAX : audio.duration;
+        updateProgress();
+      });
+
+      function updateProgress() {
+        let cur = audio.currentTime;
+        if (cur > MAX) {
+          audio.pause();
+          audio.currentTime = MAX;
+          playIcon.classList.remove('hidden');
+          pauseIcon.classList.add('hidden');
+          progressBar.value = MAX;
+          curr.textContent = fmt(MAX);
+          rem.textContent = '-0:00';
+          stopVisualizer();
+          return;
+        }
+        progressBar.value = cur;
+        curr.textContent = fmt(cur);
+        rem.textContent = '-' + fmt(parseFloat(progressBar.max) - cur);
+      }
+
+      audio.addEventListener('timeupdate', updateProgress);
+
+      progressBar.addEventListener('input', () => {
+        audio.currentTime = Math.min(progressBar.value, MAX);
+      });
+
+      volumeBar.addEventListener('input', () => {
+        audio.volume = volumeBar.value;
+      });
+
+      audio.addEventListener('ended', () => {
+        playIcon.classList.remove('hidden');
+        pauseIcon.classList.add('hidden');
+        audio.currentTime = 0;
+        updateProgress();
+        stopVisualizer();
+      });
+
+      // Limpiar al salir
+      window.addEventListener('beforeunload', () => {
+        if (audioCtx) audioCtx.close();
+      });
+
+      audio.addEventListener('contextmenu', e => e.preventDefault());
+    })();
+  </script>
+</body>
+</html>
