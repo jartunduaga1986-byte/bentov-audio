@@ -1,3 +1,4 @@
+<!-- PÁGINA COMPLETA BENTOV · AUDIO GARANTIZADO -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -17,51 +18,43 @@
       overflow-x: hidden;
     }
 
-    /* Fondo hexagonal (se mantiene igual) */
     .container-hex {
       position: fixed;
-      top: -50px;
-      left: -50px;
-      width: calc(100vw + 100px);
-      height: calc(100vh + 100px);
+      top: -50px; left: -50px;
+      width: calc(100vw + 100px); height: calc(100vh + 100px);
       z-index: -10;
       overflow: hidden;
       background-color: #020202;
     }
     .hex-wrapper {
       position: absolute;
-      width: 104px;
-      height: 120px;
-      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), filter 0.5s ease;
+      width: 104px; height: 120px;
+      transition: transform 0.5s, filter 0.5s;
       will-change: transform, filter;
     }
     .hex-inner {
-      width: 100%;
-      height: 100%;
+      width: 100%; height: 100%;
       clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
       background: linear-gradient(150deg, #2c2d30 0%, #111112 40%, #050505 100%);
-      transition: background 0.5s ease;
+      transition: background 0.5s;
       position: relative;
     }
     .hex-inner::after {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
+      content: ''; position: absolute; inset: 0;
       background: linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0) 20%);
       pointer-events: none;
     }
     .glow-purple .hex-inner { background: linear-gradient(150deg, #3a1c4a 0%, #150820 50%, #050505 100%); }
     .glow-blue .hex-inner { background: linear-gradient(150deg, #1c2a4a 0%, #081220 50%, #050505 100%); }
     @keyframes pulse-purple {
-      0% { filter: drop-shadow(0 0 8px rgba(188, 19, 254, 0.3)) drop-shadow(4px 6px 8px rgba(0,0,0,1)); }
-      100% { filter: drop-shadow(0 0 25px rgba(188, 19, 254, 0.8)) drop-shadow(4px 6px 8px rgba(0,0,0,1)); }
+      0% { filter: drop-shadow(0 0 8px rgba(188,19,254,0.3)) drop-shadow(4px 6px 8px rgba(0,0,0,1)); }
+      100% { filter: drop-shadow(0 0 25px rgba(188,19,254,0.8)) drop-shadow(4px 6px 8px rgba(0,0,0,1)); }
     }
     @keyframes pulse-blue {
-      0% { filter: drop-shadow(0 0 8px rgba(19, 144, 254, 0.3)) drop-shadow(4px 6px 8px rgba(0,0,0,1)); }
-      100% { filter: drop-shadow(0 0 25px rgba(19, 144, 254, 0.8)) drop-shadow(4px 6px 8px rgba(0,0,0,1)); }
+      0% { filter: drop-shadow(0 0 8px rgba(19,144,254,0.3)) drop-shadow(4px 6px 8px rgba(0,0,0,1)); }
+      100% { filter: drop-shadow(0 0 25px rgba(19,144,254,0.8)) drop-shadow(4px 6px 8px rgba(0,0,0,1)); }
     }
 
-    /* Banner */
     .banner { position: relative; width: 100%; height: 50vh; min-height: 420px; display: flex; align-items: center; justify-content: center; }
     canvas#waveCanvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
     .glass-card {
@@ -70,85 +63,37 @@
       border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 30px 60px rgba(0,0,0,0.5), inset 0 0 0 0.5px rgba(255,255,255,0.08);
       text-align: center; color: white;
     }
-    .badge {
-      display: inline-block; padding: 0.25rem 0.9rem; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.15em;
-      text-transform: uppercase; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15);
-      border-radius: 9999px; color: #b0b0b5; backdrop-filter: blur(10px);
-    }
-    .animated-title {
-      background: linear-gradient(135deg, #ffffff 0%, #d1d1d6 40%, #f0f0f5 80%, #ffffff 100%); background-size: 200% 200%;
-      -webkit-background-clip: text; background-clip: text; color: transparent; animation: titleShift 8s ease-in-out infinite alternate;
-    }
+    .badge { display: inline-block; padding: 0.25rem 0.9rem; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 9999px; color: #b0b0b5; backdrop-filter: blur(10px); }
+    .animated-title { background: linear-gradient(135deg, #ffffff 0%, #d1d1d6 40%, #f0f0f5 80%, #ffffff 100%); background-size: 200% 200%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: titleShift 8s ease-in-out infinite alternate; }
     @keyframes titleShift { 0% { background-position: 0% 50%; } 100% { background-position: 100% 50%; } }
 
-    /* Reproductor */
     .player-section { display: flex; justify-content: center; padding: 2rem 1rem 4rem; }
-    .reproductor {
-      max-width: 30rem; width: 100%; background: rgba(44,44,46,0.85); backdrop-filter: blur(20px);
-      border-radius: 2.5rem; padding: 2.5rem 2rem 2rem;
-      box-shadow: 0 30px 60px rgba(0,0,0,0.7), inset 0 0 0 0.5px rgba(255,255,255,0.12), 0 0 40px rgba(188,19,254,0.15);
-      color: white; position: relative; overflow: hidden;
-    }
+    .reproductor { max-width: 30rem; width: 100%; background: rgba(44,44,46,0.85); backdrop-filter: blur(20px); border-radius: 2.5rem; padding: 2.5rem 2rem 2rem; box-shadow: 0 30px 60px rgba(0,0,0,0.7), inset 0 0 0 0.5px rgba(255,255,255,0.12), 0 0 40px rgba(188,19,254,0.15); color: white; position: relative; overflow: hidden; }
     .particle-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; opacity: 0.15; }
     .particle { position: absolute; background: rgba(255,255,255,0.4); border-radius: 50%; animation: floatParticle 12s linear infinite; }
-    @keyframes floatParticle {
-      0% { transform: translateY(100%) scale(0); opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 
-      100% { transform: translateY(-100%) scale(1); opacity: 0; }
-    }
+    @keyframes floatParticle { 0% { transform: translateY(100%) scale(0); opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { transform: translateY(-100%) scale(1); opacity: 0; } }
 
     input[type="range"] { -webkit-appearance: none; width: 100%; height: 4px; background: #48484a; border-radius: 2px; outline: none; z-index: 1; }
     input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; background: #fff; border-radius: 50%; box-shadow: 0 0 15px rgba(168,85,247,0.9); cursor: pointer; margin-top: -7px; }
 
-    .boton-play {
-      width: 70px; height: 70px; background: #f2f2f7; border-radius: 50%; display: flex; align-items: center;
-      justify-content: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5); transition: all 0.3s ease; position: relative; z-index: 5;
-    }
+    .boton-play { width: 70px; height: 70px; background: #f2f2f7; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5); transition: all 0.3s ease; position: relative; z-index: 5; }
     .boton-play:hover { transform: scale(1.06); box-shadow: 0 15px 35px rgba(168,85,247,0.6); }
     .boton-play svg { width: 34px; height: 34px; color: #1c1c1e; }
 
     .viz-wrapper { position: relative; display: flex; justify-content: center; align-items: center; margin-bottom: 1.5rem; height: 260px; }
     canvas#visualizer { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1; border-radius: 50%; }
 
-    /* Aura neón (mejorada) */
-    .aura {
-      position: absolute; width: 180px; height: 180px; border-radius: 50%;
-      background: radial-gradient(circle, rgba(188,19,254,0.2) 0%, rgba(19,144,254,0.05) 60%, transparent 80%);
-      top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 0;
-      animation: auraPulse 2.5s ease-in-out infinite alternate;
-    }
-    @keyframes auraPulse {
-      0% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
-      100% { opacity: 1; transform: translate(-50%, -50%) scale(1.2); }
-    }
+    .aura { position: absolute; width: 180px; height: 180px; border-radius: 50%; background: radial-gradient(circle, rgba(188,19,254,0.2) 0%, rgba(19,144,254,0.05) 60%, transparent 80%); top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 0; animation: auraPulse 2.5s ease-in-out infinite alternate; }
+    @keyframes auraPulse { 0% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); } 100% { opacity: 1; transform: translate(-50%, -50%) scale(1.2); } }
 
-    .onda-expansiva {
-      position: absolute; width: 70px; height: 70px; border-radius: 50%;
-      border: 2px solid rgba(188,19,254,0.8); top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0);
-      pointer-events: none; z-index: 4; animation: onda 0.6s ease-out forwards;
-    }
-    @keyframes onda {
-      0% { transform: translate(-50%, -50%) scale(0); opacity: 1; border-width: 3px; }
-      100% { transform: translate(-50%, -50%) scale(4); opacity: 0; border-width: 1px; }
-    }
+    .onda-expansiva { position: absolute; width: 70px; height: 70px; border-radius: 50%; border: 2px solid rgba(188,19,254,0.8); top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0); pointer-events: none; z-index: 4; animation: onda 0.6s ease-out forwards; }
+    @keyframes onda { 0% { transform: translate(-50%, -50%) scale(0); opacity: 1; border-width: 3px; } 100% { transform: translate(-50%, -50%) scale(4); opacity: 0; border-width: 1px; } }
 
-    /* LinkedIn */
-    .linkedin-icon {
-      display: inline-flex; align-items: center; justify-content: center; width: 38px; height: 38px;
-      border-radius: 50%; background: rgba(255,255,255,0.06); backdrop-filter: blur(10px);
-      border: 1px solid rgba(255,255,255,0.15); transition: all 0.3s; animation: gentlePulse 2.8s ease-in-out infinite;
-    }
+    .linkedin-icon { display: inline-flex; align-items: center; justify-content: center; width: 38px; height: 38px; border-radius: 50%; background: rgba(255,255,255,0.06); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.15); transition: all 0.3s; animation: gentlePulse 2.8s ease-in-out infinite; }
     .linkedin-icon:hover { animation: none; transform: scale(1.15); background: rgba(168,85,247,0.25); box-shadow: 0 0 18px rgba(168,85,247,0.6); }
-    @keyframes gentlePulse {
-      0%, 100% { box-shadow: 0 0 8px rgba(168,85,247,0.4); }
-      50% { box-shadow: 0 0 18px rgba(168,85,247,0.8); }
-    }
+    @keyframes gentlePulse { 0%, 100% { box-shadow: 0 0 8px rgba(168,85,247,0.4); } 50% { box-shadow: 0 0 18px rgba(168,85,247,0.8); } }
 
-    /* Texto de frecuencia dominante */
-    .freq-display {
-      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 6;
-      font-size: 0.8rem; font-weight: 500; color: rgba(255,255,255,0.9); pointer-events: none;
-      text-shadow: 0 0 8px rgba(188,19,254,0.5); opacity: 0; transition: opacity 0.3s;
-    }
+    .freq-display { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 6; font-size: 0.8rem; font-weight: 500; color: rgba(255,255,255,0.9); pointer-events: none; text-shadow: 0 0 8px rgba(188,19,254,0.5); opacity: 0; transition: opacity 0.3s; }
     .freq-display.visible { opacity: 1; }
   </style>
 </head>
@@ -230,7 +175,7 @@
   </audio>
 
   <script>
-    // Fondo hexagonal (sin cambios)
+    // Fondo hexagonal
     (() => {
       const grid = document.getElementById('hex-grid');
       const hexWidth = 104, hexHeight = 120, gap = 3;
@@ -268,7 +213,7 @@
       window.addEventListener('resize', () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(createGrid, 200); });
     })();
 
-    // Partículas decorativas (sin cambios)
+    // Partículas decorativas
     (() => {
       const container = document.getElementById('particleContainer');
       for (let i = 0; i < 18; i++) {
@@ -279,7 +224,7 @@
       }
     })();
 
-    // Ondas cerebrales del banner (sin cambios)
+    // Ondas cerebrales del banner
     (() => {
       const canvas = document.getElementById('waveCanvas'), ctx = canvas.getContext('2d');
       let w, h, time = 0;
@@ -309,7 +254,7 @@
       window.addEventListener('resize', resize); resize(); draw();
     })();
 
-    // Reproductor + Visualizador POTENCIADO
+    // Reproductor + Visualizador CON SONIDO GARANTIZADO
     (() => {
       const audio = document.getElementById('audioPlayer');
       const playBtn = document.getElementById('playPauseBtn');
@@ -326,12 +271,12 @@
 
       let audioCtx, analyser, source, freqData;
       let animationId = null;
-      let sourceConnected = false;
-      const particlesOrb = [];
+      let isInitialized = false;
 
       const fmt = t => { const m=Math.floor(t/60); const s=Math.floor(t%60); return `${m}:${s.toString().padStart(2,'0')}`; };
 
-      // Partículas orbitantes (inicializar)
+      // Partículas orbitantes
+      const particlesOrb = [];
       for (let i = 0; i < 30; i++) {
         particlesOrb.push({
           angle: Math.random() * Math.PI * 2,
@@ -343,8 +288,10 @@
         });
       }
 
-      async function initAudio() {
-        if (!audioCtx) {
+      // Configuración inicial del AudioContext (se llama al primer clic)
+      const setupAudio = () => {
+        if (isInitialized) return true;
+        try {
           audioCtx = new (window.AudioContext || window.webkitAudioContext)();
           analyser = audioCtx.createAnalyser();
           analyser.fftSize = 512;
@@ -352,22 +299,25 @@
           source = audioCtx.createMediaElementSource(audio);
           source.connect(analyser);
           analyser.connect(audioCtx.destination);
-          sourceConnected = true;
+          isInitialized = true;
+          return true;
+        } catch (e) {
+          alert('Error al configurar el audio. Tu navegador podría no soportar Web Audio.');
+          return false;
         }
-        if (audioCtx.state === 'suspended') await audioCtx.resume();
-      }
+      };
 
+      // Visualizador
       function drawVisualizer() {
         animationId = requestAnimationFrame(drawVisualizer);
+        if (!analyser) return;
         analyser.getByteFrequencyData(freqData);
-
         const w = vizCanvas.width, h = vizCanvas.height;
-        vizCtx.clearRect(0, 0, w, h);
+        vizCtx.clearRect(0,0,w,h);
         const cx = w/2, cy = h/2;
         const radiusBase = 70;
         const angles = freqData.length;
 
-        // Barras radiales con gradiente neón
         for (let i = 0; i < angles; i++) {
           const value = freqData[i] / 255;
           const barH = value * 50;
@@ -376,11 +326,9 @@
           const y1 = cy + Math.sin(angle) * radiusBase;
           const x2 = cx + Math.cos(angle) * (radiusBase + barH);
           const y2 = cy + Math.sin(angle) * (radiusBase + barH);
-
           vizCtx.beginPath();
           vizCtx.moveTo(x1, y1);
           vizCtx.lineTo(x2, y2);
-          // Color dinámico: mezcla púrpura y azul según la posición
           const mix = (Math.sin(angle) + 1) / 2;
           const r = Math.floor(188 * mix + 19 * (1 - mix));
           const g = Math.floor(19 * mix + 144 * (1 - mix));
@@ -393,7 +341,6 @@
         }
         vizCtx.shadowBlur = 0;
 
-        // Partículas orbitantes reactivas
         const avgVolume = freqData.reduce((a,b) => a+b, 0) / freqData.length / 255;
         particlesOrb.forEach(p => {
           p.angle += p.speed * (1 + avgVolume);
@@ -409,7 +356,6 @@
         });
         vizCtx.shadowBlur = 0;
 
-        // Ondas concéntricas
         for (let ring = 1; ring <= 3; ring++) {
           const radius = radiusBase + 12 * ring + avgVolume * 25;
           vizCtx.beginPath();
@@ -419,7 +365,6 @@
           vizCtx.stroke();
         }
 
-        // Núcleo pulsante y frecuencia dominante
         const dominantIndex = freqData.indexOf(Math.max(...freqData));
         const dominantFreq = Math.round(dominantIndex * audioCtx.sampleRate / analyser.fftSize);
         vizCtx.beginPath();
@@ -430,21 +375,19 @@
         vizCtx.lineWidth = 1.5;
         vizCtx.stroke();
 
-        // Mostrar frecuencia dominante
         freqDisplay.textContent = `${dominantFreq} Hz`;
         freqDisplay.style.opacity = 0.7 + avgVolume * 0.3;
         if (!audio.paused) freqDisplay.classList.add('visible');
         else freqDisplay.classList.remove('visible');
       }
 
-      function startVisualizer() { if (!animationId) drawVisualizer(); }
-      function stopVisualizer() {
+      function startViz() { if (!animationId) drawVisualizer(); }
+      function stopViz() {
         if (animationId) { cancelAnimationFrame(animationId); animationId = null; }
         vizCtx.clearRect(0,0,vizCanvas.width, vizCanvas.height);
         freqDisplay.classList.remove('visible');
       }
 
-      // Onda expansiva al hacer clic
       function triggerWave() {
         const wave = document.createElement('div');
         wave.className = 'onda-expansiva';
@@ -453,23 +396,46 @@
       }
 
       playBtn.addEventListener('click', async () => {
-        if (audio.paused) {
-          await initAudio();
-          audio.play().catch(() => alert('Error al reproducir.'));
-          playIcon.classList.add('hidden');
-          pauseIcon.classList.remove('hidden');
-          triggerWave();
-          startVisualizer();
-        } else {
+        if (!audio.paused) {
+          // Pausar
           audio.pause();
           playIcon.classList.remove('hidden');
           pauseIcon.classList.add('hidden');
-          stopVisualizer();
+          stopViz();
+          return;
+        }
+        // Reproducir
+        if (!isInitialized && !setupAudio()) return;
+
+        // Reanudar el contexto si está suspendido
+        if (audioCtx.state === 'suspended') {
+          await audioCtx.resume();
+        }
+
+        const playPromise = audio.play();
+        if (playPromise !== undefined) {
+          playPromise
+            .then(() => {
+              playIcon.classList.add('hidden');
+              pauseIcon.classList.remove('hidden');
+              triggerWave();
+              startViz();
+            })
+            .catch(err => {
+              alert(`Error al reproducir: ${err.message}. Asegúrate de que el volumen no esté en silencio y de que el archivo sea accesible.`);
+            });
+        } else {
+          // Fallback para navegadores antiguos
+          playIcon.classList.add('hidden');
+          pauseIcon.classList.remove('hidden');
+          triggerWave();
+          startViz();
         }
       });
 
       audio.addEventListener('loadedmetadata', () => {
-        audio.volume = 0.8; volumeBar.value = 0.8;
+        audio.volume = 0.8;
+        volumeBar.value = 0.8;
         progressBar.max = (audio.duration > MAX) ? MAX : audio.duration;
         updateProgress();
       });
@@ -477,12 +443,18 @@
       function updateProgress() {
         let cur = audio.currentTime;
         if (cur > MAX) {
-          audio.pause(); audio.currentTime = MAX;
-          playIcon.classList.remove('hidden'); pauseIcon.classList.add('hidden');
-          progressBar.value = MAX; curr.textContent = fmt(MAX); rem.textContent = '-0:00';
-          stopVisualizer(); return;
+          audio.pause();
+          audio.currentTime = MAX;
+          playIcon.classList.remove('hidden');
+          pauseIcon.classList.add('hidden');
+          progressBar.value = MAX;
+          curr.textContent = fmt(MAX);
+          rem.textContent = '-0:00';
+          stopViz();
+          return;
         }
-        progressBar.value = cur; curr.textContent = fmt(cur);
+        progressBar.value = cur;
+        curr.textContent = fmt(cur);
         rem.textContent = '-' + fmt(parseFloat(progressBar.max) - cur);
       }
 
@@ -490,8 +462,11 @@
       progressBar.addEventListener('input', () => { audio.currentTime = Math.min(progressBar.value, MAX); });
       volumeBar.addEventListener('input', () => { audio.volume = volumeBar.value; });
       audio.addEventListener('ended', () => {
-        playIcon.classList.remove('hidden'); pauseIcon.classList.add('hidden');
-        audio.currentTime = 0; updateProgress(); stopVisualizer();
+        playIcon.classList.remove('hidden');
+        pauseIcon.classList.add('hidden');
+        audio.currentTime = 0;
+        updateProgress();
+        stopViz();
       });
       window.addEventListener('beforeunload', () => { if (audioCtx) audioCtx.close(); });
       audio.addEventListener('contextmenu', e => e.preventDefault());
