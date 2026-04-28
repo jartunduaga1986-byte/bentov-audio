@@ -1,4 +1,4 @@
-<!-- PÁGINA COMPLETA BENTOV · AUDIO GARANTIZADO -->
+<!-- PÁGINA COMPLETA BENTOV · AUDIO GARANTIZADO + DESCRIPCIÓN CIENTÍFICA -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -18,41 +18,73 @@
       overflow-x: hidden;
     }
 
+    /* --- FONDO HEXAGONAL MEJORADO (REALISMO 3D) --- */
     .container-hex {
       position: fixed;
       top: -50px; left: -50px;
       width: calc(100vw + 100px); height: calc(100vh + 100px);
       z-index: -10;
       overflow: hidden;
-      background-color: #020202;
+      background-color: #030304; 
     }
+    
+    /* Contenedor de grilla y profundidad */
     .hex-wrapper {
       position: absolute;
       width: 104px; height: 120px;
-      transition: transform 0.5s, filter 0.5s;
+      z-index: var(--z-idx, 2);
+    }
+    
+    /* Capa encargada del movimiento orgánico de flotación constante */
+    .hex-mover {
+      width: 100%; height: 100%;
+      animation: hex-float var(--anim-duration) ease-in-out infinite var(--anim-delay);
       will-change: transform, filter;
     }
+    
+    /* Capa física del hexágono (color y forma) */
     .hex-inner {
       width: 100%; height: 100%;
       clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-      background: linear-gradient(150deg, #2c2d30 0%, #111112 40%, #050505 100%);
-      transition: background 0.5s;
+      background: var(--base-grad, linear-gradient(135deg, #2b2c2f 0%, #161719 50%, #08080a 100%));
       position: relative;
+      transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), background 0.25s ease, filter 0.25s ease;
+      animation: hex-color-shift var(--anim-duration) ease-in-out infinite var(--anim-delay);
     }
+    
+    /* Bisel direccional que simula relieve e incidencia de luz */
     .hex-inner::after {
       content: ''; position: absolute; inset: 0;
-      background: linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0) 20%);
+      background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 30%, rgba(0,0,0,0.8) 100%);
       pointer-events: none;
+      transition: background 0.25s ease;
     }
-    .glow-purple .hex-inner { background: linear-gradient(150deg, #3a1c4a 0%, #150820 50%, #050505 100%); }
-    .glow-blue .hex-inner { background: linear-gradient(150deg, #1c2a4a 0%, #081220 50%, #050505 100%); }
-    @keyframes pulse-purple {
-      0% { filter: drop-shadow(0 0 8px rgba(188,19,254,0.3)) drop-shadow(4px 6px 8px rgba(0,0,0,1)); }
-      100% { filter: drop-shadow(0 0 25px rgba(188,19,254,0.8)) drop-shadow(4px 6px 8px rgba(0,0,0,1)); }
+
+    /* Animación de flotación y oclusión de sombras ambientales */
+    @keyframes hex-float {
+      0%, 100% { transform: scale(var(--base-scale)) translateY(0px); filter: var(--base-shadow); }
+      50% { transform: scale(calc(var(--base-scale) * 0.96)) translateY(8px); filter: var(--sink-shadow); }
     }
-    @keyframes pulse-blue {
-      0% { filter: drop-shadow(0 0 8px rgba(19,144,254,0.3)) drop-shadow(4px 6px 8px rgba(0,0,0,1)); }
-      100% { filter: drop-shadow(0 0 25px rgba(19,144,254,0.8)) drop-shadow(4px 6px 8px rgba(0,0,0,1)); }
+    
+    /* Animación de cambio de color y luminosidad coordinada con el movimiento */
+    @keyframes hex-color-shift {
+      0%, 100% { filter: hue-rotate(0deg) brightness(1); }
+      50% { filter: hue-rotate(var(--hue-shift)) brightness(var(--bright-shift)); }
+    }
+
+    /* Efecto interactivo ultra-realista de "Botón Físico Presionado" */
+    .hex-wrapper:hover .hex-mover {
+      animation-play-state: paused;
+      filter: drop-shadow(0px 0px 0px rgba(0,0,0,1)) !important;
+    }
+    .hex-wrapper:hover .hex-inner {
+      animation-play-state: paused;
+      transform: scale(0.85) translateY(14px); /* Se hunde mecánicamente */
+      background: #020202 !important;
+      filter: hue-rotate(0deg) brightness(0.4) !important;
+    }
+    .hex-wrapper:hover .hex-inner::after {
+      background: linear-gradient(135deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 40%, rgba(255,255,255,0.1) 100%);
     }
 
     .banner { position: relative; width: 100%; height: 50vh; min-height: 420px; display: flex; align-items: center; justify-content: center; }
@@ -66,6 +98,79 @@
     .badge { display: inline-block; padding: 0.25rem 0.9rem; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 9999px; color: #b0b0b5; backdrop-filter: blur(10px); }
     .animated-title { background: linear-gradient(135deg, #ffffff 0%, #d1d1d6 40%, #f0f0f5 80%, #ffffff 100%); background-size: 200% 200%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: titleShift 8s ease-in-out infinite alternate; }
     @keyframes titleShift { 0% { background-position: 0% 50%; } 100% { background-position: 100% 50%; } }
+
+    /* ─── Sección de creador en el banner ─── */
+    .creator-banner-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 1.5rem;
+      font-size: 0.9rem;
+      color: #d1d1d6;
+    }
+    .creator-banner-row a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.06);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.15);
+      transition: all 0.3s;
+      color: white;
+    }
+    .creator-banner-row a:hover {
+      background: rgba(168,85,247,0.25);
+      box-shadow: 0 0 18px rgba(168,85,247,0.6);
+    }
+
+    /* ─── Sección de descripción ─── */
+    .description-section {
+      display: flex;
+      justify-content: center;
+      padding: 0 1rem 4rem;
+    }
+    .desc-card {
+      max-width: 34rem;
+      width: 100%;
+      background: rgba(44,44,46,0.6);
+      backdrop-filter: blur(20px);
+      border-radius: 2rem;
+      padding: 2rem;
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+      color: #d1d1d6;
+      text-align: left;
+      line-height: 1.7;
+    }
+    .desc-card h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: white;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, #c084fc, #818cf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .desc-card .phase {
+      border-left: 3px solid #a855f7;
+      padding-left: 1rem;
+      margin-bottom: 1.8rem;
+    }
+    .desc-card .phase h3 {
+      color: #e0d6ff;
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+    }
+    .desc-card .phase p {
+      font-size: 0.8rem;
+      color: #a0a0a8;
+    }
 
     .player-section { display: flex; justify-content: center; padding: 2rem 1rem 4rem; }
     .reproductor { max-width: 30rem; width: 100%; background: rgba(44,44,46,0.85); backdrop-filter: blur(20px); border-radius: 2.5rem; padding: 2.5rem 2rem 2rem; box-shadow: 0 30px 60px rgba(0,0,0,0.7), inset 0 0 0 0.5px rgba(255,255,255,0.12), 0 0 40px rgba(188,19,254,0.15); color: white; position: relative; overflow: hidden; }
@@ -100,6 +205,7 @@
 <body>
   <div id="hex-grid" class="container-hex"></div>
 
+  <!-- ═══════════ BANNER ═══════════ -->
   <div class="banner">
     <canvas id="waveCanvas"></canvas>
     <div class="glass-card">
@@ -113,9 +219,19 @@
       <div class="mt-7 flex justify-center">
         <div class="w-20 h-0.5 bg-gradient-to-r from-transparent via-purple-400/60 to-transparent"></div>
       </div>
+      <!-- ─── CREADOR EN BANNER ─── -->
+      <div class="creator-banner-row">
+        <span>por <strong>Juan Carlos Artunduaga Jaramillo</strong></span>
+        <a href="https://www.linkedin.com/in/juan-inteligenciaartificial/" target="_blank" rel="noopener" aria-label="LinkedIn perfil">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M4.98 3.5C4.98 4.88 3.88 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM.19 8h4.62v16H.19V8zm7.95 0h4.45v2.16h.06c.62-1.17 2.13-2.4 4.38-2.4 4.68 0 5.54 3.08 5.54 7.09V24h-4.83v-8.17c0-1.95-.04-4.46-2.72-4.46-2.72 0-3.14 2.12-3.14 4.32V24H7.14V8z"/>
+          </svg>
+        </a>
+      </div>
     </div>
   </div>
 
+  <!-- ═══════════ REPRODUCTOR ═══════════ -->
   <div class="player-section">
     <div class="reproductor">
       <div class="particle-bg" id="particleContainer"></div>
@@ -125,7 +241,7 @@
           <p class="text-[0.65rem] text-purple-300/80 uppercase tracking-widest">Creado por</p>
           <h2 class="text-sm font-medium tracking-tight text-white/80">Juan C. Artunduaga J.</h2>
         </div>
-        <a href="https://www.linkedin.com/in/jcaj" target="_blank" rel="noopener" class="linkedin-icon" aria-label="LinkedIn">
+        <a href="https://www.linkedin.com/in/juan-inteligenciaartificial/" target="_blank" rel="noopener" class="linkedin-icon" aria-label="LinkedIn">
           <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
             <path d="M4.98 3.5C4.98 4.88 3.88 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM.19 8h4.62v16H.19V8zm7.95 0h4.45v2.16h.06c.62-1.17 2.13-2.4 4.38-2.4 4.68 0 5.54 3.08 5.54 7.09V24h-4.83v-8.17c0-1.95-.04-4.46-2.72-4.46-2.72 0-3.14 2.12-3.14 4.32V24H7.14V8z"/>
           </svg>
@@ -169,40 +285,116 @@
     </div>
   </div>
 
+  <!-- ═══════════ DESCRIPCIÓN DEL PROYECTO ═══════════ -->
+  <div class="description-section">
+    <div class="desc-card">
+      <h2>🔬 Cómo la inteligencia artificial encontró esta frecuencia</h2>
+      <div class="phase">
+        <h3>1. Simulación computacional del cerebro</h3>
+        <p>
+          Construimos una simulación digital de la actividad eléctrica de cuatro regiones cerebrales interconectadas, utilizando ecuaciones dinámicas que replican el comportamiento real de las neuronas. Esta simulación actúa como un "laboratorio virtual" donde podemos probar miles de configuraciones sin riesgo.
+        </p>
+      </div>
+      <div class="phase">
+        <h3>2. Optimización por capas de inteligencia artificial</h3>
+        <p>
+          Implementamos un sistema de optimización anidada con algoritmos de IA. Una primera capa de búsqueda inteligente explora millones de combinaciones de parámetros (frecuencia, amplitud, acoplamiento y propiedades neuronales). Dentro de cada intento, una <strong>segunda capa de IA</strong> refina aún más los valores para maximizar la sincronización cerebral y la coherencia, usando técnicas de ciencia de datos como el muestreo bayesiano y el análisis espectral en tiempo real.
+        </p>
+      </div>
+      <div class="phase">
+        <h3>3. Métricas de certificación</h3>
+        <p>
+          Para cada configuración evaluamos métricas objetivas derivadas de las señales simuladas: <strong>coherencia entre regiones</strong> (qué tan bien se comunican), <strong>PLV</strong> (Phase Locking Value, que mide la sincronización de fase) y <strong>mejora de la potencia en bandas binaurales</strong>. Solo si la combinación superaba umbrales estrictos (PLV > 0.6, coherencia > 0.9) se certificaba como segura y efectiva.
+        </p>
+      </div>
+      <div class="phase">
+        <h3>4. Validación y resultado final</h3>
+        <p>
+          La mejor configuración fue validada con múltiples semillas aleatorias y una duración extendida. El resultado es este audio binaural de precisión, respaldado por más de <strong>20 ciclos de optimización con IA</strong> y cientos de simulaciones cerebrales sintéticas. Todo el proceso fue guiado por principios de MLOps para garantizar reproducibilidad y trazabilidad.
+        </p>
+      </div>
+      <p style="text-align: center; font-size: 0.7rem; color: #888; margin-top: 2rem;">
+        Desarrollado por <strong>Juan Carlos Artunduaga Jaramillo</strong> — 
+        <a href="https://www.linkedin.com/in/juan-inteligenciaartificial/" target="_blank" style="color: #a855f7; text-decoration: underline;">Conectar en LinkedIn</a>
+      </p>
+    </div>
+  </div>
+
   <audio id="audioPlayer" preload="auto" crossorigin="anonymous"
-  src="https://raw.githubusercontent.com/jartunduaga1986-byte/bentov-audio/99b73821584358a093869c9e8dafff2ba93ce1fa/bentov_certified_7.05Hz.mp3"
-  controlsList="nodownload" oncontextmenu="return false;">
+    src="https://raw.githubusercontent.com/jartunduaga1986-byte/bentov-audio/99b73821584358a093869c9e8dafff2ba93ce1fa/bentov_certified_7.05Hz.mp3"
+    controlsList="nodownload" oncontextmenu="return false;">
   </audio>
+
   <script>
-    // Fondo hexagonal
+    // --- Lógica del fondo hexagonal MEJORADA ---
     (() => {
       const grid = document.getElementById('hex-grid');
-      const hexWidth = 104, hexHeight = 120, gap = 3;
+      const hexWidth = 104, hexHeight = 120, gap = 5;
       const horizontalDist = hexWidth + gap, verticalDist = (hexHeight * 0.75) + gap;
+      
       function createGrid() {
         grid.innerHTML = '';
         const cols = Math.ceil(window.innerWidth / horizontalDist) + 2;
         const rows = Math.ceil(window.innerHeight / verticalDist) + 2;
+        
         for (let row = -1; row < rows; row++) {
           for (let col = -1; col < cols; col++) {
             const hexWrapper = document.createElement('div'); hexWrapper.className = 'hex-wrapper';
+            const hexMover = document.createElement('div'); hexMover.className = 'hex-mover';
             const innerHex = document.createElement('div'); innerHex.className = 'hex-inner';
-            hexWrapper.appendChild(innerHex);
+            
+            hexMover.appendChild(innerHex);
+            hexWrapper.appendChild(hexMover);
+            
             const isEvenRow = row % 2 === 0;
             const x = col * horizontalDist + (isEvenRow ? horizontalDist / 2 : 0);
             const y = row * verticalDist;
             hexWrapper.style.left = `${x}px`; hexWrapper.style.top = `${y}px`;
+            
+            const animDuration = 4 + Math.random() * 5;
+            const animDelay = -(Math.random() * 10);
+            const hueShift = (Math.random() > 0.5 ? 1 : -1) * (15 + Math.random() * 40);
+            
+            hexWrapper.style.setProperty('--anim-duration', `${animDuration}s`);
+            hexWrapper.style.setProperty('--anim-delay', `${animDelay}s`);
+            hexWrapper.style.setProperty('--hue-shift', `${hueShift}deg`);
+            hexWrapper.style.setProperty('--bright-shift', `${1.1 + Math.random() * 0.3}`);
+
             const depthRand = Math.random();
-            let baseScale = 1, baseShadow = '';
-            if (depthRand > 0.80) { baseScale = 1.05; baseShadow = 'drop-shadow(8px 12px 15px rgba(0,0,0,1))'; hexWrapper.style.zIndex = '3'; innerHex.style.background = 'linear-gradient(150deg, #383a3f 0%, #1a1b1d 50%, #050505 100%)'; }
-            else if (depthRand < 0.25) { baseScale = 0.93; baseShadow = 'drop-shadow(1px 2px 3px rgba(0,0,0,0.8))'; hexWrapper.style.zIndex = '1'; innerHex.style.background = 'linear-gradient(150deg, #18191a 0%, #0a0a0b 50%, #000000 100%)'; }
-            else { baseScale = 1; baseShadow = 'drop-shadow(4px 6px 8px rgba(0,0,0,1))'; hexWrapper.style.zIndex = '2'; }
-            hexWrapper.style.transform = `scale(${baseScale})`; hexWrapper.style.filter = baseShadow;
             const neonRand = Math.random();
-            if (neonRand > 0.94) hexWrapper.classList.add('glow-purple');
-            else if (neonRand > 0.88) hexWrapper.classList.add('glow-blue');
-            hexWrapper.addEventListener('mouseover', () => { hexWrapper.style.transform = `scale(${baseScale * 0.92})`; hexWrapper.style.filter = 'drop-shadow(0px 0px 0px rgba(0,0,0,1))'; innerHex.style.background = '#000'; hexWrapper.style.zIndex = '0'; });
-            hexWrapper.addEventListener('mouseout', () => { hexWrapper.style.transform = `scale(${baseScale})`; hexWrapper.style.filter = baseShadow; innerHex.style.background = ''; setTimeout(() => { hexWrapper.style.zIndex = ''; }, 300); });
+
+            if (depthRand > 0.85) { 
+              hexWrapper.style.setProperty('--base-scale', '1.08'); 
+              hexWrapper.style.setProperty('--base-shadow', 'drop-shadow(10px 15px 22px rgba(0,0,0,0.95))'); 
+              hexWrapper.style.setProperty('--sink-shadow', 'drop-shadow(4px 6px 10px rgba(0,0,0,1))'); 
+              hexWrapper.style.setProperty('--base-grad', 'linear-gradient(135deg, #3d3f44 0%, #202225 50%, #0a0a0c 100%)'); 
+              hexWrapper.style.setProperty('--z-idx', '4');
+            } else if (depthRand < 0.20) { 
+              hexWrapper.style.setProperty('--base-scale', '0.92'); 
+              hexWrapper.style.setProperty('--base-shadow', 'drop-shadow(2px 3px 5px rgba(0,0,0,1))'); 
+              hexWrapper.style.setProperty('--sink-shadow', 'drop-shadow(1px 1px 2px rgba(0,0,0,1))'); 
+              hexWrapper.style.setProperty('--base-grad', 'linear-gradient(135deg, #18191b 0%, #0a0b0d 50%, #000000 100%)'); 
+              hexWrapper.style.setProperty('--z-idx', '1');
+            } else { 
+              hexWrapper.style.setProperty('--base-scale', '1'); 
+              hexWrapper.style.setProperty('--base-shadow', 'drop-shadow(6px 10px 14px rgba(0,0,0,1))'); 
+              hexWrapper.style.setProperty('--sink-shadow', 'drop-shadow(2px 4px 6px rgba(0,0,0,0.9))'); 
+              hexWrapper.style.setProperty('--base-grad', 'linear-gradient(135deg, #2b2c2f 0%, #161719 50%, #08080a 100%)'); 
+              hexWrapper.style.setProperty('--z-idx', '2');
+            }
+
+            if (neonRand > 0.94) {
+              hexWrapper.style.setProperty('--base-shadow', 'drop-shadow(0 0 15px rgba(188,19,254,0.4)) drop-shadow(5px 8px 10px rgba(0,0,0,1))');
+              hexWrapper.style.setProperty('--sink-shadow', 'drop-shadow(0 0 45px rgba(188,19,254,0.95)) drop-shadow(2px 4px 6px rgba(0,0,0,1))');
+              hexWrapper.style.setProperty('--base-grad', 'linear-gradient(135deg, #2a0b32 0%, #11031c 50%, #040106 100%)');
+              hexWrapper.style.setProperty('--z-idx', '3');
+            } else if (neonRand > 0.89) {
+              hexWrapper.style.setProperty('--base-shadow', 'drop-shadow(0 0 15px rgba(19,144,254,0.4)) drop-shadow(5px 8px 10px rgba(0,0,0,1))');
+              hexWrapper.style.setProperty('--sink-shadow', 'drop-shadow(0 0 45px rgba(19,144,254,0.95)) drop-shadow(2px 4px 6px rgba(0,0,0,1))');
+              hexWrapper.style.setProperty('--base-grad', 'linear-gradient(135deg, #0b1c32 0%, #030a1c 50%, #010406 100%)');
+              hexWrapper.style.setProperty('--z-idx', '3');
+            }
+
             grid.appendChild(hexWrapper);
           }
         }
@@ -274,7 +466,6 @@
 
       const fmt = t => { const m=Math.floor(t/60); const s=Math.floor(t%60); return `${m}:${s.toString().padStart(2,'0')}`; };
 
-      // Partículas orbitantes
       const particlesOrb = [];
       for (let i = 0; i < 30; i++) {
         particlesOrb.push({
@@ -287,7 +478,6 @@
         });
       }
 
-      // Configuración inicial del AudioContext (se llama al primer clic)
       const setupAudio = () => {
         if (isInitialized) return true;
         try {
@@ -306,7 +496,6 @@
         }
       };
 
-      // Visualizador
       function drawVisualizer() {
         animationId = requestAnimationFrame(drawVisualizer);
         if (!analyser) return;
@@ -396,21 +585,16 @@
 
       playBtn.addEventListener('click', async () => {
         if (!audio.paused) {
-          // Pausar
           audio.pause();
           playIcon.classList.remove('hidden');
           pauseIcon.classList.add('hidden');
           stopViz();
           return;
         }
-        // Reproducir
         if (!isInitialized && !setupAudio()) return;
-
-        // Reanudar el contexto si está suspendido
         if (audioCtx.state === 'suspended') {
           await audioCtx.resume();
         }
-
         const playPromise = audio.play();
         if (playPromise !== undefined) {
           playPromise
@@ -421,10 +605,9 @@
               startViz();
             })
             .catch(err => {
-              alert(`Error al reproducir: ${err.message}. Asegúrate de que el volumen no esté en silencio y de que el archivo sea accesible.`);
+              alert(`Error al reproducir: ${err.message}.`);
             });
         } else {
-          // Fallback para navegadores antiguos
           playIcon.classList.add('hidden');
           pauseIcon.classList.remove('hidden');
           triggerWave();
