@@ -1,28 +1,24 @@
 <!-- ═══════════════════════════════════════════════════════════════════
   BENTOV · Sinfonía Neuronal
-  Audio binaural certificado por IA — Diseño responsive con micro‑mejoras
+  Entrada hipnótica con espiral Fibonacci + ondas sincronizadas
+  + página completa con reproductor, descripción, gráfico y WhatsApp
   ═══════════════════════════════════════════════════════════════════ -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <!-- ─── Metadatos básicos: codificación, viewport responsive, título ─── -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>BENTOV · Sinfonía Neuronal</title>
-
-  <!-- Tailwind CSS v3 CDN (framework utility‑first) -->
   <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- ══════════ ESTILOS CSS ══════════ -->
   <style>
-    /* ─── Variables globales ─── */
+    /* ══════════ VARIABLES GLOBALES ══════════ */
     :root {
       --neon-purple: #bc13fe;
       --neon-blue: #1390fe;
       --bg-primary: #030304;
     }
 
-    /* ─── Reset y tipografía base ─── */
+    /* ══════════ RESET Y TIPOGRAFÍA ══════════ */
     body {
       margin: 0;
       background: var(--bg-primary);
@@ -31,7 +27,86 @@
       scroll-behavior: smooth;
     }
 
-    /* ─── Fondo hexagonal (geometría 3D con resplandor inferior al moverse) ─── */
+    /* ══════════ OVERLAY HIPNÓTICO ══════════ */
+    #hypno-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: radial-gradient(circle at center, #0a0a12 0%, #020104 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 1;
+      transition: opacity 1s ease, visibility 1s ease;
+      visibility: visible;
+      overflow: hidden;
+    }
+    #hypno-overlay.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+    #hypno-canvas {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+    .hypno-content {
+      position: relative;
+      z-index: 1;
+      max-width: 36rem;
+      width: 90%;
+      text-align: center;
+      color: white;
+      animation: fadeInUp 1s ease;
+      padding: 1rem;
+    }
+    @keyframes fadeInUp {
+      0% { opacity: 0; transform: translateY(30px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .hypno-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, #fff, #c0c0ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hypno-text {
+      color: #b0b0c0;
+      font-size: 0.95rem;
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+    .hypno-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.8rem 2.5rem;
+      border-radius: 3rem;
+      background: #ffffff;
+      color: #0a0a12;
+      font-weight: 600;
+      font-size: 1rem;
+      text-decoration: none;
+      box-shadow: 0 0 20px rgba(188,19,254,0.5);
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+      border: none;
+    }
+    .hypno-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 30px rgba(188,19,254,0.8);
+    }
+    .hypno-disclaimer {
+      margin-top: 1.5rem;
+      font-size: 0.7rem;
+      color: #666;
+    }
+
+    /* ══════════ FONDO HEXAGONAL (se mantiene exactamente igual) ══════════ */
     .container-hex {
       position: fixed;
       top: -50px; left: -50px;
@@ -87,7 +162,7 @@
       background: #010101 !important;
     }
 
-    /* ─── Banner ─── */
+    /* ══════════ BANNER ══════════ */
     .banner {
       position: relative;
       width: 100%;
@@ -153,7 +228,7 @@
       50% { transform: translateX(-50%) translateY(8px); }
     }
 
-    /* ─── Reproductor ─── */
+    /* ══════════ REPRODUCTOR ══════════ */
     .player-section {
       display: flex; justify-content: center;
       padding: 1.5rem 1rem 2rem;
@@ -211,7 +286,7 @@
     }
     .freq-display.visible { opacity: 1; }
 
-    /* ─── Icono LinkedIn (único, usado en varias secciones) ─── */
+    /* ══════════ ICONO LINKEDIN (único) ══════════ */
     .linkedin-icon {
       display: inline-flex; align-items: center; justify-content: center;
       width: 34px; height: 34px; border-radius: 50%;
@@ -226,7 +301,7 @@
       50% { box-shadow: 0 0 14px rgba(168,85,247,0.8); }
     }
 
-    /* ─── Descripción científica ─── */
+    /* ══════════ DESCRIPCIÓN CIENTÍFICA ══════════ */
     .desc-section { display: flex; justify-content: center; padding: 1rem 1rem 2.5rem; }
     .desc-card {
       max-width: 32rem; width: 100%;
@@ -241,7 +316,7 @@
     .phase h3 { color: #e0d6ff; font-size: 0.9rem; font-weight: 600; }
     .phase p { font-size: 0.78rem; color: #b0b0ba; }
 
-    /* ─── Sección gráfico futuro (placeholder) ─── */
+    /* ══════════ SECCIÓN GRÁFICO FUTURO ══════════ */
     .graph-section { display: flex; justify-content: center; padding: 0 1rem 2.5rem; }
     .graph-placeholder {
       max-width: 32rem; width: 100%;
@@ -252,7 +327,7 @@
     }
     .graph-placeholder .graph-icon { font-size: 2.5rem; margin-bottom: 0.8rem; opacity: 0.6; }
 
-    /* ─── Sección WhatsApp / Audio extendido ─── */
+    /* ══════════ SECCIÓN WHATSAPP ══════════ */
     .extended-section { display: flex; justify-content: center; padding: 0 1rem 3rem; }
     .extended-card {
       max-width: 28rem; width: 100%;
@@ -275,7 +350,7 @@
     .audio-format-note { font-size: 0.7rem; color: #9ca3af; margin-top: 0.5rem; }
     .audio-format-note strong { color: #d1d5db; }
 
-    /* ─── Link publicación LinkedIn ─── */
+    /* ══════════ LINK PUBLICACIÓN LINKEDIN ══════════ */
     .linkedin-post-link {
       display: inline-flex; align-items: center; gap: 0.3rem;
       color: #a78bfa; font-size: 0.85rem; text-decoration: underline;
@@ -283,7 +358,7 @@
     }
     .linkedin-post-link:hover { color: #c4b5fd; }
 
-    /* ─── Barra de progreso de scroll ─── */
+    /* ══════════ BARRA PROGRESO SCROLL ══════════ */
     #scrollProgressBar {
       position: fixed; top: 0; left: 0;
       height: 3px;
@@ -292,7 +367,7 @@
       transition: width 0.1s linear;
     }
 
-    /* ─── Animación fade‑in al hacer scroll ─── */
+    /* ══════════ FADE-IN DE SECCIONES ══════════ */
     .fade-section {
       opacity: 0;
       transform: translateY(30px);
@@ -303,7 +378,7 @@
       transform: translateY(0);
     }
 
-    /* ─── Media queries responsive (mobile‑first) ─── */
+    /* ══════════ MEDIA QUERIES (RESPONSIVE) ══════════ */
     @media (max-width: 640px) {
       .banner { height: 45vh; min-height: 280px; }
       .glass-card { padding: 1.5rem 1rem; }
@@ -318,197 +393,294 @@
 </head>
 <body>
 
-  <!-- ══════════ BARRA DE PROGRESO DE SCROLL ══════════ -->
-  <div id="scrollProgressBar"></div>
-
-  <!-- ══════════ FONDO HEXAGONAL ANIMADO ══════════ -->
-  <div id="hex-grid" class="container-hex"></div>
-
   <!-- ═══════════════════════════════════════════════
-    SECCIÓN 1: BANNER PRINCIPAL
-    Contiene: título, insignia, creador + LinkedIn único
+    OVERLAY HIPNÓTICO (ENTRADA)
     ═══════════════════════════════════════════════ -->
-  <div class="banner fade-section">
-    <canvas id="waveCanvas"></canvas>
-    <div class="glass-card">
-      <div class="badge mb-3">BENTOV · Neurotech</div>
-      <h1 class="animated-title text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight mb-4">
-        Frecuencias Binaurales<br />Certificadas
-      </h1>
-      <p class="text-gray-300 text-sm md:text-base font-light tracking-wide">
-        Impulsadas por inteligencia artificial avanzada
+  <div id="hypno-overlay">
+    <canvas id="hypno-canvas"></canvas>
+    <div class="hypno-content">
+      <h1 class="hypno-title">¿Te atreves a alterar las frecuencias de tu cerebro?</h1>
+      <p class="hypno-text">
+        Una frecuencia precisa, descubierta por inteligencia artificial, puede inducir estados profundos de concentración, calma o meditación.<br /><br />
+        El formato de audio que estás a punto de escuchar está comprimido (MP3). La experiencia real, sin pérdida, solo es posible con el archivo FLAC original, que contiene la huella exacta de la simulación de tu cerebro.<br /><br />
+        Si decides continuar, mantén un volumen moderado y prepárate para una sinfonía neuronal.
       </p>
-      <div class="mt-5 flex justify-center">
-        <div class="w-16 h-0.5 bg-gradient-to-r from-transparent via-purple-400 to-transparent"></div>
-      </div>
-      <!-- Creador + único link LinkedIn -->
-      <div class="flex items-center justify-center gap-2 mt-4 text-xs text-gray-400">
-        <span>por <strong class="text-white">Juan Carlos Artunduaga Jaramillo</strong></span>
-        <a href="https://www.linkedin.com/posts/juan-inteligenciaartificial_neurociencia-inteligenciaartificial-biohacking-ugcPost-7453990563684597761-ppir" target="_blank" rel="noopener" class="linkedin-icon" aria-label="Ver proyecto en LinkedIn">
-          <svg class="w-3.5 h-3.5 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M4.98 3.5C4.98 4.88 3.88 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM.19 8h4.62v16H.19V8zm7.95 0h4.45v2.16h.06c.62-1.17 2.13-2.4 4.38-2.4 4.68 0 5.54 3.08 5.54 7.09V24h-4.83v-8.17c0-1.95-.04-4.46-2.72-4.46-2.72 0-3.14 2.12-3.14 4.32V24H7.14V8z"/></svg>
-        </a>
-      </div>
-    </div>
-    <div class="scroll-indicator">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      <button id="accept-btn" class="hypno-btn">
+        ✦ Sí, quiero experimentar
+      </button>
+      <p class="hypno-disclaimer">
+        ⚠️ No apto para epilepsia o durante la conducción. Usa auriculares.
+      </p>
     </div>
   </div>
 
   <!-- ═══════════════════════════════════════════════
-    SECCIÓN 2: REPRODUCTOR DE AUDIO
-    Incluye visualizador de frecuencias, controles,
-    aviso MP3/FLAC, advertencias y modo inmersivo
+    CONTENIDO PRINCIPAL (inicialmente oculto)
     ═══════════════════════════════════════════════ -->
-  <div class="player-section fade-section" id="playerSection">
-    <div class="reproductor">
-      <div class="particle-bg" id="particleContainer"></div>
+  <div id="main-content" style="display: none;">
 
-      <!-- Cabecera del reproductor -->
-      <div class="flex items-center justify-between mb-5 relative z-10">
-        <div class="flex items-center gap-3">
-          <div class="text-left">
-            <p class="text-[0.6rem] text-purple-300/80 uppercase tracking-widest">Creado por</p>
-            <h2 class="text-xs font-medium text-white/80">Juan Carlos Artunduaga J.</h2>
-          </div>
-          <!-- Único ícono LinkedIn en el reproductor -->
+    <!-- BARRA DE PROGRESO DE SCROLL -->
+    <div id="scrollProgressBar"></div>
+
+    <!-- FONDO HEXAGONAL -->
+    <div id="hex-grid" class="container-hex"></div>
+
+    <!-- ══════════ BANNER ══════════ -->
+    <div class="banner fade-section">
+      <canvas id="waveCanvas"></canvas>
+      <div class="glass-card">
+        <div class="badge mb-3">BENTOV · Neurotech</div>
+        <h1 class="animated-title text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight mb-4">
+          Frecuencias Binaurales<br />Certificadas
+        </h1>
+        <p class="text-gray-300 text-sm md:text-base font-light tracking-wide">
+          Impulsadas por inteligencia artificial avanzada
+        </p>
+        <div class="mt-5 flex justify-center">
+          <div class="w-16 h-0.5 bg-gradient-to-r from-transparent via-purple-400 to-transparent"></div>
+        </div>
+        <div class="flex items-center justify-center gap-2 mt-4 text-xs text-gray-400">
+          <span>por <strong class="text-white">Juan Carlos Artunduaga Jaramillo</strong></span>
           <a href="https://www.linkedin.com/posts/juan-inteligenciaartificial_neurociencia-inteligenciaartificial-biohacking-ugcPost-7453990563684597761-ppir" target="_blank" rel="noopener" class="linkedin-icon" aria-label="Ver proyecto en LinkedIn">
             <svg class="w-3.5 h-3.5 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M4.98 3.5C4.98 4.88 3.88 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM.19 8h4.62v16H.19V8zm7.95 0h4.45v2.16h.06c.62-1.17 2.13-2.4 4.38-2.4 4.68 0 5.54 3.08 5.54 7.09V24h-4.83v-8.17c0-1.95-.04-4.46-2.72-4.46-2.72 0-3.14 2.12-3.14 4.32V24H7.14V8z"/></svg>
           </a>
         </div>
-        <button id="immerseBtn" class="text-xs text-purple-400 underline hover:text-purple-300 transition">Modo inmersivo</button>
       </div>
-
-      <!-- Visualizador de frecuencias + botón play -->
-      <div class="viz-wrapper">
-        <div class="aura"></div>
-        <canvas id="visualizer" width="240" height="240"></canvas>
-        <div id="freqDisplay" class="freq-display">-- Hz</div>
-        <button id="playPauseBtn" class="boton-play">
-          <svg id="playIcon" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-          <svg id="pauseIcon" class="hidden" fill="currentColor" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
-        </button>
+      <div class="scroll-indicator">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
       </div>
+    </div>
 
-      <!-- Barra de progreso y volumen -->
-      <div class="space-y-4 relative z-10">
-        <div>
-          <div class="flex justify-between text-xs text-gray-400 mb-1">
-            <span id="currentTime">0:00</span><span id="remainingTime">-7:00</span>
+    <!-- ══════════ REPRODUCTOR ══════════ -->
+    <div class="player-section fade-section" id="playerSection">
+      <div class="reproductor">
+        <div class="particle-bg" id="particleContainer"></div>
+
+        <div class="flex items-center justify-between mb-5 relative z-10">
+          <div class="flex items-center gap-3">
+            <div class="text-left">
+              <p class="text-[0.6rem] text-purple-300/80 uppercase tracking-widest">Creado por</p>
+              <h2 class="text-xs font-medium text-white/80">Juan Carlos Artunduaga J.</h2>
+            </div>
+            <a href="https://www.linkedin.com/posts/juan-inteligenciaartificial_neurociencia-inteligenciaartificial-biohacking-ugcPost-7453990563684597761-ppir" target="_blank" rel="noopener" class="linkedin-icon" aria-label="Ver proyecto en LinkedIn">
+              <svg class="w-3.5 h-3.5 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M4.98 3.5C4.98 4.88 3.88 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM.19 8h4.62v16H.19V8zm7.95 0h4.45v2.16h.06c.62-1.17 2.13-2.4 4.38-2.4 4.68 0 5.54 3.08 5.54 7.09V24h-4.83v-8.17c0-1.95-.04-4.46-2.72-4.46-2.72 0-3.14 2.12-3.14 4.32V24H7.14V8z"/></svg>
+            </a>
           </div>
-          <input type="range" id="progressBar" value="0" min="0" step="0.1" max="420" class="w-full" />
-        </div>
-        <div class="flex items-center gap-2">
-          <svg class="w-4 h-4 text-gray-500" fill="currentColor" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0014 8.5v7a4.47 4.47 0 001.5-3.5z"/></svg>
-          <input type="range" id="volumeBar" min="0" max="1" step="0.01" value="0.8" class="flex-1" />
+          <button id="immerseBtn" class="text-xs text-purple-400 underline hover:text-purple-300 transition">Modo inmersivo</button>
         </div>
 
-        <!-- Nota sobre formato MP3 vs FLAC -->
-        <p class="audio-format-note text-center">
-          📌 Estás escuchando una versión <strong>MP3</strong>. El formato ideal es <strong>FLAC</strong> (sin pérdida), pero por capacidad de almacenamiento hemos comprimido el archivo. La experiencia no será completamente real; recomendamos usar audífonos de alta fidelidad.
+        <div class="viz-wrapper">
+          <div class="aura"></div>
+          <canvas id="visualizer" width="240" height="240"></canvas>
+          <div id="freqDisplay" class="freq-display">-- Hz</div>
+          <button id="playPauseBtn" class="boton-play">
+            <svg id="playIcon" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            <svg id="pauseIcon" class="hidden" fill="currentColor" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+          </button>
+        </div>
+
+        <div class="space-y-4 relative z-10">
+          <div>
+            <div class="flex justify-between text-xs text-gray-400 mb-1">
+              <span id="currentTime">0:00</span><span id="remainingTime">-7:00</span>
+            </div>
+            <input type="range" id="progressBar" value="0" min="0" step="0.1" max="420" class="w-full" />
+          </div>
+          <div class="flex items-center gap-2">
+            <svg class="w-4 h-4 text-gray-500" fill="currentColor" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0014 8.5v7a4.47 4.47 0 001.5-3.5z"/></svg>
+            <input type="range" id="volumeBar" min="0" max="1" step="0.01" value="0.8" class="flex-1" />
+          </div>
+          <p class="audio-format-note text-center">
+            📌 Estás escuchando una versión <strong>MP3</strong>. El formato ideal es <strong>FLAC</strong> (sin pérdida), pero por capacidad de almacenamiento hemos comprimido el archivo. La experiencia no será completamente real; recomendamos usar audífonos de alta fidelidad.
+          </p>
+          <p class="text-center text-[0.65rem] text-gray-500">Experiencia de 7 min · Pausa automática</p>
+        </div>
+
+        <div class="mt-6 bg-black/30 backdrop-blur-md rounded-2xl p-3 text-[0.65rem] text-gray-400 space-y-1 border border-white/5 relative z-10">
+          <p class="text-gray-300 font-semibold uppercase tracking-widest mb-1 flex items-center gap-1"><span>⚠️</span> Advertencias</p>
+          <p>• No usar al conducir o manejar maquinaria.</p>
+          <p>• No apto para epilepsia o convulsiones.</p>
+          <p>• Consulte a su médico si usa marcapasos.</p>
+          <p>• Volumen moderado; interrumpa si hay molestia.</p>
+        </div>
+        <p class="text-center text-gray-600 text-[0.6rem] mt-4 relative z-10">BENTOV · Neurotech · Beta</p>
+      </div>
+    </div>
+
+    <!-- ══════════ DESCRIPCIÓN CIENTÍFICA ══════════ -->
+    <div class="desc-section fade-section" id="descSection">
+      <div class="desc-card">
+        <h2>🔬 Cómo la IA encontró esta frecuencia</h2>
+        <div class="phase"><h3>1. Simulación computacional del cerebro</h3><p>Laboratorio virtual de cuatro regiones cerebrales interconectadas que replica la actividad eléctrica neuronal. Probamos miles de configuraciones sin ningún riesgo.</p></div>
+        <div class="phase"><h3>2. Optimización con capas de IA anidadas</h3><p>Una primera IA explora millones de combinaciones (frecuencia, amplitud, acoplamiento). Una <strong>segunda IA interna</strong> refina los parámetros usando muestreo bayesiano y análisis espectral en tiempo real.</p></div>
+        <div class="phase"><h3>3. Métricas de certificación</h3><p>Medimos coherencia entre regiones, Phase Locking Value (PLV) y mejora de potencia en banda binaural. Solo se certifica si PLV > 0.6 y coherencia > 0.9.</p></div>
+        <div class="phase"><h3>4. Validación final</h3><p>Más de <strong>20 ciclos de optimización con IA</strong> y cientos de simulaciones cerebrales sintéticas respaldan este audio. Todo el flujo sigue principios de MLOps para trazabilidad.</p></div>
+        <p style="text-align:center; margin-top:1.5rem;">
+          <a href="https://www.linkedin.com/posts/juan-inteligenciaartificial_neurociencia-inteligenciaartificial-biohacking-ugcPost-7453990563684597761-ppir" target="_blank" rel="noopener" class="linkedin-post-link">
+            📰 Ver publicación completa del proyecto en LinkedIn
+          </a>
         </p>
-        <p class="text-center text-[0.65rem] text-gray-500">Experiencia de 7 min · Pausa automática</p>
       </div>
-
-      <!-- Advertencias de seguridad -->
-      <div class="mt-6 bg-black/30 backdrop-blur-md rounded-2xl p-3 text-[0.65rem] text-gray-400 space-y-1 border border-white/5 relative z-10">
-        <p class="text-gray-300 font-semibold uppercase tracking-widest mb-1 flex items-center gap-1"><span>⚠️</span> Advertencias</p>
-        <p>• No usar al conducir o manejar maquinaria.</p>
-        <p>• No apto para epilepsia o convulsiones.</p>
-        <p>• Consulte a su médico si usa marcapasos.</p>
-        <p>• Volumen moderado; interrumpa si hay molestia.</p>
-      </div>
-      <p class="text-center text-gray-600 text-[0.6rem] mt-4 relative z-10">BENTOV · Neurotech · Beta</p>
     </div>
-  </div>
 
-  <!-- ═══════════════════════════════════════════════
-    SECCIÓN 3: DESCRIPCIÓN DEL PROCESO CIENTÍFICO
-    Explica las fases de simulación, IA anidada,
-    métricas de certificación y validación final
-    ═══════════════════════════════════════════════ -->
-  <div class="desc-section fade-section" id="descSection">
-    <div class="desc-card">
-      <h2>🔬 Cómo la IA encontró esta frecuencia</h2>
-
-      <!-- Fase 1: Simulación computacional -->
-      <div class="phase">
-        <h3>1. Simulación computacional del cerebro</h3>
-        <p>Laboratorio virtual de cuatro regiones cerebrales interconectadas que replica la actividad eléctrica neuronal. Probamos miles de configuraciones sin ningún riesgo.</p>
+    <!-- ══════════ GRÁFICO (placeholder) ══════════ -->
+    <div class="graph-section fade-section" id="graphSection">
+      <div class="graph-placeholder">
+        <div class="graph-icon">📊</div>
+        <h3 style="color:#b0b0b8; margin-bottom:0.5rem;">Gráfico de resultados</h3>
+        <p style="font-size:0.8rem;">Próximamente: espectro de frecuencias, PLV y coherencia de la simulación computacional.</p>
+        <!--
+        Para añadir la imagen, reemplazar el <p> anterior por:
+        <img src="ruta/a/la/imagen.png" alt="Resultados de la simulación" style="max-width:100%; border-radius:1rem;" />
+        -->
       </div>
+    </div>
 
-      <!-- Fase 2: IA anidada -->
-      <div class="phase">
-        <h3>2. Optimización con capas de IA anidadas</h3>
-        <p>Una primera IA explora millones de combinaciones (frecuencia, amplitud, acoplamiento). Una <strong>segunda IA interna</strong> refina los parámetros usando muestreo bayesiano y análisis espectral en tiempo real.</p>
-      </div>
-
-      <!-- Fase 3: Métricas -->
-      <div class="phase">
-        <h3>3. Métricas de certificación</h3>
-        <p>Medimos coherencia entre regiones, Phase Locking Value (PLV) y mejora de potencia en banda binaural. Solo se certifica si PLV > 0.6 y coherencia > 0.9.</p>
-      </div>
-
-      <!-- Fase 4: Validación -->
-      <div class="phase">
-        <h3>4. Validación final</h3>
-        <p>Más de <strong>20 ciclos de optimización con IA</strong> y cientos de simulaciones cerebrales sintéticas respaldan este audio. Todo el flujo sigue principios de MLOps para trazabilidad.</p>
-      </div>
-
-      <!-- Enlace a la publicación de LinkedIn del proyecto -->
-      <p style="text-align:center; margin-top:1.5rem;">
-        <a href="https://www.linkedin.com/posts/juan-inteligenciaartificial_neurociencia-inteligenciaartificial-biohacking-ugcPost-7453990563684597761-ppir" target="_blank" rel="noopener" class="linkedin-post-link">
-          📰 Ver publicación completa del proyecto en LinkedIn
+    <!-- ══════════ AUDIO EXTENDIDO (WHATSAPP) ══════════ -->
+    <div class="extended-section fade-section" id="extSection">
+      <div class="extended-card">
+        <h3 class="text-lg font-semibold text-white mb-2">🧘 Audio completo de 30 minutos</h3>
+        <p class="text-sm text-gray-300 mb-3">
+          Si deseas la versión extendida para meditación profunda, escríbeme directamente a WhatsApp.
+          <br /><strong class="text-white">No tiene costo fijo</strong>. Tu donación voluntaria, según tu capacidad de pago, nos permite <strong>adquirir equipos y profundizar la investigación</strong> para que más personas puedan influir en sus estados mentales mediante frecuencias binaurales certificadas.
+        </p>
+        <a href="https://wa.me/573001467346?text=Hola%20Juan%20Carlos,%20quiero%20el%20audio%20binaural%20de%2030%20minutos%20para%20meditar.%20Estoy%20de%20acuerdo%20en%20contribuir%20con%20una%20donación%20voluntaria." target="_blank" rel="noopener" class="whatsapp-btn">
+          📲 Solicitar audio extendido
         </a>
-      </p>
+        <p class="text-xs text-gray-500 mt-2">573001467346 · Contribución voluntaria para equipos de investigación</p>
+      </div>
     </div>
-  </div>
 
-  <!-- ═══════════════════════════════════════════════
-    SECCIÓN 4: GRÁFICO DE RESULTADOS (placeholder)
-    Espacio reservado para añadir una imagen del
-    espectro o métricas de la simulación más adelante
-    ═══════════════════════════════════════════════ -->
-  <div class="graph-section fade-section" id="graphSection">
-    <div class="graph-placeholder">
-      <div class="graph-icon">📊</div>
-      <h3 style="color:#b0b0b8; margin-bottom:0.5rem;">Gráfico de resultados</h3>
-      <p style="font-size:0.8rem;">Próximamente: espectro de frecuencias, PLV y coherencia de la simulación computacional.</p>
-      <!-- Para añadir la imagen, reemplaza este <p> por:
-      <img src="ruta/a/la/imagen.png" alt="Resultados de la simulación" style="max-width:100%; border-radius:1rem;" />
-      -->
-    </div>
+    <!-- ══════════ ELEMENTO DE AUDIO (oculto) ══════════ -->
+    <audio id="audioPlayer" preload="auto" crossorigin="anonymous"
+      src="https://raw.githubusercontent.com/jartunduaga1986-byte/bentov-audio/99b73821584358a093869c9e8dafff2ba93ce1fa/bentov_certified_7.05Hz.mp3"
+      controlsList="nodownload" oncontextmenu="return false;">
+    </audio>
   </div>
-
-  <!-- ═══════════════════════════════════════════════
-    SECCIÓN 5: AUDIO EXTENDIDO + WHATSAPP
-    Contacto para obtener la versión de 30 minutos
-    con donación voluntaria para equipos de investigación
-    ═══════════════════════════════════════════════ -->
-  <div class="extended-section fade-section" id="extSection">
-    <div class="extended-card">
-      <h3 class="text-lg font-semibold text-white mb-2">🧘 Audio completo de 30 minutos</h3>
-      <p class="text-sm text-gray-300 mb-3">
-        Si deseas la versión extendida para meditación profunda, escríbeme directamente a WhatsApp.
-        <br /><strong class="text-white">No tiene costo fijo</strong>. Tu donación voluntaria, según tu capacidad de pago, nos permite <strong>adquirir equipos y profundizar la investigación</strong> para que más personas puedan influir en sus estados mentales mediante frecuencias binaurales certificadas.
-      </p>
-      <a href="https://wa.me/573001467346?text=Hola%20Juan%20Carlos,%20quiero%20el%20audio%20binaural%20de%2030%20minutos%20para%20meditar.%20Estoy%20de%20acuerdo%20en%20contribuir%20con%20una%20donación%20voluntaria." target="_blank" rel="noopener" class="whatsapp-btn">
-        📲 Solicitar audio extendido
-      </a>
-      <p class="text-xs text-gray-500 mt-2">573001467346 · Contribución voluntaria para equipos de investigación</p>
-    </div>
-  </div>
-
-  <!-- ══════════ ELEMENTO DE AUDIO (oculto, solo funcional) ══════════ -->
-  <audio id="audioPlayer" preload="auto" crossorigin="anonymous"
-    src="https://raw.githubusercontent.com/jartunduaga1986-byte/bentov-audio/99b73821584358a093869c9e8dafff2ba93ce1fa/bentov_certified_7.05Hz.mp3"
-    controlsList="nodownload" oncontextmenu="return false;">
-  </audio>
 
   <!-- ═══════════════════════════════════════════════
     JAVASCRIPT
     ═══════════════════════════════════════════════ -->
   <script>
-    // ─── 1. FONDO HEXAGONAL (grises metálicos con resplandor inferior) ───
+    // ─── 1. ANIMACIÓN HIPNÓTICA (ESPIRAL FIBONACCI + ONDAS SINCRONIZADAS) ───
+    (() => {
+      const canvas = document.getElementById('hypno-canvas');
+      const ctx = canvas.getContext('2d');
+      let w, h;
+      let time = 0;
+      const numWaves = 8;
+      const waves = [];
+      const targetPhase = Math.PI / 2;
+      for (let i = 0; i < numWaves; i++) {
+        waves.push({
+          initialPhase: Math.random() * Math.PI * 2,
+          amplitude: 15 + Math.random() * 25,
+          frequency: 0.01 + Math.random() * 0.02,
+          speed: 0.01 + Math.random() * 0.03,
+          yOffset: (i - numWaves/2) * 18,
+          color: `hsla(${260 + i * 15}, 80%, 70%, 0.2)`,
+        });
+      }
+
+      const orbitingParticles = [];
+      for (let i = 0; i < 40; i++) {
+        orbitingParticles.push({
+          angle: Math.random() * Math.PI * 2,
+          radius: 50 + Math.random() * 200,
+          speed: 0.002 + Math.random() * 0.008,
+          size: 1 + Math.random() * 2.5,
+          hue: Math.random() < 0.5 ? 270 : 220,
+        });
+      }
+
+      function resize() {
+        w = canvas.parentElement.clientWidth;
+        h = canvas.parentElement.clientHeight;
+        canvas.width = w;
+        canvas.height = h;
+      }
+
+      let rotation = 0;
+      function drawSpiral() {
+        const cx = w / 2, cy = h / 2;
+        const maxRadius = Math.min(w, h) * 0.45;
+        const particleCount = 300;
+        const spiralTightness = 8;
+
+        for (let i = 0; i < particleCount; i++) {
+          const progress = i / particleCount;
+          const angle = progress * Math.PI * 8 * spiralTightness + rotation;
+          const radius = progress * maxRadius;
+          const x = cx + Math.cos(angle) * radius;
+          const y = cy + Math.sin(angle) * radius;
+          const glow = (Math.sin(progress * 30 - time * 0.05) + 1) * 0.5;
+          const alpha = 0.4 + glow * 0.6;
+          const hue = 260 + glow * 40;
+          ctx.beginPath();
+          ctx.arc(x, y, 1.8, 0, Math.PI * 2);
+          ctx.fillStyle = `hsla(${hue}, 90%, 70%, ${alpha})`;
+          ctx.shadowColor = `hsla(${hue}, 90%, 70%, 0.8)`;
+          ctx.shadowBlur = 8;
+          ctx.fill();
+        }
+        ctx.shadowBlur = 0;
+
+        orbitingParticles.forEach(p => {
+          p.angle += p.speed;
+          const x = cx + Math.cos(p.angle) * p.radius;
+          const y = cy + Math.sin(p.angle) * p.radius;
+          const alpha = 0.3 + Math.sin(time * 0.1 + p.angle) * 0.2;
+          ctx.beginPath();
+          ctx.arc(x, y, p.size, 0, Math.PI * 2);
+          ctx.fillStyle = `hsla(${p.hue}, 90%, 70%, ${alpha})`;
+          ctx.fill();
+        });
+      }
+
+      function drawWaves() {
+        const cx = w / 2, cy = h / 2;
+        waves.forEach((wave) => {
+          const convergence = Math.min(1, time * 0.002);
+          const currentPhase = wave.initialPhase + (targetPhase - wave.initialPhase) * convergence;
+          ctx.beginPath();
+          ctx.strokeStyle = wave.color;
+          ctx.lineWidth = 1.8;
+          for (let x = -w/2; x < w/2; x += 3) {
+            const y = cy + wave.yOffset + Math.sin(x * wave.frequency + time * wave.speed + currentPhase) * wave.amplitude;
+            const y2 = y + Math.sin(x * 0.03 + time * 0.02) * 3;
+            if (x === -w/2) ctx.moveTo(x + cx, y2);
+            else ctx.lineTo(x + cx, y2);
+          }
+          ctx.stroke();
+        });
+      }
+
+      function animate() {
+        if (document.getElementById('hypno-overlay').classList.contains('hidden')) return;
+        ctx.clearRect(0, 0, w, h);
+        rotation += 0.002;
+        drawWaves();
+        drawSpiral();
+        time++;
+        requestAnimationFrame(animate);
+      }
+
+      window.addEventListener('resize', resize);
+      resize();
+      animate();
+    })();
+
+    // ─── 2. MOSTRAR CONTENIDO PRINCIPAL AL ACEPTAR ───
+    document.getElementById('accept-btn').addEventListener('click', () => {
+      const overlay = document.getElementById('hypno-overlay');
+      overlay.classList.add('hidden');
+      document.getElementById('main-content').style.display = 'block';
+      document.body.style.overflow = '';
+      // Desplazar suavemente al inicio
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // ─── 3. FONDO HEXAGONAL ───
     (() => {
       const grid = document.getElementById('hex-grid');
       const hexWidth = 104, hexHeight = 120, gap = 6;
@@ -570,7 +742,7 @@
       });
     })();
 
-    // ─── 2. PARTÍCULAS DECORATIVAS DENTRO DEL REPRODUCTOR ───
+    // ─── 4. PARTÍCULAS REPRODUCTOR ───
     (() => {
       const container = document.getElementById('particleContainer');
       for (let i = 0; i < 15; i++) {
@@ -584,7 +756,7 @@
       }
     })();
 
-    // ─── 3. ONDAS CEREBRALES DEL BANNER ───
+    // ─── 5. ONDAS CEREBRALES DEL BANNER ───
     (() => {
       const canvas = document.getElementById('waveCanvas'), ctx = canvas.getContext('2d');
       let w, h, time = 0;
@@ -614,7 +786,7 @@
       draw();
     })();
 
-    // ─── 4. REPRODUCTOR + VISUALIZADOR + MODO INMERSIVO + EFECTO MAGNÉTICO ───
+    // ─── 6. REPRODUCTOR + VISUALIZADOR + MODO INMERSIVO + MAGNÉTICO ───
     (() => {
       const audio = document.getElementById('audioPlayer');
       const playBtn = document.getElementById('playPauseBtn');
@@ -628,172 +800,91 @@
       const vizCtx = vizCanvas.getContext('2d');
       const freqDisp = document.getElementById('freqDisplay');
       const immerseBtn = document.getElementById('immerseBtn');
-      const MAX = 420; // 7 minutos en segundos
+      const MAX = 420;
       let audioCtx, analyser, source, freqData, animId = null, init = false, immersed = false;
-      const fmt = t => {
-        const m = Math.floor(t / 60);
-        const s = Math.floor(t % 60);
-        return `${m}:${s.toString().padStart(2, '0')}`;
-      };
+      const fmt = t => { const m=Math.floor(t/60); const s=Math.floor(t%60); return `${m}:${s.toString().padStart(2,'0')}`; };
 
-      // Partículas orbitantes del visualizador
       const particlesOrb = [];
-      for (let i = 0; i < 30; i++) {
-        particlesOrb.push({
-          angle: Math.random() * Math.PI * 2,
-          radius: 80 + Math.random() * 45,
-          size: Math.random() * 3 + 1.4,
-          speed: Math.random() * 0.02 + 0.006,
-          offset: Math.random() * Math.PI * 2,
-          brightness: 0.5
-        });
-      }
+      for (let i=0; i<30; i++) particlesOrb.push({ angle: Math.random()*Math.PI*2, radius: 80+Math.random()*45, size: Math.random()*3+1.4, speed: Math.random()*0.02+0.006, offset: Math.random()*Math.PI*2, brightness: 0.5 });
 
-      // Configuración del AudioContext (solo una vez)
       const setup = () => {
         if (init) return true;
         try {
-          audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-          analyser = audioCtx.createAnalyser();
-          analyser.fftSize = 512;
-          freqData = new Uint8Array(analyser.frequencyBinCount);
-          source = audioCtx.createMediaElementSource(audio);
-          source.connect(analyser);
-          analyser.connect(audioCtx.destination);
-          init = true;
-          return true;
-        } catch (e) {
-          alert('Audio no soportado.');
-          return false;
-        }
+          audioCtx = new (window.AudioContext||window.webkitAudioContext)();
+          analyser = audioCtx.createAnalyser(); analyser.fftSize = 512; freqData = new Uint8Array(analyser.frequencyBinCount);
+          source = audioCtx.createMediaElementSource(audio); source.connect(analyser); analyser.connect(audioCtx.destination);
+          init = true; return true;
+        } catch(e) { alert('Audio no soportado.'); return false; }
       };
 
-      // Modo inmersivo: oculta banner y descripción para centrar el reproductor
-      immerseBtn.addEventListener('click', () => {
-        immersed = !immersed;
-        document.querySelector('.banner').style.display = immersed ? 'none' : 'flex';
-        document.querySelector('.desc-section').style.display = immersed ? 'none' : 'flex';
-        document.querySelector('.graph-section').style.display = immersed ? 'none' : 'flex';
-        document.querySelector('.extended-section').style.display = immersed ? 'none' : 'flex';
-        immerseBtn.textContent = immersed ? 'Salir del modo inmersivo' : 'Modo inmersivo';
-        document.querySelector('.player-section').style.minHeight = immersed ? '100vh' : '';
+      immerseBtn.addEventListener('click', ()=>{
+        immersed=!immersed;
+        document.querySelector('.banner').style.display=immersed?'none':'flex';
+        document.querySelector('.desc-section').style.display=immersed?'none':'flex';
+        document.querySelector('.graph-section').style.display=immersed?'none':'flex';
+        document.querySelector('.extended-section').style.display=immersed?'none':'flex';
+        immerseBtn.textContent=immersed?'Salir del modo inmersivo':'Modo inmersivo';
+        document.querySelector('.player-section').style.minHeight=immersed?'100vh':'';
       });
 
-      // Efecto magnético del aura alrededor del botón
       const auraDiv = document.querySelector('.aura');
       const vizWrap = document.querySelector('.viz-wrapper');
-      vizWrap.addEventListener('mousemove', (e) => {
+      vizWrap.addEventListener('mousemove',(e)=>{
         if (!auraDiv) return;
-        const r = vizWrap.getBoundingClientRect();
-        auraDiv.style.transform = `translate(calc(-50% + ${(e.clientX - r.left - r.width / 2) * 0.04}px), calc(-50% + ${(e.clientY - r.top - r.height / 2) * 0.04}px))`;
+        const r=vizWrap.getBoundingClientRect();
+        auraDiv.style.transform=`translate(calc(-50% + ${(e.clientX-r.left-r.width/2)*0.04}px), calc(-50% + ${(e.clientY-r.top-r.height/2)*0.04}px))`;
       });
-      vizWrap.addEventListener('mouseleave', () => {
-        if (auraDiv) auraDiv.style.transform = 'translate(-50%, -50%)';
-      });
+      vizWrap.addEventListener('mouseleave',()=>{ if(auraDiv) auraDiv.style.transform='translate(-50%, -50%)'; });
 
-      // Dibuja el visualizador de frecuencias en tiempo real
       function draw() {
-        animId = requestAnimationFrame(draw);
-        if (!analyser) return;
+        animId=requestAnimationFrame(draw);
+        if(!analyser) return;
         analyser.getByteFrequencyData(freqData);
-        const w = vizCanvas.width, h = vizCanvas.height, cx = w / 2, cy = h / 2, rBase = 68;
-        vizCtx.clearRect(0, 0, w, h);
-        for (let i = 0; i < freqData.length; i++) {
-          const v = freqData[i] / 255, barH = v * 44, ang = (i / freqData.length) * Math.PI * 2;
-          const x1 = cx + Math.cos(ang) * rBase, y1 = cy + Math.sin(ang) * rBase;
-          const x2 = cx + Math.cos(ang) * (rBase + barH), y2 = cy + Math.sin(ang) * (rBase + barH);
-          vizCtx.beginPath();
-          vizCtx.moveTo(x1, y1);
-          vizCtx.lineTo(x2, y2);
-          const mix = (Math.sin(ang) + 1) / 2;
-          const r = Math.floor(255 * mix), g = Math.floor(100 * mix + 50), b = Math.floor(255 * (1 - mix) + 100);
-          vizCtx.strokeStyle = `rgba(${r},${g},${b},${0.4 + v * 0.6})`;
-          vizCtx.lineWidth = 2.2;
-          vizCtx.shadowColor = `rgba(${r},${g},${b},0.7)`;
-          vizCtx.shadowBlur = v * 12;
-          vizCtx.stroke();
+        const w=vizCanvas.width, h=vizCanvas.height, cx=w/2, cy=h/2, rBase=68;
+        vizCtx.clearRect(0,0,w,h);
+        for(let i=0;i<freqData.length;i++){
+          const v=freqData[i]/255, barH=v*44, ang=(i/freqData.length)*Math.PI*2;
+          const x1=cx+Math.cos(ang)*rBase, y1=cy+Math.sin(ang)*rBase;
+          const x2=cx+Math.cos(ang)*(rBase+barH), y2=cy+Math.sin(ang)*(rBase+barH);
+          vizCtx.beginPath(); vizCtx.moveTo(x1,y1); vizCtx.lineTo(x2,y2);
+          const mix=(Math.sin(ang)+1)/2;
+          const r=Math.floor(255*mix), g=Math.floor(100*mix+50), b=Math.floor(255*(1-mix)+100);
+          vizCtx.strokeStyle=`rgba(${r},${g},${b},${0.4+v*0.6})`;
+          vizCtx.lineWidth=2.2; vizCtx.shadowColor=`rgba(${r},${g},${b},0.7)`; vizCtx.shadowBlur=v*12; vizCtx.stroke();
         }
-        vizCtx.shadowBlur = 0;
-        const avg = freqData.reduce((a, b) => a + b, 0) / freqData.length / 255;
-        particlesOrb.forEach(p => {
-          p.angle += p.speed * (1 + avg);
-          p.brightness = 0.3 + avg * 0.7;
-          const x = cx + Math.cos(p.angle + p.offset) * p.radius, y = cy + Math.sin(p.angle + p.offset) * p.radius;
-          vizCtx.beginPath();
-          vizCtx.arc(x, y, p.size, 0, Math.PI * 2);
-          vizCtx.fillStyle = `rgba(255,0,180,${p.brightness})`;
-          vizCtx.fill();
-        });
-        freqDisp.textContent = `${Math.round(freqData.indexOf(Math.max(...freqData)) * audioCtx.sampleRate / analyser.fftSize)} Hz`;
-        freqDisp.style.opacity = 0.6 + avg * 0.4;
-        if (!audio.paused) freqDisp.classList.add('visible');
-        else freqDisp.classList.remove('visible');
+        vizCtx.shadowBlur=0;
+        const avg=freqData.reduce((a,b)=>a+b,0)/freqData.length/255;
+        particlesOrb.forEach(p=>{ p.angle+=p.speed*(1+avg); p.brightness=0.3+avg*0.7;
+          const x=cx+Math.cos(p.angle+p.offset)*p.radius, y=cy+Math.sin(p.angle+p.offset)*p.radius;
+          vizCtx.beginPath(); vizCtx.arc(x,y,p.size,0,Math.PI*2); vizCtx.fillStyle=`rgba(255,0,180,${p.brightness})`; vizCtx.fill(); });
+        freqDisp.textContent=`${Math.round(freqData.indexOf(Math.max(...freqData))*audioCtx.sampleRate/analyser.fftSize)} Hz`;
+        freqDisp.style.opacity=0.6+avg*0.4;
+        if(!audio.paused) freqDisp.classList.add('visible'); else freqDisp.classList.remove('visible');
       }
-      function startViz() { if (!animId) draw(); }
-      function stopViz() {
-        if (animId) { cancelAnimationFrame(animId); animId = null; }
-        vizCtx.clearRect(0, 0, vizCanvas.width, vizCanvas.height);
-        freqDisp.classList.remove('visible');
-      }
+      function startViz(){ if(!animId) draw(); }
+      function stopViz(){ if(animId){ cancelAnimationFrame(animId); animId=null; } vizCtx.clearRect(0,0,vizCanvas.width,vizCanvas.height); freqDisp.classList.remove('visible'); }
 
-      // Evento de reproducción/pausa
-      playBtn.addEventListener('click', async () => {
-        if (!audio.paused) {
-          audio.pause();
-          playIcon.classList.remove('hidden');
-          pauseIcon.classList.add('hidden');
-          stopViz();
-          return;
-        }
-        if (!init && !setup()) return;
-        if (audioCtx.state === 'suspended') await audioCtx.resume();
-        audio.play().then(() => {
-          playIcon.classList.add('hidden');
-          pauseIcon.classList.remove('hidden');
-          startViz();
-        }).catch(e => alert('Error al reproducir.'));
+      playBtn.addEventListener('click', async ()=>{
+        if(!audio.paused){ audio.pause(); playIcon.classList.remove('hidden'); pauseIcon.classList.add('hidden'); stopViz(); return; }
+        if(!init&&!setup()) return;
+        if(audioCtx.state==='suspended') await audioCtx.resume();
+        audio.play().then(()=>{ playIcon.classList.add('hidden'); pauseIcon.classList.remove('hidden'); startViz(); }).catch(e=>alert('Error al reproducir.'));
       });
 
-      // Metadatos cargados: configura duración, volumen y actualiza progreso
-      audio.addEventListener('loadedmetadata', () => {
-        audio.volume = 0.8;
-        volumeBar.value = 0.8;
-        progressBar.max = (audio.duration > MAX) ? MAX : audio.duration;
-        updateProgress();
-      });
-
-      function updateProgress() {
-        let cur = audio.currentTime;
-        if (cur > MAX) {
-          audio.pause();
-          audio.currentTime = MAX;
-          playIcon.classList.remove('hidden');
-          pauseIcon.classList.add('hidden');
-          progressBar.value = MAX;
-          curr.textContent = fmt(MAX);
-          rem.textContent = '-0:00';
-          stopViz();
-          return;
-        }
-        progressBar.value = cur;
-        curr.textContent = fmt(cur);
-        rem.textContent = `-${fmt(parseFloat(progressBar.max) - cur)}`;
+      audio.addEventListener('loadedmetadata',()=>{ audio.volume=0.8; volumeBar.value=0.8; progressBar.max=(audio.duration>MAX)?MAX:audio.duration; updateProgress(); });
+      function updateProgress(){
+        let cur=audio.currentTime;
+        if(cur>MAX){ audio.pause(); audio.currentTime=MAX; playIcon.classList.remove('hidden'); pauseIcon.classList.add('hidden'); progressBar.value=MAX; curr.textContent=fmt(MAX); rem.textContent='-0:00'; stopViz(); return; }
+        progressBar.value=cur; curr.textContent=fmt(cur); rem.textContent=`-${fmt(parseFloat(progressBar.max)-cur)}`;
       }
-
-      audio.addEventListener('timeupdate', updateProgress);
-      progressBar.addEventListener('input', () => { audio.currentTime = Math.min(progressBar.value, MAX); });
-      volumeBar.addEventListener('input', () => { audio.volume = volumeBar.value; });
-      audio.addEventListener('ended', () => {
-        playIcon.classList.remove('hidden');
-        pauseIcon.classList.add('hidden');
-        audio.currentTime = 0;
-        updateProgress();
-        stopViz();
-      });
-      audio.addEventListener('contextmenu', e => e.preventDefault());
+      audio.addEventListener('timeupdate',updateProgress);
+      progressBar.addEventListener('input',()=>{ audio.currentTime=Math.min(progressBar.value,MAX); });
+      volumeBar.addEventListener('input',()=>{ audio.volume=volumeBar.value; });
+      audio.addEventListener('ended',()=>{ playIcon.classList.remove('hidden'); pauseIcon.classList.add('hidden'); audio.currentTime=0; updateProgress(); stopViz(); });
+      audio.addEventListener('contextmenu', e=>e.preventDefault());
     })();
 
-    // ─── 5. MICRO‑MEJORAS: barra de progreso de scroll ───
+    // ─── 7. BARRA DE PROGRESO DE SCROLL ───
     (() => {
       const bar = document.getElementById('scrollProgressBar');
       window.addEventListener('scroll', () => {
@@ -804,7 +895,7 @@
       });
     })();
 
-    // ─── 6. MICRO‑MEJORAS: fade‑in de secciones al hacer scroll (IntersectionObserver) ───
+    // ─── 8. FADE-IN DE SECCIONES AL HACER SCROLL ───
     (() => {
       const sections = document.querySelectorAll('.fade-section');
       const observer = new IntersectionObserver((entries) => {
@@ -814,7 +905,7 @@
             observer.unobserve(entry.target);
           }
         });
-      }, { threshold: 0.2 });
+      }, { threshold: 0.15 });
       sections.forEach(section => observer.observe(section));
     })();
   </script>
