@@ -1,0 +1,22 @@
+# BENTOV · Sinfonía Neuronal
+
+## Descripción
+Proyecto neurocientífico que genera frecuencias binaurales certificadas mediante simulación computacional y capas anidadas de inteligencia artificial.
+Encuentra la frecuencia óptima para sincronización cerebral y la entrega como un audio binaural de 7 minutos (MP3 por capacidad; ideal FLAC).
+Incluye visualizador de frecuencias en tiempo real y opción de donación para ampliar la investigación.
+
+## Tipo
+Audio binaural certificado por IA / Neurotech / Ciencia de datos / MLOps
+
+## Autor
+Juan Carlos Artunduaga Jaramillo
+LinkedIn: https://www.linkedin.com/in/juan-inteligenciaartificial/
+
+## Repositorio
+https://github.com/jartunduaga1986-byte/bentov-audio
+
+## Página web
+https://jartunduaga1986-byte.github.io/bentov-audio/
+
+## Palabras clave
+frecuencias binaurales, audio cerebral, simulación neuronal, optimización con IA, neurotecnología, meditación guiada, mejoramiento cognitivo
