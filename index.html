@@ -1,4 +1,4 @@
-<!-- PÁGINA COMPLETA BENTOV · AUDIO GARANTIZADO + DESCRIPCIÓN CIENTÍFICA -->
+<!-- PÁGINA COMPLETA BENTOV · UX MEJORADA + LLMS.TXT PREPARADO -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -27,22 +27,16 @@
       overflow: hidden;
       background-color: #030304; 
     }
-    
-    /* Contenedor de grilla y profundidad */
     .hex-wrapper {
       position: absolute;
       width: 104px; height: 120px;
       z-index: var(--z-idx, 2);
     }
-    
-    /* Capa encargada del movimiento orgánico de flotación constante */
     .hex-mover {
       width: 100%; height: 100%;
       animation: hex-float var(--anim-duration) ease-in-out infinite var(--anim-delay);
       will-change: transform, filter;
     }
-    
-    /* Capa física del hexágono (color y forma) */
     .hex-inner {
       width: 100%; height: 100%;
       clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
@@ -51,35 +45,27 @@
       transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), background 0.25s ease, filter 0.25s ease;
       animation: hex-color-shift var(--anim-duration) ease-in-out infinite var(--anim-delay);
     }
-    
-    /* Bisel direccional que simula relieve e incidencia de luz */
     .hex-inner::after {
       content: ''; position: absolute; inset: 0;
       background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 30%, rgba(0,0,0,0.8) 100%);
       pointer-events: none;
       transition: background 0.25s ease;
     }
-
-    /* Animación de flotación y oclusión de sombras ambientales */
     @keyframes hex-float {
       0%, 100% { transform: scale(var(--base-scale)) translateY(0px); filter: var(--base-shadow); }
       50% { transform: scale(calc(var(--base-scale) * 0.96)) translateY(8px); filter: var(--sink-shadow); }
     }
-    
-    /* Animación de cambio de color y luminosidad coordinada con el movimiento */
     @keyframes hex-color-shift {
       0%, 100% { filter: hue-rotate(0deg) brightness(1); }
       50% { filter: hue-rotate(var(--hue-shift)) brightness(var(--bright-shift)); }
     }
-
-    /* Efecto interactivo ultra-realista de "Botón Físico Presionado" */
     .hex-wrapper:hover .hex-mover {
       animation-play-state: paused;
       filter: drop-shadow(0px 0px 0px rgba(0,0,0,1)) !important;
     }
     .hex-wrapper:hover .hex-inner {
       animation-play-state: paused;
-      transform: scale(0.85) translateY(14px); /* Se hunde mecánicamente */
+      transform: scale(0.85) translateY(14px);
       background: #020202 !important;
       filter: hue-rotate(0deg) brightness(0.4) !important;
     }
@@ -87,6 +73,7 @@
       background: linear-gradient(135deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 40%, rgba(255,255,255,0.1) 100%);
     }
 
+    /* --- Banner --- */
     .banner { position: relative; width: 100%; height: 50vh; min-height: 420px; display: flex; align-items: center; justify-content: center; }
     canvas#waveCanvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
     .glass-card {
@@ -99,79 +86,45 @@
     .animated-title { background: linear-gradient(135deg, #ffffff 0%, #d1d1d6 40%, #f0f0f5 80%, #ffffff 100%); background-size: 200% 200%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: titleShift 8s ease-in-out infinite alternate; }
     @keyframes titleShift { 0% { background-position: 0% 50%; } 100% { background-position: 100% 50%; } }
 
-    /* ─── Sección de creador en el banner ─── */
-    .creator-banner-row {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      margin-top: 1.5rem;
-      font-size: 0.9rem;
-      color: #d1d1d6;
+    /* --- Indicador de scroll --- */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 3;
+      animation: bounceDown 2s infinite;
     }
-    .creator-banner-row a {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.06);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255,255,255,0.15);
-      transition: all 0.3s;
-      color: white;
-    }
-    .creator-banner-row a:hover {
-      background: rgba(168,85,247,0.25);
-      box-shadow: 0 0 18px rgba(168,85,247,0.6);
+    @keyframes bounceDown {
+      0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); opacity: 0.6; }
+      40% { transform: translateX(-50%) translateY(8px); opacity: 1; }
+      60% { transform: translateX(-50%) translateY(4px); opacity: 0.8; }
     }
 
-    /* ─── Sección de descripción ─── */
-    .description-section {
-      display: flex;
-      justify-content: center;
-      padding: 0 1rem 4rem;
-    }
-    .desc-card {
-      max-width: 34rem;
-      width: 100%;
-      background: rgba(44,44,46,0.6);
+    /* --- Toast de bienvenida --- */
+    .toast {
+      position: fixed;
+      top: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(44,44,46,0.9);
       backdrop-filter: blur(20px);
       border-radius: 2rem;
-      padding: 2rem;
-      border: 1px solid rgba(255,255,255,0.08);
-      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-      color: #d1d1d6;
-      text-align: left;
-      line-height: 1.7;
-    }
-    .desc-card h2 {
-      font-size: 1.5rem;
-      font-weight: 600;
+      padding: 0.7rem 2rem;
       color: white;
-      margin-bottom: 1.5rem;
-      background: linear-gradient(135deg, #c084fc, #818cf8);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      font-size: 0.85rem;
+      z-index: 20;
+      opacity: 0;
+      animation: fadeInOut 4s forwards;
     }
-    .desc-card .phase {
-      border-left: 3px solid #a855f7;
-      padding-left: 1rem;
-      margin-bottom: 1.8rem;
-    }
-    .desc-card .phase h3 {
-      color: #e0d6ff;
-      font-size: 0.95rem;
-      font-weight: 600;
-      margin-bottom: 0.3rem;
-    }
-    .desc-card .phase p {
-      font-size: 0.8rem;
-      color: #a0a0a8;
+    @keyframes fadeInOut {
+      0% { opacity: 0; top: 20px; }
+      15% { opacity: 1; top: 30px; }
+      80% { opacity: 1; top: 30px; }
+      100% { opacity: 0; top: 40px; }
     }
 
+    /* --- Reproductor --- */
     .player-section { display: flex; justify-content: center; padding: 2rem 1rem 4rem; }
     .reproductor { max-width: 30rem; width: 100%; background: rgba(44,44,46,0.85); backdrop-filter: blur(20px); border-radius: 2.5rem; padding: 2.5rem 2rem 2rem; box-shadow: 0 30px 60px rgba(0,0,0,0.7), inset 0 0 0 0.5px rgba(255,255,255,0.12), 0 0 40px rgba(188,19,254,0.15); color: white; position: relative; overflow: hidden; }
     .particle-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; opacity: 0.15; }
@@ -200,10 +153,21 @@
 
     .freq-display { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 6; font-size: 0.8rem; font-weight: 500; color: rgba(255,255,255,0.9); pointer-events: none; text-shadow: 0 0 8px rgba(188,19,254,0.5); opacity: 0; transition: opacity 0.3s; }
     .freq-display.visible { opacity: 1; }
+
+    /* --- Sección de descripción --- */
+    .description-section { display: flex; justify-content: center; padding: 0 1rem 4rem; }
+    .desc-card { max-width: 34rem; width: 100%; background: rgba(44,44,46,0.6); backdrop-filter: blur(20px); border-radius: 2rem; padding: 2rem; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 20px 40px rgba(0,0,0,0.5); color: #d1d1d6; text-align: left; line-height: 1.7; }
+    .desc-card h2 { font-size: 1.5rem; font-weight: 600; color: white; margin-bottom: 1.5rem; background: linear-gradient(135deg, #c084fc, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .desc-card .phase { border-left: 3px solid #a855f7; padding-left: 1rem; margin-bottom: 1.8rem; }
+    .desc-card .phase h3 { color: #e0d6ff; font-size: 0.95rem; font-weight: 600; margin-bottom: 0.3rem; }
+    .desc-card .phase p { font-size: 0.8rem; color: #a0a0a8; }
   </style>
 </head>
 <body>
   <div id="hex-grid" class="container-hex"></div>
+
+  <!-- Toast de bienvenida -->
+  <div id="welcomeToast" class="toast">Bienvenido a Sinfonía Neuronal</div>
 
   <!-- ═══════════ BANNER ═══════════ -->
   <div class="banner">
@@ -219,15 +183,19 @@
       <div class="mt-7 flex justify-center">
         <div class="w-20 h-0.5 bg-gradient-to-r from-transparent via-purple-400/60 to-transparent"></div>
       </div>
-      <!-- ─── CREADOR EN BANNER ─── -->
-      <div class="creator-banner-row">
-        <span>por <strong>Juan Carlos Artunduaga Jaramillo</strong></span>
-        <a href="https://www.linkedin.com/in/juan-inteligenciaartificial/" target="_blank" rel="noopener" aria-label="LinkedIn perfil">
-          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M4.98 3.5C4.98 4.88 3.88 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM.19 8h4.62v16H.19V8zm7.95 0h4.45v2.16h.06c.62-1.17 2.13-2.4 4.38-2.4 4.68 0 5.54 3.08 5.54 7.09V24h-4.83v-8.17c0-1.95-.04-4.46-2.72-4.46-2.72 0-3.14 2.12-3.14 4.32V24H7.14V8z"/>
-          </svg>
+      <!-- Creador en banner -->
+      <div class="flex items-center justify-center gap-2 mt-5 text-sm text-gray-400">
+        <span>por <strong class="text-white">Juan Carlos Artunduaga Jaramillo</strong></span>
+        <a href="https://www.linkedin.com/in/juan-inteligenciaartificial/" target="_blank" rel="noopener" class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-white/10 hover:bg-purple-500/30 transition" aria-label="LinkedIn">
+          <svg class="w-3.5 h-3.5 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M4.98 3.5C4.98 4.88 3.88 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM.19 8h4.62v16H.19V8zm7.95 0h4.45v2.16h.06c.62-1.17 2.13-2.4 4.38-2.4 4.68 0 5.54 3.08 5.54 7.09V24h-4.83v-8.17c0-1.95-.04-4.46-2.72-4.46-2.72 0-3.14 2.12-3.14 4.32V24H7.14V8z"/></svg>
         </a>
       </div>
+    </div>
+    <!-- Indicador de scroll -->
+    <div class="scroll-indicator">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2">
+        <path d="M6 9l6 6 6-6"/>
+      </svg>
     </div>
   </div>
 
@@ -236,16 +204,17 @@
     <div class="reproductor">
       <div class="particle-bg" id="particleContainer"></div>
 
-      <div class="flex items-center justify-center gap-3 mb-7 relative z-10">
-        <div class="text-left">
-          <p class="text-[0.65rem] text-purple-300/80 uppercase tracking-widest">Creado por</p>
-          <h2 class="text-sm font-medium tracking-tight text-white/80">Juan C. Artunduaga J.</h2>
+      <div class="flex items-center justify-between mb-6 relative z-10">
+        <div class="flex items-center gap-3">
+          <div class="text-left">
+            <p class="text-[0.65rem] text-purple-300/80 uppercase tracking-widest">Creado por</p>
+            <h2 class="text-sm font-medium tracking-tight text-white/80">Juan C. Artunduaga J.</h2>
+          </div>
+          <a href="https://www.linkedin.com/in/juan-inteligenciaartificial/" target="_blank" rel="noopener" class="linkedin-icon" aria-label="LinkedIn">
+            <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M4.98 3.5C4.98 4.88 3.88 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM.19 8h4.62v16H.19V8zm7.95 0h4.45v2.16h.06c.62-1.17 2.13-2.4 4.38-2.4 4.68 0 5.54 3.08 5.54 7.09V24h-4.83v-8.17c0-1.95-.04-4.46-2.72-4.46-2.72 0-3.14 2.12-3.14 4.32V24H7.14V8z"/></svg>
+          </a>
         </div>
-        <a href="https://www.linkedin.com/in/juan-inteligenciaartificial/" target="_blank" rel="noopener" class="linkedin-icon" aria-label="LinkedIn">
-          <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M4.98 3.5C4.98 4.88 3.88 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM.19 8h4.62v16H.19V8zm7.95 0h4.45v2.16h.06c.62-1.17 2.13-2.4 4.38-2.4 4.68 0 5.54 3.08 5.54 7.09V24h-4.83v-8.17c0-1.95-.04-4.46-2.72-4.46-2.72 0-3.14 2.12-3.14 4.32V24H7.14V8z"/>
-          </svg>
-        </a>
+        <button id="immerseBtn" class="text-xs text-purple-400 underline hover:text-purple-300 transition">Modo inmersivo</button>
       </div>
 
       <div class="viz-wrapper">
@@ -273,9 +242,7 @@
       </div>
 
       <div class="mt-8 bg-black/30 backdrop-blur-md rounded-2xl p-4 text-[0.7rem] text-gray-400 space-y-1.5 border border-white/5 relative z-10">
-        <p class="text-gray-300 font-semibold uppercase tracking-widest mb-2 flex items-center gap-1">
-          <span>⚠️</span> Advertencias de seguridad
-        </p>
+        <p class="text-gray-300 font-semibold uppercase tracking-widest mb-2 flex items-center gap-1"><span>⚠️</span> Advertencias de seguridad</p>
         <p>• No usar al conducir o manejar maquinaria.</p>
         <p>• No apto para personas con epilepsia o convulsiones.</p>
         <p>• Consulte a su médico si usa marcapasos o implantes.</p>
@@ -289,34 +256,11 @@
   <div class="description-section">
     <div class="desc-card">
       <h2>🔬 Cómo la inteligencia artificial encontró esta frecuencia</h2>
-      <div class="phase">
-        <h3>1. Simulación computacional del cerebro</h3>
-        <p>
-          Construimos una simulación digital de la actividad eléctrica de cuatro regiones cerebrales interconectadas, utilizando ecuaciones dinámicas que replican el comportamiento real de las neuronas. Esta simulación actúa como un "laboratorio virtual" donde podemos probar miles de configuraciones sin riesgo.
-        </p>
-      </div>
-      <div class="phase">
-        <h3>2. Optimización por capas de inteligencia artificial</h3>
-        <p>
-          Implementamos un sistema de optimización anidada con algoritmos de IA. Una primera capa de búsqueda inteligente explora millones de combinaciones de parámetros (frecuencia, amplitud, acoplamiento y propiedades neuronales). Dentro de cada intento, una <strong>segunda capa de IA</strong> refina aún más los valores para maximizar la sincronización cerebral y la coherencia, usando técnicas de ciencia de datos como el muestreo bayesiano y el análisis espectral en tiempo real.
-        </p>
-      </div>
-      <div class="phase">
-        <h3>3. Métricas de certificación</h3>
-        <p>
-          Para cada configuración evaluamos métricas objetivas derivadas de las señales simuladas: <strong>coherencia entre regiones</strong> (qué tan bien se comunican), <strong>PLV</strong> (Phase Locking Value, que mide la sincronización de fase) y <strong>mejora de la potencia en bandas binaurales</strong>. Solo si la combinación superaba umbrales estrictos (PLV > 0.6, coherencia > 0.9) se certificaba como segura y efectiva.
-        </p>
-      </div>
-      <div class="phase">
-        <h3>4. Validación y resultado final</h3>
-        <p>
-          La mejor configuración fue validada con múltiples semillas aleatorias y una duración extendida. El resultado es este audio binaural de precisión, respaldado por más de <strong>20 ciclos de optimización con IA</strong> y cientos de simulaciones cerebrales sintéticas. Todo el proceso fue guiado por principios de MLOps para garantizar reproducibilidad y trazabilidad.
-        </p>
-      </div>
-      <p style="text-align: center; font-size: 0.7rem; color: #888; margin-top: 2rem;">
-        Desarrollado por <strong>Juan Carlos Artunduaga Jaramillo</strong> — 
-        <a href="https://www.linkedin.com/in/juan-inteligenciaartificial/" target="_blank" style="color: #a855f7; text-decoration: underline;">Conectar en LinkedIn</a>
-      </p>
+      <div class="phase"><h3>1. Simulación computacional del cerebro</h3><p>Construimos una simulación digital de la actividad eléctrica de cuatro regiones cerebrales interconectadas, usando ecuaciones dinámicas que replican el comportamiento real de las neuronas. Este laboratorio virtual prueba miles de configuraciones sin riesgo.</p></div>
+      <div class="phase"><h3>2. Optimización por capas de inteligencia artificial</h3><p>Un sistema de optimización anidada con IA explora millones de combinaciones (frecuencia, amplitud, acoplamiento). Una <strong>segunda capa de IA</strong> refina aún más los valores para maximizar sincronización y coherencia, usando técnicas de ciencia de datos como muestreo bayesiano y análisis espectral en tiempo real.</p></div>
+      <div class="phase"><h3>3. Métricas de certificación</h3><p>Evaluamos objetivamente la coherencia entre regiones, el Phase Locking Value (PLV) y la mejora de potencia en bandas binaurales. Solo si se superaban umbrales estrictos (PLV > 0.6, coherencia > 0.9) se certificaba la configuración como segura y efectiva.</p></div>
+      <div class="phase"><h3>4. Validación final</h3><p>La mejor combinación se validó con múltiples semillas aleatorias y duraciones extendidas. El resultado es este audio binaural de precisión, respaldado por más de <strong>20 ciclos de optimización con IA</strong> y cientos de simulaciones cerebrales sintéticas. Todo el flujo se gestionó con principios de MLOps para trazabilidad y reproducibilidad.</p></div>
+      <p style="text-align: center; font-size: 0.7rem; color: #888; margin-top: 2rem;">Desarrollado por <strong>Juan Carlos Artunduaga Jaramillo</strong> — <a href="https://www.linkedin.com/in/juan-inteligenciaartificial/" target="_blank" style="color: #a855f7; text-decoration: underline;">Conectar en LinkedIn</a></p>
     </div>
   </div>
 
@@ -326,43 +270,35 @@
   </audio>
 
   <script>
-    // --- Lógica del fondo hexagonal MEJORADA ---
+    // Fondo hexagonal (sin cambios)
     (() => {
       const grid = document.getElementById('hex-grid');
       const hexWidth = 104, hexHeight = 120, gap = 5;
       const horizontalDist = hexWidth + gap, verticalDist = (hexHeight * 0.75) + gap;
-      
       function createGrid() {
         grid.innerHTML = '';
         const cols = Math.ceil(window.innerWidth / horizontalDist) + 2;
         const rows = Math.ceil(window.innerHeight / verticalDist) + 2;
-        
         for (let row = -1; row < rows; row++) {
           for (let col = -1; col < cols; col++) {
             const hexWrapper = document.createElement('div'); hexWrapper.className = 'hex-wrapper';
             const hexMover = document.createElement('div'); hexMover.className = 'hex-mover';
             const innerHex = document.createElement('div'); innerHex.className = 'hex-inner';
-            
             hexMover.appendChild(innerHex);
             hexWrapper.appendChild(hexMover);
-            
             const isEvenRow = row % 2 === 0;
             const x = col * horizontalDist + (isEvenRow ? horizontalDist / 2 : 0);
             const y = row * verticalDist;
             hexWrapper.style.left = `${x}px`; hexWrapper.style.top = `${y}px`;
-            
             const animDuration = 4 + Math.random() * 5;
             const animDelay = -(Math.random() * 10);
             const hueShift = (Math.random() > 0.5 ? 1 : -1) * (15 + Math.random() * 40);
-            
             hexWrapper.style.setProperty('--anim-duration', `${animDuration}s`);
             hexWrapper.style.setProperty('--anim-delay', `${animDelay}s`);
             hexWrapper.style.setProperty('--hue-shift', `${hueShift}deg`);
             hexWrapper.style.setProperty('--bright-shift', `${1.1 + Math.random() * 0.3}`);
-
             const depthRand = Math.random();
             const neonRand = Math.random();
-
             if (depthRand > 0.85) { 
               hexWrapper.style.setProperty('--base-scale', '1.08'); 
               hexWrapper.style.setProperty('--base-shadow', 'drop-shadow(10px 15px 22px rgba(0,0,0,0.95))'); 
@@ -382,7 +318,6 @@
               hexWrapper.style.setProperty('--base-grad', 'linear-gradient(135deg, #2b2c2f 0%, #161719 50%, #08080a 100%)'); 
               hexWrapper.style.setProperty('--z-idx', '2');
             }
-
             if (neonRand > 0.94) {
               hexWrapper.style.setProperty('--base-shadow', 'drop-shadow(0 0 15px rgba(188,19,254,0.4)) drop-shadow(5px 8px 10px rgba(0,0,0,1))');
               hexWrapper.style.setProperty('--sink-shadow', 'drop-shadow(0 0 45px rgba(188,19,254,0.95)) drop-shadow(2px 4px 6px rgba(0,0,0,1))');
@@ -394,7 +329,6 @@
               hexWrapper.style.setProperty('--base-grad', 'linear-gradient(135deg, #0b1c32 0%, #030a1c 50%, #010406 100%)');
               hexWrapper.style.setProperty('--z-idx', '3');
             }
-
             grid.appendChild(hexWrapper);
           }
         }
@@ -445,7 +379,7 @@
       window.addEventListener('resize', resize); resize(); draw();
     })();
 
-    // Reproductor + Visualizador CON SONIDO GARANTIZADO
+    // Reproductor + Visualizador (con mejoras UX)
     (() => {
       const audio = document.getElementById('audioPlayer');
       const playBtn = document.getElementById('playPauseBtn');
@@ -458,11 +392,13 @@
       const vizCanvas = document.getElementById('visualizer');
       const vizCtx = vizCanvas.getContext('2d');
       const freqDisplay = document.getElementById('freqDisplay');
+      const immerseBtn = document.getElementById('immerseBtn');
       const MAX = 420;
 
       let audioCtx, analyser, source, freqData;
       let animationId = null;
       let isInitialized = false;
+      let immersed = false;
 
       const fmt = t => { const m=Math.floor(t/60); const s=Math.floor(t%60); return `${m}:${s.toString().padStart(2,'0')}`; };
 
@@ -495,6 +431,28 @@
           return false;
         }
       };
+
+      // Modo inmersivo
+      immerseBtn.addEventListener('click', () => {
+        immersed = !immersed;
+        document.querySelector('.banner').style.display = immersed ? 'none' : 'flex';
+        document.querySelector('.description-section').style.display = immersed ? 'none' : 'block';
+        immerseBtn.textContent = immersed ? 'Salir del modo inmersivo' : 'Modo inmersivo';
+        document.querySelector('.player-section').style.minHeight = immersed ? '100vh' : '';
+      });
+
+      // Efecto magnético en el aura
+      const vizWrapper = document.querySelector('.viz-wrapper');
+      const aura = document.querySelector('.aura');
+      vizWrapper.addEventListener('mousemove', (e) => {
+        const rect = vizWrapper.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width/2;
+        const y = e.clientY - rect.top - rect.height/2;
+        if (aura) aura.style.transform = `translate(calc(-50% + ${x*0.05}px), calc(-50% + ${y*0.05}px))`;
+      });
+      vizWrapper.addEventListener('mouseleave', () => {
+        if (aura) aura.style.transform = 'translate(-50%, -50%)';
+      });
 
       function drawVisualizer() {
         animationId = requestAnimationFrame(drawVisualizer);
