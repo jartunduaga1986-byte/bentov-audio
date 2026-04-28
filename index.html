@@ -1,24 +1,37 @@
-<!-- PÁGINA COMPLETA BENTOV · COLORES REFINADOS + AVISO MP3 + DONACIÓN EQUIPOS -->
+<!-- ═══════════════════════════════════════════════════════════════════
+  BENTOV · Sinfonía Neuronal
+  Audio binaural certificado por IA — Diseño responsive con micro‑mejoras
+  ═══════════════════════════════════════════════════════════════════ -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- ─── Metadatos básicos: codificación, viewport responsive, título ─── -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>BENTOV · Sinfonía Neuronal</title>
+
+  <!-- Tailwind CSS v3 CDN (framework utility‑first) -->
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- ══════════ ESTILOS CSS ══════════ -->
   <style>
+    /* ─── Variables globales ─── */
     :root {
       --neon-purple: #bc13fe;
       --neon-blue: #1390fe;
-    }
-    body {
-      margin: 0;
-      background: #030304;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      overflow-x: hidden;
+      --bg-primary: #030304;
     }
 
-    /* --- FONDO HEXAGONAL ELEGANTE (GRISES PROFUNDOS CON RESPLANDOR INFERIOR) --- */
+    /* ─── Reset y tipografía base ─── */
+    body {
+      margin: 0;
+      background: var(--bg-primary);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    /* ─── Fondo hexagonal (geometría 3D con resplandor inferior al moverse) ─── */
     .container-hex {
       position: fixed;
       top: -50px; left: -50px;
@@ -34,47 +47,39 @@
     }
     .hex-mover {
       width: 100%; height: 100%;
-      animation: hex-float var(--anim-duration) ease-in-out infinite var(--anim-delay);
+      animation: hexFloat var(--anim-duration) ease-in-out infinite var(--anim-delay);
       will-change: transform, filter;
       position: relative;
     }
-    /* Resplandor inferior que se activa con el movimiento */
     .hex-mover::before {
       content: '';
-      position: absolute;
-      inset: 0;
+      position: absolute; inset: 0;
       background: var(--glow-color, radial-gradient(circle at 50% 80%, rgba(188,19,254,0.25) 0%, transparent 70%));
       opacity: 0;
       transition: opacity 0.8s ease;
       z-index: -1;
       filter: blur(18px);
     }
-    .hex-mover.moving::before {
-      opacity: 1;
-    }
+    .hex-mover.moving::before { opacity: 1; }
     .hex-inner {
       width: 100%; height: 100%;
       clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-      background: var(--base-grad, linear-gradient(135deg, #2b2c2f 0%, #161719 50%, #08080a 100%));
+      background: var(--base-grad);
       position: relative;
-      transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), background 0.2s ease;
+      transition: transform 0.2s cubic-bezier(0.4,0,0.2,1), background 0.2s;
     }
-    /* Bisel de luz metálico */
     .hex-inner::after {
       content: ''; position: absolute; inset: 0;
-      background: linear-gradient(135deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0) 35%, rgba(0,0,0,0.9) 100%);
+      background: linear-gradient(135deg, rgba(255,255,255,0.18) 0%, transparent 35%, rgba(0,0,0,0.9) 100%);
       pointer-events: none;
     }
-
-    @keyframes hex-float {
-      0%, 100% { transform: scale(var(--base-scale)) translateY(0px); filter: var(--base-shadow); }
-      50% { transform: scale(calc(var(--base-scale) * 0.94)) translateY(10px); filter: var(--sink-shadow); }
+    @keyframes hexFloat {
+      0%, 100% { transform: scale(var(--base-scale)) translateY(0); filter: var(--base-shadow); }
+      50% { transform: scale(calc(var(--base-scale)*0.94)) translateY(10px); filter: var(--sink-shadow); }
     }
-
-    /* Interacción hover: hundimiento elegante */
     .hex-wrapper:hover .hex-mover {
       animation-play-state: paused;
-      filter: drop-shadow(0px 0px 0px rgba(0,0,0,1)) !important;
+      filter: drop-shadow(0 0 0 rgba(0,0,0,1)) !important;
     }
     .hex-wrapper:hover .hex-inner {
       animation-play-state: paused;
@@ -82,12 +87,12 @@
       background: #010101 !important;
     }
 
-    /* --- BANNER --- */
+    /* ─── Banner ─── */
     .banner {
       position: relative;
       width: 100%;
       height: 55vh;
-      min-height: 380px;
+      min-height: 360px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -104,7 +109,7 @@
       max-width: 42rem; width: 90%;
       padding: 2rem;
       border-radius: 2rem;
-      background: rgba(20, 20, 24, 0.55);
+      background: rgba(20,20,24,0.55);
       backdrop-filter: blur(30px);
       -webkit-backdrop-filter: blur(30px);
       border: 1px solid rgba(255,255,255,0.12);
@@ -125,7 +130,7 @@
       color: #c0c0c6;
     }
     .animated-title {
-      background: linear-gradient(135deg, #fff 0%, #e0e0f0 40%, #ffffff 80%, #d0d0ff 100%);
+      background: linear-gradient(135deg, #fff 0%, #e0e0f0 40%, #fff 80%, #d0d0ff 100%);
       background-size: 200% 200%;
       -webkit-background-clip: text;
       background-clip: text;
@@ -137,9 +142,7 @@
       100% { background-position: 100% 50%; }
     }
     .scroll-indicator {
-      position: absolute;
-      bottom: 15px;
-      left: 50%;
+      position: absolute; bottom: 15px; left: 50%;
       transform: translateX(-50%);
       z-index: 3;
       animation: bounce 2s infinite;
@@ -150,23 +153,20 @@
       50% { transform: translateX(-50%) translateY(8px); }
     }
 
-    /* --- REPRODUCTOR --- */
+    /* ─── Reproductor ─── */
     .player-section {
-      display: flex;
-      justify-content: center;
+      display: flex; justify-content: center;
       padding: 1.5rem 1rem 2rem;
     }
     .reproductor {
-      max-width: 26rem;
-      width: 100%;
-      background: rgba(30, 30, 34, 0.8);
+      max-width: 26rem; width: 100%;
+      background: rgba(30,30,34,0.8);
       backdrop-filter: blur(25px);
       border-radius: 2.5rem;
       padding: 2rem 1.8rem;
       box-shadow: 0 25px 50px rgba(0,0,0,0.6), inset 0 0 0 0.5px rgba(255,255,255,0.15), 0 0 30px rgba(188,19,254,0.2);
       color: white;
-      position: relative;
-      overflow: hidden;
+      position: relative; overflow: hidden;
     }
     .particle-bg { position: absolute; inset: 0; pointer-events: none; z-index: 0; opacity: 0.12; }
     .particle { position: absolute; background: rgba(255,255,255,0.6); border-radius: 50%; animation: float 12s linear infinite; }
@@ -178,7 +178,6 @@
     }
     input[type="range"] { -webkit-appearance: none; width: 100%; height: 5px; background: #3a3a3e; border-radius: 3px; outline: none; }
     input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; background: #fff; border-radius: 50%; box-shadow: 0 0 18px var(--neon-purple); cursor: pointer; }
-
     .boton-play {
       width: 64px; height: 64px;
       background: #f0f0f5;
@@ -190,30 +189,29 @@
     }
     .boton-play:hover { transform: scale(1.07); box-shadow: 0 12px 30px var(--neon-purple); }
     .boton-play svg { width: 32px; height: 32px; color: #1a1a1e; }
-
     .viz-wrapper { position: relative; display: flex; justify-content: center; align-items: center; margin-bottom: 1.2rem; height: 240px; }
-    canvas#visualizer { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1; border-radius: 50%; }
-
+    canvas#visualizer { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); z-index: 1; border-radius: 50%; }
     .aura {
       position: absolute; width: 170px; height: 170px; border-radius: 50%;
       background: radial-gradient(circle, rgba(188,19,254,0.25) 0%, rgba(19,144,254,0.08) 55%, transparent 75%);
-      top: 50%; left: 50%; transform: translate(-50%, -50%);
+      top: 50%; left: 50%; transform: translate(-50%,-50%);
       z-index: 0;
       animation: auraPulse 2.2s ease-in-out infinite alternate;
     }
     @keyframes auraPulse {
-      0% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
-      100% { opacity: 1; transform: translate(-50%, -50%) scale(1.25); }
+      0% { opacity: 0.5; transform: translate(-50%,-50%) scale(1); }
+      100% { opacity: 1; transform: translate(-50%,-50%) scale(1.25); }
     }
-
     .freq-display {
-      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 6;
-      font-size: 0.75rem; font-weight: 600; color: white; pointer-events: none;
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+      z-index: 6;
+      font-size: 0.75rem; font-weight: 600; color: white;
       text-shadow: 0 0 10px var(--neon-purple);
       opacity: 0; transition: opacity 0.3s;
     }
     .freq-display.visible { opacity: 1; }
 
+    /* ─── Icono LinkedIn (único, usado en varias secciones) ─── */
     .linkedin-icon {
       display: inline-flex; align-items: center; justify-content: center;
       width: 34px; height: 34px; border-radius: 50%;
@@ -228,67 +226,109 @@
       50% { box-shadow: 0 0 14px rgba(168,85,247,0.8); }
     }
 
-    /* --- DESCRIPCIÓN CIENTÍFICA --- */
-    .desc-section {
-      display: flex; justify-content: center; padding: 1rem 1rem 2.5rem;
-    }
+    /* ─── Descripción científica ─── */
+    .desc-section { display: flex; justify-content: center; padding: 1rem 1rem 2.5rem; }
     .desc-card {
       max-width: 32rem; width: 100%;
-      background: rgba(25, 25, 30, 0.65);
-      backdrop-filter: blur(18px);
-      border-radius: 2rem;
-      padding: 1.8rem;
+      background: rgba(25,25,30,0.65); backdrop-filter: blur(18px);
+      border-radius: 2rem; padding: 1.8rem;
       border: 1px solid rgba(255,255,255,0.06);
       box-shadow: 0 15px 35px rgba(0,0,0,0.5);
-      color: #d0d0d8;
-      line-height: 1.65;
+      color: #d0d0d8; line-height: 1.65;
     }
-    .desc-card h2 { font-size: 1.4rem; font-weight: 600; color: white; margin-bottom: 1.3rem; background: linear-gradient(135deg, #c084fc, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .desc-card h2 { font-size: 1.4rem; font-weight: 600; color: white; margin-bottom: 1.3rem; background: linear-gradient(135deg,#c084fc,#818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
     .phase { border-left: 3px solid #a855f7; padding-left: 1rem; margin-bottom: 1.5rem; }
     .phase h3 { color: #e0d6ff; font-size: 0.9rem; font-weight: 600; }
     .phase p { font-size: 0.78rem; color: #b0b0ba; }
 
-    /* --- SECCIÓN WHATSAPP / AUDIO EXTENDIDO --- */
-    .extended-section {
-      display: flex; justify-content: center; padding: 0 1rem 3rem;
+    /* ─── Sección gráfico futuro (placeholder) ─── */
+    .graph-section { display: flex; justify-content: center; padding: 0 1rem 2.5rem; }
+    .graph-placeholder {
+      max-width: 32rem; width: 100%;
+      background: rgba(25,25,30,0.5); backdrop-filter: blur(18px);
+      border-radius: 2rem; padding: 2rem;
+      border: 2px dashed rgba(255,255,255,0.12);
+      text-align: center; color: #888;
     }
+    .graph-placeholder .graph-icon { font-size: 2.5rem; margin-bottom: 0.8rem; opacity: 0.6; }
+
+    /* ─── Sección WhatsApp / Audio extendido ─── */
+    .extended-section { display: flex; justify-content: center; padding: 0 1rem 3rem; }
     .extended-card {
       max-width: 28rem; width: 100%;
-      background: rgba(35, 35, 40, 0.7);
-      backdrop-filter: blur(20px);
-      border-radius: 2rem;
-      padding: 1.8rem;
+      background: rgba(35,35,40,0.7); backdrop-filter: blur(20px);
+      border-radius: 2rem; padding: 1.8rem;
       border: 1px solid rgba(255,255,255,0.08);
       box-shadow: 0 15px 30px rgba(0,0,0,0.5);
-      text-align: center;
-      color: #e0e0e8;
+      text-align: center; color: #e0e0e8;
     }
     .whatsapp-btn {
       display: inline-flex; align-items: center; gap: 0.5rem;
       background: #25D366; color: white;
-      padding: 0.7rem 1.5rem;
-      border-radius: 2.5rem;
-      font-weight: 600;
-      font-size: 0.9rem;
-      text-decoration: none;
+      padding: 0.7rem 1.5rem; border-radius: 2.5rem;
+      font-weight: 600; font-size: 0.9rem; text-decoration: none;
       transition: background 0.3s, transform 0.2s;
-      box-shadow: 0 6px 18px rgba(37, 211, 102, 0.5);
+      box-shadow: 0 6px 18px rgba(37,211,102,0.5);
       margin: 0.8rem 0 0.5rem;
     }
-    .whatsapp-btn:hover { background: #1ebe5b; transform: translateY(-2px); box-shadow: 0 10px 22px rgba(37, 211, 102, 0.7); }
-    .audio-format-note {
-      font-size: 0.7rem;
-      color: #9ca3af;
-      margin-top: 0.5rem;
-    }
+    .whatsapp-btn:hover { background: #1ebe5b; transform: translateY(-2px); box-shadow: 0 10px 22px rgba(37,211,102,0.7); }
+    .audio-format-note { font-size: 0.7rem; color: #9ca3af; margin-top: 0.5rem; }
     .audio-format-note strong { color: #d1d5db; }
+
+    /* ─── Link publicación LinkedIn ─── */
+    .linkedin-post-link {
+      display: inline-flex; align-items: center; gap: 0.3rem;
+      color: #a78bfa; font-size: 0.85rem; text-decoration: underline;
+      transition: color 0.2s;
+    }
+    .linkedin-post-link:hover { color: #c4b5fd; }
+
+    /* ─── Barra de progreso de scroll ─── */
+    #scrollProgressBar {
+      position: fixed; top: 0; left: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--neon-purple), var(--neon-blue));
+      z-index: 1000;
+      transition: width 0.1s linear;
+    }
+
+    /* ─── Animación fade‑in al hacer scroll ─── */
+    .fade-section {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fade-section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─── Media queries responsive (mobile‑first) ─── */
+    @media (max-width: 640px) {
+      .banner { height: 45vh; min-height: 280px; }
+      .glass-card { padding: 1.5rem 1rem; }
+      .animated-title { font-size: 2rem !important; line-height: 1.2; }
+      .boton-play { width: 56px; height: 56px; }
+      .boton-play svg { width: 28px; height: 28px; }
+      .viz-wrapper { height: 200px; }
+      .reproductor { padding: 1.5rem 1.2rem; }
+      .desc-card, .graph-placeholder, .extended-card { padding: 1.2rem; }
+    }
   </style>
 </head>
 <body>
+
+  <!-- ══════════ BARRA DE PROGRESO DE SCROLL ══════════ -->
+  <div id="scrollProgressBar"></div>
+
+  <!-- ══════════ FONDO HEXAGONAL ANIMADO ══════════ -->
   <div id="hex-grid" class="container-hex"></div>
 
-  <!-- ═══════════ BANNER ═══════════ -->
-  <div class="banner">
+  <!-- ═══════════════════════════════════════════════
+    SECCIÓN 1: BANNER PRINCIPAL
+    Contiene: título, insignia, creador + LinkedIn único
+    ═══════════════════════════════════════════════ -->
+  <div class="banner fade-section">
     <canvas id="waveCanvas"></canvas>
     <div class="glass-card">
       <div class="badge mb-3">BENTOV · Neurotech</div>
@@ -298,10 +338,13 @@
       <p class="text-gray-300 text-sm md:text-base font-light tracking-wide">
         Impulsadas por inteligencia artificial avanzada
       </p>
-      <div class="mt-5 flex justify-center"><div class="w-16 h-0.5 bg-gradient-to-r from-transparent via-purple-400 to-transparent"></div></div>
+      <div class="mt-5 flex justify-center">
+        <div class="w-16 h-0.5 bg-gradient-to-r from-transparent via-purple-400 to-transparent"></div>
+      </div>
+      <!-- Creador + único link LinkedIn -->
       <div class="flex items-center justify-center gap-2 mt-4 text-xs text-gray-400">
         <span>por <strong class="text-white">Juan Carlos Artunduaga Jaramillo</strong></span>
-        <a href="https://www.linkedin.com/in/juan-inteligenciaartificial/" target="_blank" rel="noopener" class="linkedin-icon" aria-label="LinkedIn">
+        <a href="https://www.linkedin.com/posts/juan-inteligenciaartificial_neurociencia-inteligenciaartificial-biohacking-ugcPost-7453990563684597761-ppir" target="_blank" rel="noopener" class="linkedin-icon" aria-label="Ver proyecto en LinkedIn">
           <svg class="w-3.5 h-3.5 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M4.98 3.5C4.98 4.88 3.88 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM.19 8h4.62v16H.19V8zm7.95 0h4.45v2.16h.06c.62-1.17 2.13-2.4 4.38-2.4 4.68 0 5.54 3.08 5.54 7.09V24h-4.83v-8.17c0-1.95-.04-4.46-2.72-4.46-2.72 0-3.14 2.12-3.14 4.32V24H7.14V8z"/></svg>
         </a>
       </div>
@@ -311,23 +354,31 @@
     </div>
   </div>
 
-  <!-- ═══════════ REPRODUCTOR ═══════════ -->
-  <div class="player-section">
+  <!-- ═══════════════════════════════════════════════
+    SECCIÓN 2: REPRODUCTOR DE AUDIO
+    Incluye visualizador de frecuencias, controles,
+    aviso MP3/FLAC, advertencias y modo inmersivo
+    ═══════════════════════════════════════════════ -->
+  <div class="player-section fade-section" id="playerSection">
     <div class="reproductor">
       <div class="particle-bg" id="particleContainer"></div>
+
+      <!-- Cabecera del reproductor -->
       <div class="flex items-center justify-between mb-5 relative z-10">
         <div class="flex items-center gap-3">
           <div class="text-left">
             <p class="text-[0.6rem] text-purple-300/80 uppercase tracking-widest">Creado por</p>
-            <h2 class="text-xs font-medium text-white/80">Juan C. Artunduaga J.</h2>
+            <h2 class="text-xs font-medium text-white/80">Juan Carlos Artunduaga J.</h2>
           </div>
-          <a href="https://www.linkedin.com/in/juan-inteligenciaartificial/" target="_blank" rel="noopener" class="linkedin-icon" aria-label="LinkedIn">
+          <!-- Único ícono LinkedIn en el reproductor -->
+          <a href="https://www.linkedin.com/posts/juan-inteligenciaartificial_neurociencia-inteligenciaartificial-biohacking-ugcPost-7453990563684597761-ppir" target="_blank" rel="noopener" class="linkedin-icon" aria-label="Ver proyecto en LinkedIn">
             <svg class="w-3.5 h-3.5 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M4.98 3.5C4.98 4.88 3.88 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM.19 8h4.62v16H.19V8zm7.95 0h4.45v2.16h.06c.62-1.17 2.13-2.4 4.38-2.4 4.68 0 5.54 3.08 5.54 7.09V24h-4.83v-8.17c0-1.95-.04-4.46-2.72-4.46-2.72 0-3.14 2.12-3.14 4.32V24H7.14V8z"/></svg>
           </a>
         </div>
         <button id="immerseBtn" class="text-xs text-purple-400 underline hover:text-purple-300 transition">Modo inmersivo</button>
       </div>
 
+      <!-- Visualizador de frecuencias + botón play -->
       <div class="viz-wrapper">
         <div class="aura"></div>
         <canvas id="visualizer" width="240" height="240"></canvas>
@@ -338,22 +389,27 @@
         </button>
       </div>
 
+      <!-- Barra de progreso y volumen -->
       <div class="space-y-4 relative z-10">
         <div>
-          <div class="flex justify-between text-xs text-gray-400 mb-1"><span id="currentTime">0:00</span><span id="remainingTime">-7:00</span></div>
-          <input type="range" id="progressBar" value="0" min="0" step="0.1" max="420" class="w-full">
+          <div class="flex justify-between text-xs text-gray-400 mb-1">
+            <span id="currentTime">0:00</span><span id="remainingTime">-7:00</span>
+          </div>
+          <input type="range" id="progressBar" value="0" min="0" step="0.1" max="420" class="w-full" />
         </div>
         <div class="flex items-center gap-2">
           <svg class="w-4 h-4 text-gray-500" fill="currentColor" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0014 8.5v7a4.47 4.47 0 001.5-3.5z"/></svg>
-          <input type="range" id="volumeBar" min="0" max="1" step="0.01" value="0.8" class="flex-1">
+          <input type="range" id="volumeBar" min="0" max="1" step="0.01" value="0.8" class="flex-1" />
         </div>
-        <!-- Nota sobre el formato de audio -->
+
+        <!-- Nota sobre formato MP3 vs FLAC -->
         <p class="audio-format-note text-center">
           📌 Estás escuchando una versión <strong>MP3</strong>. El formato ideal es <strong>FLAC</strong> (sin pérdida), pero por capacidad de almacenamiento hemos comprimido el archivo. La experiencia no será completamente real; recomendamos usar audífonos de alta fidelidad.
         </p>
         <p class="text-center text-[0.65rem] text-gray-500">Experiencia de 7 min · Pausa automática</p>
       </div>
 
+      <!-- Advertencias de seguridad -->
       <div class="mt-6 bg-black/30 backdrop-blur-md rounded-2xl p-3 text-[0.65rem] text-gray-400 space-y-1 border border-white/5 relative z-10">
         <p class="text-gray-300 font-semibold uppercase tracking-widest mb-1 flex items-center gap-1"><span>⚠️</span> Advertencias</p>
         <p>• No usar al conducir o manejar maquinaria.</p>
@@ -365,46 +421,99 @@
     </div>
   </div>
 
-  <!-- ═══════════ DESCRIPCIÓN DEL PROCESO ═══════════ -->
-  <div class="desc-section">
+  <!-- ═══════════════════════════════════════════════
+    SECCIÓN 3: DESCRIPCIÓN DEL PROCESO CIENTÍFICO
+    Explica las fases de simulación, IA anidada,
+    métricas de certificación y validación final
+    ═══════════════════════════════════════════════ -->
+  <div class="desc-section fade-section" id="descSection">
     <div class="desc-card">
       <h2>🔬 Cómo la IA encontró esta frecuencia</h2>
-      <div class="phase"><h3>1. Simulación computacional del cerebro</h3><p>Laboratorio virtual de cuatro regiones cerebrales interconectadas que replica la actividad eléctrica neuronal. Probamos miles de configuraciones sin ningún riesgo.</p></div>
-      <div class="phase"><h3>2. Optimización con capas de IA anidadas</h3><p>Una primera IA explora millones de combinaciones (frecuencia, amplitud, acoplamiento). Una <strong>segunda IA interna</strong> refina los parámetros usando muestreo bayesiano y análisis espectral en tiempo real.</p></div>
-      <div class="phase"><h3>3. Métricas de certificación</h3><p>Medimos coherencia entre regiones, Phase Locking Value (PLV) y mejora de potencia en banda binaural. Solo se certifica si PLV > 0.6 y coherencia > 0.9.</p></div>
-      <div class="phase"><h3>4. Validación final</h3><p>Más de <strong>20 ciclos de optimización con IA</strong> y cientos de simulaciones cerebrales sintéticas respaldan este audio. Todo el flujo sigue principios de MLOps para trazabilidad.</p></div>
+
+      <!-- Fase 1: Simulación computacional -->
+      <div class="phase">
+        <h3>1. Simulación computacional del cerebro</h3>
+        <p>Laboratorio virtual de cuatro regiones cerebrales interconectadas que replica la actividad eléctrica neuronal. Probamos miles de configuraciones sin ningún riesgo.</p>
+      </div>
+
+      <!-- Fase 2: IA anidada -->
+      <div class="phase">
+        <h3>2. Optimización con capas de IA anidadas</h3>
+        <p>Una primera IA explora millones de combinaciones (frecuencia, amplitud, acoplamiento). Una <strong>segunda IA interna</strong> refina los parámetros usando muestreo bayesiano y análisis espectral en tiempo real.</p>
+      </div>
+
+      <!-- Fase 3: Métricas -->
+      <div class="phase">
+        <h3>3. Métricas de certificación</h3>
+        <p>Medimos coherencia entre regiones, Phase Locking Value (PLV) y mejora de potencia en banda binaural. Solo se certifica si PLV > 0.6 y coherencia > 0.9.</p>
+      </div>
+
+      <!-- Fase 4: Validación -->
+      <div class="phase">
+        <h3>4. Validación final</h3>
+        <p>Más de <strong>20 ciclos de optimización con IA</strong> y cientos de simulaciones cerebrales sintéticas respaldan este audio. Todo el flujo sigue principios de MLOps para trazabilidad.</p>
+      </div>
+
+      <!-- Enlace a la publicación de LinkedIn del proyecto -->
+      <p style="text-align:center; margin-top:1.5rem;">
+        <a href="https://www.linkedin.com/posts/juan-inteligenciaartificial_neurociencia-inteligenciaartificial-biohacking-ugcPost-7453990563684597761-ppir" target="_blank" rel="noopener" class="linkedin-post-link">
+          📰 Ver publicación completa del proyecto en LinkedIn
+        </a>
+      </p>
     </div>
   </div>
 
-  <!-- ═══════════ AUDIO EXTENDIDO (WHATSAPP) ═══════════ -->
-  <div class="extended-section">
+  <!-- ═══════════════════════════════════════════════
+    SECCIÓN 4: GRÁFICO DE RESULTADOS (placeholder)
+    Espacio reservado para añadir una imagen del
+    espectro o métricas de la simulación más adelante
+    ═══════════════════════════════════════════════ -->
+  <div class="graph-section fade-section" id="graphSection">
+    <div class="graph-placeholder">
+      <div class="graph-icon">📊</div>
+      <h3 style="color:#b0b0b8; margin-bottom:0.5rem;">Gráfico de resultados</h3>
+      <p style="font-size:0.8rem;">Próximamente: espectro de frecuencias, PLV y coherencia de la simulación computacional.</p>
+      <!-- Para añadir la imagen, reemplaza este <p> por:
+      <img src="ruta/a/la/imagen.png" alt="Resultados de la simulación" style="max-width:100%; border-radius:1rem;" />
+      -->
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+    SECCIÓN 5: AUDIO EXTENDIDO + WHATSAPP
+    Contacto para obtener la versión de 30 minutos
+    con donación voluntaria para equipos de investigación
+    ═══════════════════════════════════════════════ -->
+  <div class="extended-section fade-section" id="extSection">
     <div class="extended-card">
       <h3 class="text-lg font-semibold text-white mb-2">🧘 Audio completo de 30 minutos</h3>
       <p class="text-sm text-gray-300 mb-3">
         Si deseas la versión extendida para meditación profunda, escríbeme directamente a WhatsApp.
-        <br/><strong class="text-white">No tiene costo fijo</strong>. Tu donación voluntaria, según tu capacidad de pago, nos permite <strong>adquirir equipos y profundizar la investigación</strong> para que más personas puedan influir en sus estados mentales mediante frecuencias binaurales certificadas.
+        <br /><strong class="text-white">No tiene costo fijo</strong>. Tu donación voluntaria, según tu capacidad de pago, nos permite <strong>adquirir equipos y profundizar la investigación</strong> para que más personas puedan influir en sus estados mentales mediante frecuencias binaurales certificadas.
       </p>
-      <a href="https://wa.me/573001467346?text=Hola%20Juan%20Carlos,%20quiero%20el%20audio%20binaural%20de%2030%20minutos%20para%20meditar.%20Estoy%20de%20acuerdo%20en%20contribuir%20con%20una%20donación%20voluntaria." 
-         target="_blank" rel="noopener" class="whatsapp-btn">
-        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        Solicitar audio extendido
+      <a href="https://wa.me/573001467346?text=Hola%20Juan%20Carlos,%20quiero%20el%20audio%20binaural%20de%2030%20minutos%20para%20meditar.%20Estoy%20de%20acuerdo%20en%20contribuir%20con%20una%20donación%20voluntaria." target="_blank" rel="noopener" class="whatsapp-btn">
+        📲 Solicitar audio extendido
       </a>
       <p class="text-xs text-gray-500 mt-2">573001467346 · Contribución voluntaria para equipos de investigación</p>
     </div>
   </div>
 
+  <!-- ══════════ ELEMENTO DE AUDIO (oculto, solo funcional) ══════════ -->
   <audio id="audioPlayer" preload="auto" crossorigin="anonymous"
     src="https://raw.githubusercontent.com/jartunduaga1986-byte/bentov-audio/99b73821584358a093869c9e8dafff2ba93ce1fa/bentov_certified_7.05Hz.mp3"
     controlsList="nodownload" oncontextmenu="return false;">
   </audio>
 
+  <!-- ═══════════════════════════════════════════════
+    JAVASCRIPT
+    ═══════════════════════════════════════════════ -->
   <script>
-    // ─── FONDO HEXAGONAL (GRIS ELEGANTE CON RESPLANDOR INFERIOR AL MOVERSE) ───
+    // ─── 1. FONDO HEXAGONAL (grises metálicos con resplandor inferior) ───
     (() => {
       const grid = document.getElementById('hex-grid');
       const hexWidth = 104, hexHeight = 120, gap = 6;
       const horizontalDist = hexWidth + gap, verticalDist = (hexHeight * 0.75) + gap;
-      const colorsGlow = ['rgba(188,19,254,0.3)', 'rgba(19,144,254,0.25)', 'rgba(168,85,247,0.2)'];
+      const glowColors = ['rgba(188,19,254,0.3)', 'rgba(19,144,254,0.25)', 'rgba(168,85,247,0.2)'];
 
       function createGrid() {
         grid.innerHTML = '';
@@ -427,12 +536,8 @@
             wrapper.style.setProperty('--anim-duration', `${duration}s`);
             wrapper.style.setProperty('--anim-delay', `${delay}s`);
 
-            // Asignar un color de resplandor aleatorio
-            const glowColor = colorsGlow[Math.floor(Math.random() * colorsGlow.length)];
-            mover.style.setProperty('--glow-color', `radial-gradient(circle at 50% 80%, ${glowColor} 0%, transparent 70%)`);
-
-            // Activar resplandor en ciertos momentos de la animación (simulamos con clases)
-            mover.classList.add('moving'); // siempre tendrá el resplandor activo, pero muy sutil
+            mover.style.setProperty('--glow-color', `radial-gradient(circle at 50% 80%, ${glowColors[Math.floor(Math.random() * glowColors.length)]} 0%, transparent 70%)`);
+            mover.classList.add('moving');
 
             const depthRand = Math.random();
             if (depthRand > 0.85) {
@@ -459,10 +564,13 @@
         }
       }
       createGrid();
-      window.addEventListener('resize', () => clearTimeout(window.resized) && (window.resized = setTimeout(createGrid, 150)));
+      window.addEventListener('resize', () => {
+        clearTimeout(window.resized);
+        window.resized = setTimeout(createGrid, 150);
+      });
     })();
 
-    // ─── PARTÍCULAS ───
+    // ─── 2. PARTÍCULAS DECORATIVAS DENTRO DEL REPRODUCTOR ───
     (() => {
       const container = document.getElementById('particleContainer');
       for (let i = 0; i < 15; i++) {
@@ -476,7 +584,7 @@
       }
     })();
 
-    // ─── ONDAS BANNER ───
+    // ─── 3. ONDAS CEREBRALES DEL BANNER ───
     (() => {
       const canvas = document.getElementById('waveCanvas'), ctx = canvas.getContext('2d');
       let w, h, time = 0;
@@ -489,21 +597,24 @@
       ];
       function resize() { w = canvas.parentElement.clientWidth; h = canvas.parentElement.clientHeight; canvas.width = w; canvas.height = h; }
       function draw() {
-        ctx.clearRect(0,0,w,h);
+        ctx.clearRect(0, 0, w, h);
         waves.forEach(wv => {
           ctx.beginPath(); ctx.lineWidth = 1.5; ctx.strokeStyle = wv.col;
-          for (let x=0; x<=w; x+=2) {
-            let y = h*0.5 + Math.sin(x*wv.freq + time*wv.speed + wv.off)*wv.amp + Math.cos(x*0.007 + time*0.008)*3;
-            x===0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+          for (let x = 0; x <= w; x += 2) {
+            let y = h * 0.5 + Math.sin(x * wv.freq + time * wv.speed + wv.off) * wv.amp + Math.cos(x * 0.007 + time * 0.008) * 3;
+            x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
           }
           ctx.stroke();
         });
-        time++; requestAnimationFrame(draw);
+        time++;
+        requestAnimationFrame(draw);
       }
-      window.addEventListener('resize', resize); resize(); draw();
+      window.addEventListener('resize', resize);
+      resize();
+      draw();
     })();
 
-    // ─── REPRODUCTOR + VISUALIZADOR + INMERSIVO + MAGNÉTICO ───
+    // ─── 4. REPRODUCTOR + VISUALIZADOR + MODO INMERSIVO + EFECTO MAGNÉTICO ───
     (() => {
       const audio = document.getElementById('audioPlayer');
       const playBtn = document.getElementById('playPauseBtn');
@@ -517,87 +628,194 @@
       const vizCtx = vizCanvas.getContext('2d');
       const freqDisp = document.getElementById('freqDisplay');
       const immerseBtn = document.getElementById('immerseBtn');
-      const MAX = 420;
+      const MAX = 420; // 7 minutos en segundos
       let audioCtx, analyser, source, freqData, animId = null, init = false, immersed = false;
-      const fmt = t => { const m=Math.floor(t/60); const s=Math.floor(t%60); return `${m}:${s.toString().padStart(2,'0')}`; };
+      const fmt = t => {
+        const m = Math.floor(t / 60);
+        const s = Math.floor(t % 60);
+        return `${m}:${s.toString().padStart(2, '0')}`;
+      };
 
+      // Partículas orbitantes del visualizador
       const particlesOrb = [];
-      for (let i=0; i<30; i++) particlesOrb.push({ angle: Math.random()*Math.PI*2, radius: 80+Math.random()*45, size: Math.random()*3+1.4, speed: Math.random()*0.02+0.006, offset: Math.random()*Math.PI*2, brightness: 0.5 });
+      for (let i = 0; i < 30; i++) {
+        particlesOrb.push({
+          angle: Math.random() * Math.PI * 2,
+          radius: 80 + Math.random() * 45,
+          size: Math.random() * 3 + 1.4,
+          speed: Math.random() * 0.02 + 0.006,
+          offset: Math.random() * Math.PI * 2,
+          brightness: 0.5
+        });
+      }
 
+      // Configuración del AudioContext (solo una vez)
       const setup = () => {
         if (init) return true;
         try {
-          audioCtx = new (window.AudioContext||window.webkitAudioContext)();
-          analyser = audioCtx.createAnalyser(); analyser.fftSize = 512; freqData = new Uint8Array(analyser.frequencyBinCount);
-          source = audioCtx.createMediaElementSource(audio); source.connect(analyser); analyser.connect(audioCtx.destination);
-          init = true; return true;
-        } catch(e) { alert('Audio no soportado.'); return false; }
+          audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+          analyser = audioCtx.createAnalyser();
+          analyser.fftSize = 512;
+          freqData = new Uint8Array(analyser.frequencyBinCount);
+          source = audioCtx.createMediaElementSource(audio);
+          source.connect(analyser);
+          analyser.connect(audioCtx.destination);
+          init = true;
+          return true;
+        } catch (e) {
+          alert('Audio no soportado.');
+          return false;
+        }
       };
 
-      immerseBtn.addEventListener('click', ()=>{
-        immersed=!immersed;
-        document.querySelector('.banner').style.display=immersed?'none':'flex';
-        document.querySelector('.desc-section').style.display=immersed?'none':'flex';
-        document.querySelector('.extended-section').style.display=immersed?'none':'flex';
-        immerseBtn.textContent=immersed?'Salir del modo inmersivo':'Modo inmersivo';
-        document.querySelector('.player-section').style.minHeight=immersed?'100vh':'';
+      // Modo inmersivo: oculta banner y descripción para centrar el reproductor
+      immerseBtn.addEventListener('click', () => {
+        immersed = !immersed;
+        document.querySelector('.banner').style.display = immersed ? 'none' : 'flex';
+        document.querySelector('.desc-section').style.display = immersed ? 'none' : 'flex';
+        document.querySelector('.graph-section').style.display = immersed ? 'none' : 'flex';
+        document.querySelector('.extended-section').style.display = immersed ? 'none' : 'flex';
+        immerseBtn.textContent = immersed ? 'Salir del modo inmersivo' : 'Modo inmersivo';
+        document.querySelector('.player-section').style.minHeight = immersed ? '100vh' : '';
       });
 
+      // Efecto magnético del aura alrededor del botón
       const auraDiv = document.querySelector('.aura');
       const vizWrap = document.querySelector('.viz-wrapper');
-      vizWrap.addEventListener('mousemove',(e)=>{
+      vizWrap.addEventListener('mousemove', (e) => {
         if (!auraDiv) return;
-        const r=vizWrap.getBoundingClientRect();
-        auraDiv.style.transform=`translate(calc(-50% + ${(e.clientX-r.left-r.width/2)*0.04}px), calc(-50% + ${(e.clientY-r.top-r.height/2)*0.04}px))`;
+        const r = vizWrap.getBoundingClientRect();
+        auraDiv.style.transform = `translate(calc(-50% + ${(e.clientX - r.left - r.width / 2) * 0.04}px), calc(-50% + ${(e.clientY - r.top - r.height / 2) * 0.04}px))`;
       });
-      vizWrap.addEventListener('mouseleave',()=>{ if(auraDiv) auraDiv.style.transform='translate(-50%, -50%)'; });
+      vizWrap.addEventListener('mouseleave', () => {
+        if (auraDiv) auraDiv.style.transform = 'translate(-50%, -50%)';
+      });
 
+      // Dibuja el visualizador de frecuencias en tiempo real
       function draw() {
-        animId=requestAnimationFrame(draw);
-        if(!analyser) return;
+        animId = requestAnimationFrame(draw);
+        if (!analyser) return;
         analyser.getByteFrequencyData(freqData);
-        const w=vizCanvas.width, h=vizCanvas.height, cx=w/2, cy=h/2, rBase=68;
-        vizCtx.clearRect(0,0,w,h);
-        for(let i=0;i<freqData.length;i++){
-          const v=freqData[i]/255, barH=v*44, ang=(i/freqData.length)*Math.PI*2;
-          const x1=cx+Math.cos(ang)*rBase, y1=cy+Math.sin(ang)*rBase;
-          const x2=cx+Math.cos(ang)*(rBase+barH), y2=cy+Math.sin(ang)*(rBase+barH);
-          vizCtx.beginPath(); vizCtx.moveTo(x1,y1); vizCtx.lineTo(x2,y2);
-          const mix=(Math.sin(ang)+1)/2;
-          const r=Math.floor(255*mix), g=Math.floor(100*mix+50), b=Math.floor(255*(1-mix)+100);
-          vizCtx.strokeStyle=`rgba(${r},${g},${b},${0.4+v*0.6})`;
-          vizCtx.lineWidth=2.2; vizCtx.shadowColor=`rgba(${r},${g},${b},0.7)`; vizCtx.shadowBlur=v*12; vizCtx.stroke();
+        const w = vizCanvas.width, h = vizCanvas.height, cx = w / 2, cy = h / 2, rBase = 68;
+        vizCtx.clearRect(0, 0, w, h);
+        for (let i = 0; i < freqData.length; i++) {
+          const v = freqData[i] / 255, barH = v * 44, ang = (i / freqData.length) * Math.PI * 2;
+          const x1 = cx + Math.cos(ang) * rBase, y1 = cy + Math.sin(ang) * rBase;
+          const x2 = cx + Math.cos(ang) * (rBase + barH), y2 = cy + Math.sin(ang) * (rBase + barH);
+          vizCtx.beginPath();
+          vizCtx.moveTo(x1, y1);
+          vizCtx.lineTo(x2, y2);
+          const mix = (Math.sin(ang) + 1) / 2;
+          const r = Math.floor(255 * mix), g = Math.floor(100 * mix + 50), b = Math.floor(255 * (1 - mix) + 100);
+          vizCtx.strokeStyle = `rgba(${r},${g},${b},${0.4 + v * 0.6})`;
+          vizCtx.lineWidth = 2.2;
+          vizCtx.shadowColor = `rgba(${r},${g},${b},0.7)`;
+          vizCtx.shadowBlur = v * 12;
+          vizCtx.stroke();
         }
-        vizCtx.shadowBlur=0;
-        const avg=freqData.reduce((a,b)=>a+b,0)/freqData.length/255;
-        particlesOrb.forEach(p=>{ p.angle+=p.speed*(1+avg); p.brightness=0.3+avg*0.7;
-          const x=cx+Math.cos(p.angle+p.offset)*p.radius, y=cy+Math.sin(p.angle+p.offset)*p.radius;
-          vizCtx.beginPath(); vizCtx.arc(x,y,p.size,0,Math.PI*2); vizCtx.fillStyle=`rgba(255,0,180,${p.brightness})`; vizCtx.fill(); });
-        freqDisp.textContent=`${Math.round(freqData.indexOf(Math.max(...freqData))*audioCtx.sampleRate/analyser.fftSize)} Hz`;
-        freqDisp.style.opacity=0.6+avg*0.4;
-        if(!audio.paused) freqDisp.classList.add('visible'); else freqDisp.classList.remove('visible');
+        vizCtx.shadowBlur = 0;
+        const avg = freqData.reduce((a, b) => a + b, 0) / freqData.length / 255;
+        particlesOrb.forEach(p => {
+          p.angle += p.speed * (1 + avg);
+          p.brightness = 0.3 + avg * 0.7;
+          const x = cx + Math.cos(p.angle + p.offset) * p.radius, y = cy + Math.sin(p.angle + p.offset) * p.radius;
+          vizCtx.beginPath();
+          vizCtx.arc(x, y, p.size, 0, Math.PI * 2);
+          vizCtx.fillStyle = `rgba(255,0,180,${p.brightness})`;
+          vizCtx.fill();
+        });
+        freqDisp.textContent = `${Math.round(freqData.indexOf(Math.max(...freqData)) * audioCtx.sampleRate / analyser.fftSize)} Hz`;
+        freqDisp.style.opacity = 0.6 + avg * 0.4;
+        if (!audio.paused) freqDisp.classList.add('visible');
+        else freqDisp.classList.remove('visible');
       }
-      function startViz(){ if(!animId) draw(); }
-      function stopViz(){ if(animId){ cancelAnimationFrame(animId); animId=null; } vizCtx.clearRect(0,0,vizCanvas.width,vizCanvas.height); freqDisp.classList.remove('visible'); }
+      function startViz() { if (!animId) draw(); }
+      function stopViz() {
+        if (animId) { cancelAnimationFrame(animId); animId = null; }
+        vizCtx.clearRect(0, 0, vizCanvas.width, vizCanvas.height);
+        freqDisp.classList.remove('visible');
+      }
 
-      playBtn.addEventListener('click', async ()=>{
-        if(!audio.paused){ audio.pause(); playIcon.classList.remove('hidden'); pauseIcon.classList.add('hidden'); stopViz(); return; }
-        if(!init&&!setup()) return;
-        if(audioCtx.state==='suspended') await audioCtx.resume();
-        audio.play().then(()=>{ playIcon.classList.add('hidden'); pauseIcon.classList.remove('hidden'); startViz(); }).catch(e=>alert('Error al reproducir.'));
+      // Evento de reproducción/pausa
+      playBtn.addEventListener('click', async () => {
+        if (!audio.paused) {
+          audio.pause();
+          playIcon.classList.remove('hidden');
+          pauseIcon.classList.add('hidden');
+          stopViz();
+          return;
+        }
+        if (!init && !setup()) return;
+        if (audioCtx.state === 'suspended') await audioCtx.resume();
+        audio.play().then(() => {
+          playIcon.classList.add('hidden');
+          pauseIcon.classList.remove('hidden');
+          startViz();
+        }).catch(e => alert('Error al reproducir.'));
       });
 
-      audio.addEventListener('loadedmetadata',()=>{ audio.volume=0.8; volumeBar.value=0.8; progressBar.max=(audio.duration>MAX)?MAX:audio.duration; updateProgress(); });
-      function updateProgress(){
-        let cur=audio.currentTime;
-        if(cur>MAX){ audio.pause(); audio.currentTime=MAX; playIcon.classList.remove('hidden'); pauseIcon.classList.add('hidden'); progressBar.value=MAX; curr.textContent=fmt(MAX); rem.textContent='-0:00'; stopViz(); return; }
-        progressBar.value=cur; curr.textContent=fmt(cur); rem.textContent=`-${fmt(parseFloat(progressBar.max)-cur)}`;
+      // Metadatos cargados: configura duración, volumen y actualiza progreso
+      audio.addEventListener('loadedmetadata', () => {
+        audio.volume = 0.8;
+        volumeBar.value = 0.8;
+        progressBar.max = (audio.duration > MAX) ? MAX : audio.duration;
+        updateProgress();
+      });
+
+      function updateProgress() {
+        let cur = audio.currentTime;
+        if (cur > MAX) {
+          audio.pause();
+          audio.currentTime = MAX;
+          playIcon.classList.remove('hidden');
+          pauseIcon.classList.add('hidden');
+          progressBar.value = MAX;
+          curr.textContent = fmt(MAX);
+          rem.textContent = '-0:00';
+          stopViz();
+          return;
+        }
+        progressBar.value = cur;
+        curr.textContent = fmt(cur);
+        rem.textContent = `-${fmt(parseFloat(progressBar.max) - cur)}`;
       }
-      audio.addEventListener('timeupdate',updateProgress);
-      progressBar.addEventListener('input',()=>{ audio.currentTime=Math.min(progressBar.value,MAX); });
-      volumeBar.addEventListener('input',()=>{ audio.volume=volumeBar.value; });
-      audio.addEventListener('ended',()=>{ playIcon.classList.remove('hidden'); pauseIcon.classList.add('hidden'); audio.currentTime=0; updateProgress(); stopViz(); });
-      audio.addEventListener('contextmenu', e=>e.preventDefault());
+
+      audio.addEventListener('timeupdate', updateProgress);
+      progressBar.addEventListener('input', () => { audio.currentTime = Math.min(progressBar.value, MAX); });
+      volumeBar.addEventListener('input', () => { audio.volume = volumeBar.value; });
+      audio.addEventListener('ended', () => {
+        playIcon.classList.remove('hidden');
+        pauseIcon.classList.add('hidden');
+        audio.currentTime = 0;
+        updateProgress();
+        stopViz();
+      });
+      audio.addEventListener('contextmenu', e => e.preventDefault());
+    })();
+
+    // ─── 5. MICRO‑MEJORAS: barra de progreso de scroll ───
+    (() => {
+      const bar = document.getElementById('scrollProgressBar');
+      window.addEventListener('scroll', () => {
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+        bar.style.width = `${Math.min(progress, 100)}%`;
+      });
+    })();
+
+    // ─── 6. MICRO‑MEJORAS: fade‑in de secciones al hacer scroll (IntersectionObserver) ───
+    (() => {
+      const sections = document.querySelectorAll('.fade-section');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.2 });
+      sections.forEach(section => observer.observe(section));
     })();
   </script>
 </body>
